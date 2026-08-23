@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogCTA from "../../components/BlogCTA.astro";
+import { publishedBlogPosts } from "../../data/blog";
+import { services } from "../../data/services";
+
+export function getStaticPaths() {
+  return publishedBlogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const relatedService = services.find((s) => s.slug === post.categorySlug);
+
+const dateFormatter = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  description: post.metaDescription,
+  datePublished: post.datePublished,
+  dateModified: post.datePublished,
+  author: { "@type": "Organization", name: "Albariza Digital" },
+  publisher: { "@type": "Organization", name: "Albariza Digital" },
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: post.faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<Layout
+  title={`${post.title} | Albariza Digital`}
+  description={post.metaDescription}
+  ogType="article"
+  publishedTime={post.datePublished}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <article class="mx-auto max-w-2xl px-6 pb-24 pt-16 sm:pt-24">
+    <a href="/blog" class="text-sm text-white/50 transition hover:text-white">← Volver al blog</a>
+
+    <span class="mt-8 block text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+      {post.categoryLabel}
+    </span>
+    <h1 class="mt-2 font-serif text-3xl leading-tight sm:text-4xl">{post.title}</h1>
+    <time datetime={post.datePublished} class="mt-4 block text-sm text-white/40">
+      {dateFormatter.format(new Date(post.datePublished))}
+    </time>
+
+    <div class="prose-content mt-10 space-y-6 text-white/80">
+      {post.intro.map((block) =>
+        block.type === "p" ? (
+          <p class="text-lg leading-relaxed">{block.text}</p>
+        ) : (
+          <ul class="list-inside list-disc space-y-2">
+            {block.items.map((item) => <li>{item}</li>)}
+          </ul>
+        )
+      )}
+
+      {post.sections.map((section) => (
+        <div>
+          <h2 class="mt-4 font-serif text-2xl text-white">{section.heading}</h2>
+          <div class="mt-4 space-y-4">
+            {section.blocks.map((block) =>
+              block.type === "p" ? (
+                <p class="leading-relaxed">{block.text}</p>
+              ) : (
+                <ul class="list-inside list-disc space-y-2">
+                  {block.items.map((item) => <li>{item}</li>)}
+                </ul>
+              )
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div>
+        <h2 class="mt-4 font-serif text-2xl text-white">Preguntas frecuentes</h2>
+        <div class="mt-4 space-y-5">
+          {post.faq.map((item) => (
+            <div>
+              <h3 class="font-semibold text-white">{item.q}</h3>
+              <p class="mt-1 leading-relaxed">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {relatedService && (
+      <a
+        href={`/servicios/${relatedService.slug}`}
+        class="mt-10 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
+      >
+        Conoce nuestro servicio de {relatedService.name} →
+      </a>
+    )}
+
+    <BlogCTA />
+  </article>
+</Layout>

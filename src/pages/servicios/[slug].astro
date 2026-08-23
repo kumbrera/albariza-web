@@ -1,0 +1,305 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AnimatedTagline from "../../components/AnimatedTagline.tsx";
+import ServiceCTA from "../../components/ServiceCTA.astro";
+import { services } from "../../data/services";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const index = services.findIndex((s) => s.slug === service.slug);
+// Only the hero glow's horizontal position varies by page — purely decorative, no
+// content ever moves around between services.
+const heroAlign = ["left-1/4", "left-1/2", "left-3/4"][index % 3];
+
+const consultingSignals = [
+  "Los clientes se pierden entre WhatsApp, email y Excel",
+  "Nadie sabe cuántas oportunidades de venta hay abiertas ahora mismo",
+  "Si un empleado se va, se va también el conocimiento de sus clientes",
+  "Un informe de ventas tarda días en salir, si sale",
+];
+
+const contentPillars = [
+  { label: "Educa", text: "Resuelve una duda real" },
+  { label: "Muestra", text: "Proceso, equipo, producto" },
+  { label: "Vende", text: "Una única llamada a la acción" },
+  { label: "Conecta", text: "Comunidad y cercanía" },
+];
+---
+
+<Layout title={`${service.name} — Albariza Digital`} description={service.description}>
+  <!-- Hero: tagline + a soft glow in the service's own colour behind it. No
+       overflow-hidden on this section: clipping a blurred element at its container's
+       edge is exactly what was drawing that hard straight line across the page. -->
+  <section class="relative">
+    <div
+      class={`pointer-events-none absolute ${heroAlign} top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full opacity-25 blur-[110px]`}
+      style={`background: ${service.accent};`}
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 pb-6 pt-16 text-center sm:pt-24">
+      <a href="/#servicios" class="text-sm text-white/50 transition hover:text-white">← Volver a servicios</a>
+      <div class="mt-6">
+        <AnimatedTagline
+          client:load
+          normal={service.tagline.normal}
+          emphasis={service.tagline.emphasis}
+          accent={service.accent}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- What it is -->
+  <section class="mx-auto max-w-3xl px-6 pb-16 text-center">
+    <div data-reveal>
+      <h2 class="text-2xl font-black uppercase tracking-tight sm:text-3xl">
+        {service.name}
+      </h2>
+      <span
+        class="mx-auto mt-3 block h-[3px] w-16 rounded-full"
+        style={`background: ${service.accent};`}
+      ></span>
+      <p class="mx-auto mt-6 max-w-xl text-lg font-medium text-white/85">{service.description}</p>
+      <p class="mx-auto mt-4 max-w-xl text-white/60">{service.longIntro}</p>
+    </div>
+
+    <ul class="mx-auto mt-10 grid max-w-xl gap-3 text-left sm:grid-cols-2">
+      {service.bullets.map((b, i) => (
+        <li
+          data-reveal
+          data-reveal-delay={i * 90}
+          class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-sm text-white/80"
+        >
+          <span
+            class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-black"
+            style={`background: ${service.accent};`}
+          >
+            ✓
+          </span>
+          {b}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- How we work -->
+  <section class="border-t border-white/10 px-6 py-16">
+    <div class="mx-auto max-w-3xl">
+      <h2 data-reveal class="text-center font-serif text-2xl italic sm:text-3xl">
+        Cómo <span class="not-italic text-white/50">trabajamos</span>
+      </h2>
+
+      <ol class="mx-auto mt-10 max-w-xl space-y-8">
+        {service.process.map((step, i) => (
+          <li data-reveal data-reveal-delay={i * 140} class="flex items-start gap-5">
+            <span
+              class="shrink-0 select-none font-sans text-5xl font-black leading-none tracking-tighter sm:text-6xl"
+              style={`color: ${service.accent};`}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div class="pt-1.5 sm:pt-2.5">
+              <h3 class="font-semibold text-white">{step.title}</h3>
+              <p class="mt-1 text-sm text-white/60">{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Signature visual — genuinely different per service, not just a
+       reshuffle. Each one is its own layout: horizontal comparison,
+       vertical timeline, light showcase card, floating post mockups,
+       browser-window video frame.
+       ============================================================ -->
+
+  {service.slug === "ia-automatizacion" && (
+    <section class="border-t border-white/10 px-6 py-16">
+      <div data-reveal class="mx-auto max-w-4xl">
+        <h3 class="text-center font-serif text-2xl italic sm:text-3xl">
+          Antes <span class="not-italic text-white/40">vs.</span> después
+        </h3>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+              Sin automatización
+            </span>
+            <ul class="mt-4 space-y-3 text-sm text-white/55">
+              <li class="flex gap-2"><span class="text-white/30">✕</span> Copias datos a mano entre sistemas</li>
+              <li class="flex gap-2"><span class="text-white/30">✕</span> Respondes los mismos emails cada día</li>
+              <li class="flex gap-2"><span class="text-white/30">✕</span> Los informes se improvisan a última hora</li>
+            </ul>
+          </div>
+          <div
+            class="relative overflow-hidden rounded-2xl border p-6"
+            style={`border-color: ${service.accent}55; background: linear-gradient(160deg, ${service.accent}1a, transparent);`}
+          >
+            <span class="text-xs font-semibold uppercase tracking-[0.2em]" style={`color: ${service.accent};`}>
+              Con Albariza Digital
+            </span>
+            <ul class="mt-4 space-y-3 text-sm text-white/85">
+              <li class="flex gap-2"><span style={`color: ${service.accent};`}>✓</span> Los datos se sincronizan solos</li>
+              <li class="flex gap-2"><span style={`color: ${service.accent};`}>✓</span> Las respuestas repetitivas se envían solas</li>
+              <li class="flex gap-2"><span style={`color: ${service.accent};`}>✓</span> Los informes se generan cada semana sin tocarlos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {service.slug === "consultoria" && (
+    <section class="border-t border-white/10 px-6 py-16">
+      <div data-reveal class="mx-auto max-w-2xl">
+        <h3 class="text-center font-serif text-2xl italic sm:text-3xl">
+          Señales de que <span class="not-italic" style={`color: ${service.accent};`}>ya lo necesitas</span>
+        </h3>
+
+        <div class="relative mt-12">
+          <div
+            class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2"
+            style={`background: linear-gradient(${service.accent}, transparent 90%);`}
+          >
+            <span
+              class="travel-dot h-2.5 w-2.5 rounded-full"
+              style={`background: ${service.accent}; box-shadow: 0 0 12px ${service.accent};`}
+            ></span>
+          </div>
+
+          <ul class="space-y-8">
+            {consultingSignals.map((s, i) => (
+              <li
+                data-reveal
+                data-reveal-delay={i * 110}
+                class={`relative flex ${i % 2 === 0 ? "justify-start pr-[52%]" : "justify-end pl-[52%]"}`}
+              >
+                <div class="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/75">
+                  {s}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {service.slug === "seo-geo" && (
+    <section class="relative border-t border-white/10 px-6 py-16">
+      <div
+        class="pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-[70%] max-w-4xl -translate-y-1/2 rounded-full opacity-30 blur-[110px]"
+        style={`background: ${service.accent};`}
+        aria-hidden="true"
+      >
+      </div>
+
+      <div
+        data-reveal
+        class="relative mx-auto max-w-5xl overflow-hidden rounded-3xl p-8 sm:p-12"
+        style="background: linear-gradient(160deg, #f8f4ec, #efe8da);"
+      >
+        <div class="grid items-center gap-10 md:grid-cols-2">
+          <div class="text-left text-[#1a1a1a]">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em]" style={`color: ${service.accent};`}>
+              Por qué importa
+            </span>
+            <h3 class="mt-3 font-serif text-2xl leading-snug sm:text-3xl">
+              Casi la mitad de las búsquedas en Google ya son locales
+            </h3>
+            <p class="mt-4 text-[#4a4a4a]">
+              Y la mayoría termina en una visita, llamada o compra en menos de 24 horas. Si tu
+              ficha y tu contenido no están optimizados, ese cliente se va con la competencia
+              sin que ni siquiera lo sepas.
+            </p>
+            <div class="mt-6 flex gap-4">
+              <div class="flex-1 rounded-xl border p-4" style={`border-color: ${service.accent}40;`}>
+                <p class="font-sans text-2xl font-light tracking-tight text-[#1a1a1a]">
+                  46<span class="text-base align-top" style={`color: ${service.accent};`}>%</span>
+                </p>
+                <p class="mt-1 text-[11px] uppercase tracking-wide text-[#7a7a7a]">
+                  búsquedas con intención local
+                </p>
+              </div>
+              <div class="flex-1 rounded-xl border p-4" style={`border-color: ${service.accent}40;`}>
+                <p class="font-sans text-2xl font-light tracking-tight text-[#1a1a1a]">
+                  24<span class="text-base align-top" style={`color: ${service.accent};`}>h</span>
+                </p>
+                <p class="mt-1 text-[11px] uppercase tracking-wide text-[#7a7a7a]">
+                  hasta la visita o compra
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="relative overflow-hidden rounded-2xl"
+            style={`box-shadow: 0 25px 60px -20px ${service.accent}66;`}
+          >
+            <video class="h-full w-full object-cover" src={service.video} autoplay muted loop playsinline />
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {service.slug === "social-media" && (
+    <section class="border-t border-white/10 px-6 py-16">
+      <div data-reveal class="mx-auto max-w-4xl text-center">
+        <h3 class="font-serif text-2xl italic sm:text-3xl">
+          Contenido con <span class="not-italic" style={`color: ${service.accent};`}>sistema</span>, no al azar
+        </h3>
+        <div class="mt-10 flex justify-center gap-5 overflow-x-auto px-2 pb-4">
+          {contentPillars.map((pillar, i) => (
+            <div
+              class="float-bob w-36 shrink-0 rounded-2xl border border-white/10 bg-white/[0.03] p-3"
+              style={{ "--float-delay": `${i * 0.4}s` }}
+            >
+              <div class={`h-24 w-full rounded-lg bg-gradient-to-br ${service.gradient}`}></div>
+              <div class="mt-3 space-y-1.5">
+                <div class="h-2 w-full rounded bg-white/15"></div>
+                <div class="h-2 w-2/3 rounded bg-white/10"></div>
+              </div>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-wide" style={`color: ${service.accent};`}>
+                {pillar.label}
+              </p>
+              <p class="mt-0.5 text-[11px] text-white/40">{pillar.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {service.slug === "web" && (
+    <section class="border-t border-white/10 px-6 py-16">
+      <div data-reveal class="mx-auto max-w-4xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-white/10"
+          style={`box-shadow: 0 30px 80px -30px ${service.accent}66;`}
+        >
+          <div class="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-red-400/70"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-yellow-400/70"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-green-400/70"></span>
+            <span class="ml-3 rounded-full bg-white/10 px-3 py-1 text-xs text-white/40">tuempresa.com</span>
+          </div>
+          <video class="h-full max-h-[420px] w-full object-cover" src={service.video} autoplay muted loop playsinline />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="px-6 py-24">
+    <ServiceCTA service={service} />
+  </section>
+</Layout>
