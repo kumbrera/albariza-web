@@ -25,7 +25,7 @@ src/
 public/
 ├── brand/          # logo, favicon, og-image (fuente: los .svg; los .png se generan a partir de ellos)
 ├── videos/         # vídeos de fondo de las tarjetas de servicio (comprimidos con ffmpeg)
-├── robots.txt, llms.txt, _redirects, _headers, sitemap (generado en build)
+├── robots.txt, llms.txt, _headers, sitemap (generado en build)
 ```
 
 ## Piezas que dependen de claves externas
@@ -37,6 +37,10 @@ public/
 - **Dominio de producción**: fijado en `astro.config.mjs` (`site: 'https://albarizadigital.com'`)
   — lo usa el sitemap y las URLs absolutas (`og:image`, JSON-LD). Si cambia el dominio,
   hay que actualizarlo aquí.
+- **Redirect `www` → dominio raíz**: no se hace por `_redirects` (el motor de despliegue de
+  Cloudflare usado por este proyecto, Workers con assets estáticos vía `wrangler deploy`,
+  rechaza reglas con URL absoluta). Se configura en el panel de Cloudflare: Rules →
+  Redirect Rules, o marcando la opción de redirección al añadir `www` como dominio personalizado.
 
 ## Contenido del blog
 
