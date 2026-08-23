@@ -17,6 +17,16 @@ const index = services.findIndex((s) => s.slug === service.slug);
 // content ever moves around between services.
 const heroAlign = ["left-1/4", "left-1/2", "left-3/4"][index % 3];
 
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: service.faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
 const consultingSignals = [
   "Los clientes se pierden entre WhatsApp, email y Excel",
   "Nadie sabe cuántas oportunidades de venta hay abiertas ahora mismo",
@@ -33,6 +43,8 @@ const contentPillars = [
 ---
 
 <Layout title={`${service.name} — Albariza Digital`} description={service.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
   <!-- Hero: tagline + a soft glow in the service's own colour behind it. No
        overflow-hidden on this section: clipping a blurred element at its container's
        edge is exactly what was drawing that hard straight line across the page. -->
@@ -293,11 +305,30 @@ const contentPillars = [
             <span class="h-2.5 w-2.5 rounded-full bg-green-400/70"></span>
             <span class="ml-3 rounded-full bg-white/10 px-3 py-1 text-xs text-white/40">tuempresa.com</span>
           </div>
-          <video class="h-full max-h-[420px] w-full object-cover" src={service.video} autoplay muted loop playsinline />
+          <!-- Dedicated clip for this mockup (not service.video, the carousel card's own
+               clip) — a screen recording, pre-cropped to drop its top black letterbox band. -->
+          <video class="h-full max-h-[420px] w-full object-cover" src="/videos/web-mockup.mp4" autoplay muted loop playsinline />
         </div>
       </div>
     </section>
   )}
+
+  <!-- FAQ — visible content + FAQPage schema (defined above, near the top of <head>) -->
+  <section class="border-t border-white/10 px-6 py-16">
+    <div class="mx-auto max-w-2xl">
+      <h2 data-reveal class="text-center font-serif text-2xl italic sm:text-3xl">
+        Preguntas <span class="not-italic text-white/50">frecuentes</span>
+      </h2>
+      <div class="mx-auto mt-8 space-y-6">
+        {service.faq.map((item, i) => (
+          <div data-reveal data-reveal-delay={i * 100}>
+            <h3 class="font-semibold text-white">{item.q}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-white/60">{item.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <section class="px-6 py-24">
     <ServiceCTA service={service} />

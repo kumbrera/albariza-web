@@ -50,15 +50,23 @@ export default function ServicesCarousel() {
 
   // Only the active card's background video actually plays — everyone else sits paused
   // on whatever frame they're on. Keeps 5 looping clips from all decoding at once.
+  //
+  // `preload` follows the same logic: only the active video is told to fetch its full
+  // data. The other 4 sit at "metadata" (just enough to know duration/dimensions) until
+  // they become active — otherwise all 5 clips download in full on first paint, which
+  // is exactly the kind of thing that tanks LCP/page-weight on a slow connection for
+  // zero visible benefit (nobody sees 4 of them yet).
   useEffect(() => {
     videoRefs.current.forEach((el, i) => {
       if (!el) return;
       if (i === active) {
+        el.preload = "auto";
         void el.play().catch(() => {
           /* a rejected autoplay (no user gesture yet) will just retry next time active changes */
         });
       } else {
         el.pause();
+        el.preload = "metadata";
       }
     });
   }, [active]);
@@ -174,13 +182,16 @@ export default function ServicesCarousel() {
                   ref={(el) => {
                     videoRefs.current[index] = el;
                   }}
+                  // cover: fills the card edge-to-edge with no letterbox bars. All
+                  // source clips are now landscape and pre-cropped close to the card's
+                  // own aspect ratio, so cover only trims a little off the sides/top.
                   className="absolute inset-0 h-full w-full object-cover"
                   style={{ filter: "brightness(0.72) saturate(1.15) contrast(1.05)" }}
                   src={service.video}
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload={isActive ? "auto" : "metadata"}
                   aria-hidden="true"
                 />
                 <div

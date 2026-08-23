@@ -1,0 +1,82 @@
+---
+const GA_MEASUREMENT_ID = "G-66V8XGXXJ3";
+---
+
+<div
+  id="cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-[70] hidden border-t border-white/10 bg-[#0c0c0e]/95 px-6 py-4 backdrop-blur"
+>
+  <div class="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+    <p class="text-sm text-white/70">
+      Usamos cookies de analítica para entender cómo se usa la web y mejorarla. Puedes
+      aceptarlas o rechazarlas —{" "}
+      <a href="/politica-privacidad" class="underline decoration-white/30 underline-offset-4">
+        más información
+      </a>.
+    </p>
+    <div class="flex shrink-0 gap-2">
+      <button
+        id="cookie-reject"
+        type="button"
+        class="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white/70 transition hover:text-white"
+      >
+        Rechazar
+      </button>
+      <button
+        id="cookie-accept"
+        type="button"
+        class="rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black transition hover:bg-white/90"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ GA_MEASUREMENT_ID }}>
+  const CONSENT_KEY = "albariza-cookie-consent";
+
+  function loadAnalytics(id) {
+    if (!id || id.startsWith("REPLACE_")) return; // safety net if the ID is ever cleared
+    const s = document.createElement("script");
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+    s.async = true;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    // anonymize_ip: a reasonable privacy default, not a substitute for real consent.
+    // page_path/page_title: explicit since this is a static multi-page site, not an SPA —
+    // each navigation is already a full page load, so this just makes the page_view event
+    // unambiguous rather than relying on gtag's own default location read.
+    gtag("config", id, {
+      anonymize_ip: true,
+      page_path: window.location.pathname,
+      page_title: document.title,
+    });
+  }
+
+  const banner = document.getElementById("cookie-banner");
+  const consent = localStorage.getItem(CONSENT_KEY);
+
+  if (consent === "accepted") {
+    loadAnalytics(GA_MEASUREMENT_ID);
+  } else if (consent !== "rejected") {
+    banner?.classList.remove("hidden");
+  }
+
+  document.getElementById("cookie-accept")?.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "accepted");
+    banner?.classList.add("hidden");
+    loadAnalytics(GA_MEASUREMENT_ID);
+  });
+
+  document.getElementById("cookie-reject")?.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "rejected");
+    banner?.classList.add("hidden");
+  });
+</script>

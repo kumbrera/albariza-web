@@ -8,6 +8,11 @@ export interface ProcessStep {
   text: string;
 }
 
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 export interface Service {
   slug: string;
   name: string;
@@ -19,6 +24,8 @@ export interface Service {
   bullets: string[];
   /** 3-step "how we work" process, shown on the service page */
   process: ProcessStep[];
+  /** Shown on the service page + emitted as FAQPage JSON-LD (GEO/AI-answer visibility) */
+  faq: FaqItem[];
   /** Short line typed out in the service page's closing CTA */
   ctaLine: string;
   /** Tailwind gradient classes used for the animated plasma background (fallback / overlay tint) */
@@ -67,6 +74,20 @@ export const services: Service[] = [
         text: "Lo ponemos en marcha, medimos el tiempo ahorrado y lo afinamos contigo.",
       },
     ],
+    faq: [
+      {
+        q: "¿Qué es la automatización de procesos (RPA)?",
+        a: "Es tecnología que automatiza tareas digitales repetitivas —copiar datos, enviar emails, generar informes— sin programación compleja, replicando lo que haría una persona pero de forma continua y sin errores.",
+      },
+      {
+        q: "¿Cuánto cuesta automatizar procesos en mi empresa?",
+        a: "Muchas automatizaciones se implementan por menos de 500€ iniciales, con herramientas no-code desde 0-9€/mes de suscripción. El retorno de inversión medio ronda los 6-12 meses.",
+      },
+      {
+        q: "¿Necesito cambiar mis sistemas actuales para automatizar?",
+        a: "No. Automatizamos sobre las herramientas que ya usas, conectándolas entre sí en vez de sustituirlas.",
+      },
+    ],
     ctaLine: "Cuéntanos qué tareas repetitivas te quitan más tiempo",
     gradient: "from-violet-600 via-fuchsia-500 to-indigo-700",
     accent: "#a855f7",
@@ -101,6 +122,20 @@ export const services: Service[] = [
       {
         title: "Acompañamiento",
         text: "Implementamos, formamos a tu equipo y medimos resultados a los 90 días.",
+      },
+    ],
+    faq: [
+      {
+        q: "¿Qué diferencia hay entre un CRM y un ERP?",
+        a: "El CRM gestiona la relación con tus clientes (ventas, seguimiento, oportunidades). El ERP gestiona la operativa interna (facturación, stock, contabilidad). Muchas pymes empiezan por uno solo, según dónde tengan el problema más urgente.",
+      },
+      {
+        q: "¿Cuánto tiempo lleva digitalizar una empresa pequeña?",
+        a: "Un proceso piloto bien acotado puede estar funcionando en 2-4 semanas. Digitalizar toda la operativa suele ser un proceso por fases de varios meses.",
+      },
+      {
+        q: "¿Por dónde empezamos si no sabemos qué digitalizar primero?",
+        a: "Con una consultoría inicial gratuita de 30 minutos identificamos el proceso con más impacto, y empezamos por ahí — no por toda la empresa a la vez.",
       },
     ],
     ctaLine: "Cuéntanos cómo gestionas hoy tus clientes y procesos",
@@ -139,6 +174,20 @@ export const services: Service[] = [
         text: "Publicamos, optimizamos tu ficha local y medimos la evolución mes a mes.",
       },
     ],
+    faq: [
+      {
+        q: "¿Qué diferencia hay entre SEO y GEO?",
+        a: "El SEO busca posicionarte en los resultados de búsqueda tradicionales de Google para tu zona. El GEO busca que las IAs generativas (ChatGPT, Google AI Overviews) te citen directamente como respuesta. Comparten base, pero el GEO exige contenido aún más claro y estructurado.",
+      },
+      {
+        q: "¿Cuánto se tarda en ver resultados de SEO local?",
+        a: "Las mejoras en tu ficha de Google Business Profile pueden notarse en semanas. El posicionamiento orgánico por contenido suele tardar de 3 a 6 meses en consolidarse.",
+      },
+      {
+        q: "¿Trabajáis con negocios fuera de Andalucía?",
+        a: "Sí, trabajamos con empresas de toda España, aunque somos especialistas en el mercado andaluz.",
+      },
+    ],
     ctaLine: "Cuéntanos qué buscan tus clientes y dónde no apareces",
     gradient: "from-teal-500 via-emerald-500 to-cyan-600",
     accent: "#14b8a6",
@@ -175,6 +224,20 @@ export const services: Service[] = [
         text: "Creamos, publicamos y gestionamos la comunidad cada semana.",
       },
     ],
+    faq: [
+      {
+        q: "¿Cuántas veces a la semana debería publicar mi empresa?",
+        a: "Mejor 3 publicaciones semanales sostenibles y con estrategia que 7 improvisadas. La constancia y la calidad pesan más que la frecuencia.",
+      },
+      {
+        q: "¿Qué red social es mejor para mi negocio?",
+        a: "Depende de tu cliente ideal: Instagram/TikTok para consumo visual, LinkedIn para B2B, Facebook para comunidad local. No hace falta estar en todas.",
+      },
+      {
+        q: "¿Gestionáis también la publicidad de pago?",
+        a: "Sí, gestionamos campañas en Google, Meta y TikTok, siempre después de validar qué contenido funciona de forma orgánica.",
+      },
+    ],
     ctaLine: "Cuéntanos qué resultado esperas de tus redes",
     gradient: "from-pink-500 via-rose-500 to-purple-700",
     accent: "#ec4899",
@@ -209,6 +272,20 @@ export const services: Service[] = [
       {
         title: "Lanzamiento y SEO",
         text: "Publicamos, configuramos analítica y dejamos las bases de SEO técnico listas.",
+      },
+    ],
+    faq: [
+      {
+        q: "¿Cuánto cuesta una página web?",
+        a: "Una web corporativa sencilla suele rondar entre 600€ y 1.500€. Una tienda online (eCommerce) parte desde 2.000€, según catálogo e integraciones.",
+      },
+      {
+        q: "¿Necesito una tienda online o me vale una web informativa?",
+        a: "Si tus clientes suelen contactarte antes de comprar (servicios, presupuestos), una web informativa optimizada suele bastar. Si vendes producto físico sin hablar antes contigo, el eCommerce tiene más sentido.",
+      },
+      {
+        q: "¿La web incluye SEO técnico?",
+        a: "Sí, el SEO técnico básico (velocidad, estructura, etiquetas, adaptación móvil) va integrado en el propio diseño desde el primer día.",
       },
     ],
     ctaLine: "Cuéntanos qué debería conseguir tu web y cuánto te cuesta hoy no tenerla",
