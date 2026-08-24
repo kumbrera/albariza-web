@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Pure static-asset Worker: this site is `output: "static"` (plain HTML/CSS/JS, no
+  // server-side rendering), so no `main` worker script or @astrojs/cloudflare adapter is
+  // needed — Workers can serve a static assets directory directly.
+  //
+  // This file exists specifically so `wrangler deploy` finds a config on every build and
+  // skips its interactive "astro add cloudflare" auto-setup. That auto-setup was silently
+  // re-running `astro build` a second time in a different subprocess on every single
+  // deploy, and that second build was the one actually shipped (`dist/client`) — it came
+  // out missing every blog page, wiping the blog from the live site. Committing this file
+  // makes every deploy do exactly one build, matching what `npm run build` already
+  // verifies locally.
+  "name": "albariza-web",
+  "compatibility_date": "2026-08-24",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

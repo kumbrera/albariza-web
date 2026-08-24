@@ -41,6 +41,13 @@ public/
   Cloudflare usado por este proyecto, Workers con assets estáticos vía `wrangler deploy`,
   rechaza reglas con URL absoluta). Se configura en el panel de Cloudflare: Rules →
   Redirect Rules, o marcando la opción de redirección al añadir `www` como dominio personalizado.
+- **`wrangler.jsonc`**: necesario para que `wrangler deploy` sirva `dist/` como assets
+  estáticos sin más. Sin este archivo, `wrangler deploy` no encuentra config y lanza su
+  propio asistente interactivo (`astro add cloudflare`), que reconfigura el proyecto como
+  Worker con adaptador y **vuelve a ejecutar `astro build` una segunda vez** en otro
+  proceso — esa segunda build fue la que realmente se desplegaba, y llegó a salir sin
+  ninguna entrada de blog (bug real, visto en producción el 24/08/2026). No borrar este
+  archivo.
 
 ## Contenido del blog
 
