@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # wrangler local state/cache
 .wrangler/
+design-src/

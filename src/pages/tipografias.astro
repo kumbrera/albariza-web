@@ -1,0 +1,43 @@
+---
+// Temporary comparison page to pick the brand typeface. Delete once the choice is made.
+import "@fontsource-variable/geist";
+import "@fontsource-variable/onest";
+import "@fontsource-variable/schibsted-grotesk";
+import "@fontsource-variable/host-grotesk";
+import "../styles/global.css";
+
+const fonts = [
+  { name: "Geist", family: "'Geist Variable'", note: "La que he puesto: neutra, moderna, muy contundente en negrita." },
+  { name: "Host Grotesk", family: "'Host Grotesk Variable'", note: "Algo más cálida y redondeada, igual de limpia." },
+  { name: "Onest", family: "'Onest Variable'", note: "Geométrica y amable, muy legible." },
+  { name: "Schibsted Grotesk", family: "'Schibsted Grotesk Variable'", note: "Más editorial y con más carácter." },
+];
+---
+
+<html lang="es" class="theme-light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Tipografías · prueba</title>
+  </head>
+  <body class="theme-light">
+    <main class="mx-auto grid max-w-7xl gap-6 px-6 py-12 md:grid-cols-2">
+      {fonts.map((f) => (
+        <section class="rounded-[24px] border border-ink/10 bg-white/70 p-8" style={`font-family:${f.family}`}>
+          <p class="text-[0.95rem] font-semibold text-violet">{f.name}</p>
+          <h2 class="mt-4 text-[clamp(2.2rem,4vw,3.4rem)] font-bold leading-[0.98] text-graphite" style="letter-spacing:-0.045em">
+            Del caos de Excel y WhatsApp
+          </h2>
+          <h2 class="text-[clamp(2.2rem,4vw,3.4rem)] font-bold leading-[0.98] text-ink" style="letter-spacing:-0.045em">
+            a un sistema que funciona solo
+          </h2>
+          <p class="mt-5 text-[1.08rem] leading-relaxed text-graphite">
+            Detectamos las tareas que te roban horas cada semana y las automatizamos sobre las herramientas que ya usas.
+          </p>
+          <p class="mt-6 text-[0.9rem] text-graphite/80">{f.note}</p>
+        </section>
+      ))}
+    </main>
+  </body>
+</html>

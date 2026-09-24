@@ -1,11 +1,22 @@
 ---
-// Global cinematic grain overlay. Sits on every page via Layout.astro.
+// Global grain overlay, sits on every page via Layout.astro.
 // The noise is a tiny SVG (feTurbulence -> feColorMatrix, the standard "static" recipe),
 // base64-encoded at build time — no external image request, no runtime generation cost.
-const noiseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180">
+//
+// tone="film": white static in overlay mode, flickering — the original dark pages.
+// tone="chalk": dark mineral grain in multiply mode, static — light pages. On a light
+// ground white overlay noise is invisible, and a limestone surface doesn't flicker.
+interface Props {
+  tone?: "film" | "chalk";
+}
+
+const { tone = "film" } = Astro.props;
+
+const channel = tone === "chalk" ? "0" : "1";
+const noiseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">
   <filter id="n">
-    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0" />
+    <feTurbulence type="fractalNoise" baseFrequency="${tone === "chalk" ? "0.72" : "0.85"}" numOctaves="3" stitchTiles="stitch" />
+    <feColorMatrix type="matrix" values="0 0 0 0 ${channel}  0 0 0 0 ${channel}  0 0 0 0 ${channel}  0 0 0 1 0" />
   </filter>
   <rect width="100%" height="100%" filter="url(#n)" />
 </svg>`;
@@ -13,19 +24,27 @@ const noiseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="18
 const dataUri = `data:image/svg+xml;base64,${Buffer.from(noiseSvg).toString("base64")}`;
 ---
 
-<div class="film-grain" style={`background-image:url('${dataUri}')`} aria-hidden="true"></div>
+<div class:list={["grain", `grain--${tone}`]} style={`background-image:url('${dataUri}')`} aria-hidden="true"></div>
 
 <style>
-  .film-grain {
+  .grain {
     position: fixed;
     inset: 0;
     z-index: 50;
     pointer-events: none;
     background-repeat: repeat;
-    background-size: 180px 180px;
+    background-size: 220px 220px;
+  }
+
+  .grain--film {
     opacity: 0.04;
     mix-blend-mode: overlay;
     animation: film-grain-flicker 0.8s steps(4) infinite;
+  }
+
+  .grain--chalk {
+    opacity: 0.07;
+    mix-blend-mode: multiply;
   }
 
   @keyframes film-grain-flicker {
@@ -47,7 +66,7 @@ const dataUri = `data:image/svg+xml;base64,${Buffer.from(noiseSvg).toString("bas
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .film-grain {
+    .grain--film {
       animation: none;
     }
   }

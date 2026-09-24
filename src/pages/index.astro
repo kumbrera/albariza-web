@@ -1,151 +1,289 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ServicesCarousel from "../components/ServicesCarousel.tsx";
-import AnimatedTagline from "../components/AnimatedTagline.tsx";
-import Testimonials from "../components/Testimonials.astro";
-import { homeTagline } from "../data/services";
+import HeroLaptop from "../components/home/HeroLaptop.tsx";
+import PainStrip from "../components/home/PainStrip.tsx";
+import StepMetrics from "../components/home/StepMetrics.tsx";
+import StepsScroll from "../components/home/StepsScroll.tsx";
+import FreeSessionCard from "../components/home/FreeSessionCard.tsx";
+import ServicesDeck from "../components/home/ServicesDeck.tsx";
+import { services } from "../data/services";
 import { publishedBlogPosts } from "../data/blog";
+import {
+  hero,
+  painPoints,
+  stepCase,
+  steps,
+  automations,
+  freeSession,
+  alsoHelp,
+  homeFaq,
+  homeMeta,
+} from "../data/home";
+
+// The "caos" line is set with every letter slightly off its baseline — deterministic, so the
+// markup is identical on every build. The "sistema" line underneath is set dead straight.
+let charIndex = 0;
+const chaosWords = hero.headline.normal.split(" ").map((word) =>
+  [...word].map((ch) => {
+    const i = charIndex++;
+    const r = Math.sin((i + 1) * 12.9898) * 43758.5453;
+    const f = r - Math.floor(r);
+    return { ch, rot: ((f - 0.5) * 10).toFixed(2), y: (Math.cos(i * 7.3) * 0.05).toFixed(3) };
+  }),
+);
+
+const deckServices = alsoHelp.slugs.map((slug) => {
+  const s = services.find((x) => x.slug === slug)!;
+  return { slug: s.slug, name: s.name, description: alsoHelp.blurbs[slug], video: s.video };
+});
 
 const latestPosts = [...publishedBlogPosts]
   .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
   .slice(0, 3);
 
-const diferenciadores = [
-  {
-    title: "Especialistas locales",
-    text: "Conocemos el tejido empresarial de Andalucía porque trabajamos codo con codo con él.",
-  },
-  {
-    title: "Resultados globales",
-    text: "Aplicamos IA, automatización y estrategia digital de nivel internacional a negocios locales.",
-  },
-  {
-    title: "No somos una agencia genérica",
-    text: "Cada proyecto se diseña a medida: sin plantillas ni servicios enlatados.",
-  },
-];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: homeFaq.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 ---
 
-<Layout
-  title="Albariza Digital — Agencia de Transformación Digital en Andalucía"
-  description="Agencia de transformación digital en Andalucía: marketing digital, posicionamiento SEO, IA y automatización, y consultoría estratégica para pymes de Cádiz, Sevilla y Jerez."
-  ambientGlow
->
+<Layout title={homeMeta.title} description={homeMeta.description} theme="light">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
   <!-- Hero -->
-  <section class="mx-auto max-w-6xl px-6 pb-8 pt-16 text-center sm:pt-24">
-    <AnimatedTagline client:load normal={homeTagline.normal} emphasis={homeTagline.emphasis} />
-    <p class="mx-auto mt-6 max-w-2xl text-base text-white/60 sm:text-lg">
-      Marketing digital, inteligencia artificial y consultoría estratégica. Todo lo que tu
-      negocio necesita para crecer online.
-    </p>
-  </section>
+  <section class="relative overflow-hidden">
+    <div aria-hidden="true" class="hero-light pointer-events-none absolute -left-[15%] top-[-10%] h-[120%] w-[80%]"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-4 px-6 pb-16 pt-6 lg:grid-cols-12 lg:gap-10 lg:pb-24 lg:pt-10">
+      <div class="order-2 lg:order-1 lg:col-span-7">
+        <HeroLaptop client:only="react">
+          <div slot="fallback" class="aspect-[5/4] w-full"></div>
+        </HeroLaptop>
+      </div>
 
-  <!-- Carrusel de servicios -->
-  <section id="servicios" class="px-4 py-14 sm:py-20">
-    <h2 class="mb-10 text-center font-serif text-2xl italic sm:text-3xl">
-      Explora <span class="not-italic text-white/50">nuestros servicios</span>
-    </h2>
-    <ServicesCarousel client:load />
-  </section>
-
-  <Testimonials />
-
-  <!-- Diferenciadores -->
-  <section id="nosotros" class="border-t border-white/10 px-6 py-16 text-center">
-    <div class="mx-auto grid max-w-5xl gap-8 sm:grid-cols-3">
-      {diferenciadores.map((d, i) => (
-        <div
-          data-reveal
-          data-reveal-delay={i * 120}
-          class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-left"
-        >
-          <h3 class="font-serif text-lg">{d.title}</h3>
-          <p class="mt-2 text-sm text-white/60">{d.text}</p>
-        </div>
-      ))}
-    </div>
-    <a
-      href="/nosotros"
-      data-reveal
-      data-reveal-delay="360"
-      class="mt-8 inline-block text-sm text-white/50 underline decoration-white/30 underline-offset-4 transition hover:text-white"
-    >
-      Conoce nuestra historia →
-    </a>
-  </section>
-
-  <!-- Consultoría gratuita -->
-  <section class="border-t border-white/10 px-6 py-20 text-center">
-    <div data-reveal>
-      <h2 class="font-serif text-3xl sm:text-4xl">Cuéntanos tu proyecto</h2>
-      <p class="mx-auto mt-4 max-w-xl text-white/60">
-        Analizamos tu situación digital sin compromiso en una consultoría de 30 minutos.
-      </p>
-      <a
-        href="/contacto"
-        class="mt-8 inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:bg-white/90"
-      >
-        Reservar mi consultoría gratis →
-      </a>
-    </div>
-  </section>
-
-  <!-- Blog -->
-  <section id="blog" class="border-t border-white/10 px-6 py-20 text-center">
-    <div data-reveal>
-      <h2 class="font-serif text-2xl sm:text-3xl">Blog</h2>
-      <p class="mx-auto mt-4 max-w-xl text-white/60">
-        Artículos sobre marketing digital, inteligencia artificial y estrategia para hacer crecer tu negocio.
-      </p>
-    </div>
-
-    <div class="mx-auto mt-10 grid max-w-5xl gap-6 text-left sm:grid-cols-3">
-      {latestPosts.map((post, i) => (
-        <a
-          href={`/blog/${post.slug}`}
-          data-reveal
-          data-reveal-delay={i * 120}
-          class="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-white/25 hover:bg-white/[0.05]"
-        >
-          <span class="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
-            {post.categoryLabel}
+      <div class="order-1 lg:order-2 lg:col-span-5">
+        <p class="text-[1rem] font-medium text-violet">{hero.eyebrow}</p>
+        <h1 class="mt-4 text-[clamp(2.5rem,4.6vw,4rem)] font-bold leading-[0.98]">
+          <span class="chaos-line block text-graphite" aria-label={hero.headline.normal}>
+            {chaosWords.map((word, w) => (
+              <>
+                <span aria-hidden="true" class="inline-block whitespace-nowrap">
+                  {word.map((c) => (
+                    <span class="inline-block" style={`transform: translateY(${c.y}em) rotate(${c.rot}deg)`}>{c.ch}</span>
+                  ))}
+                </span>
+                {w < chaosWords.length - 1 && " "}
+              </>
+            ))}
           </span>
-          <h3 class="mt-2 font-serif text-base leading-snug transition group-hover:text-white">
-            {post.title}
-          </h3>
+          <span class="mt-2 block text-ink">{hero.headline.emphasis}</span>
+        </h1>
+        <p class="mt-6 max-w-[46ch] text-[1.12rem] leading-relaxed text-graphite">{hero.sub}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <a
+            href={hero.primaryCta.href}
+            class="rounded-full bg-violet px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet"
+          >
+            {hero.primaryCta.label}
+          </a>
+          <a href={hero.secondaryCta.href} class="text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">
+            {hero.secondaryCta.label}
+          </a>
+        </div>
+        <ul class="mt-7 flex flex-wrap gap-2">
+          {hero.microcopy.map((m) => (
+            <li class="rounded-full border border-ink/10 bg-white/50 px-3.5 py-1.5 text-[0.88rem] text-graphite">{m}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cinta de dolores -->
+  <section aria-label="Problemas habituales" class="border-y border-ink/8 bg-limestone/50 py-8">
+    <PainStrip client:visible items={painPoints} />
+  </section>
+
+  <!-- Caso STEP -->
+  <section class="mx-auto max-w-7xl px-6 py-28">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="text-[1rem] font-medium text-violet">{stepCase.eyebrow}</p>
+        <h2 class="mt-4 text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">{stepCase.title}</h2>
+      </div>
+      <div class="space-y-5 lg:col-span-6 lg:col-start-7">
+        <p class="text-[1.15rem] leading-relaxed text-graphite">{stepCase.problem}</p>
+        <p class="text-[1.15rem] leading-relaxed text-ink">{stepCase.solution}</p>
+      </div>
+    </div>
+    <div class="mt-16">
+      <StepMetrics client:visible metrics={stepCase.metrics} />
+    </div>
+  </section>
+
+  <!-- Cómo trabajamos -->
+  <section id="como-trabajamos" class="scroll-mt-24 border-t border-ink/8 bg-white/40">
+    <div class="mx-auto grid max-w-7xl gap-14 px-6 py-28 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-32">
+          <h2 class="text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">Empezamos por un solo proceso.</h2>
+          <p class="mt-5 max-w-[40ch] text-[1.12rem] leading-relaxed text-graphite">
+            No digitalizamos tu empresa de golpe. Elegimos lo que más tiempo te roba, lo arreglamos y medimos el resultado antes de seguir.
+          </p>
+        </div>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <StepsScroll client:visible steps={steps} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué automatizamos -->
+  <section class="mx-auto max-w-7xl px-6 py-28">
+    <h2 class="max-w-[18ch] text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">Lo que dejarás de hacer a mano.</h2>
+    <div class="mt-14 grid gap-10 lg:grid-cols-12">
+      <figure class="relative overflow-hidden rounded-[28px] bg-ink lg:col-span-5">
+        <video class="h-full min-h-[340px] w-full object-cover opacity-90" src="/videos/ia-automatizacion.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent"></div>
+        <figcaption class="absolute inset-x-0 bottom-0 p-7 text-[1.05rem] leading-snug text-white/90">
+          Sin cambiar tus herramientas: conectamos las que ya usas.
+        </figcaption>
+      </figure>
+      <ul class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-7">
+        {automations.map((a) => (
+          <li class="automation-row group py-7">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+              <h3 class="text-[1.45rem] font-bold leading-tight">{a.title}</h3>
+              <p class="text-[0.95rem] text-graphite sm:text-right">
+                <span class="line-through decoration-ink/30">{a.before}</span>
+              </p>
+            </div>
+            <p class="mt-2 max-w-[52ch] text-[1.02rem] leading-relaxed text-graphite">{a.text}</p>
+            <p class="mt-3 inline-flex items-center gap-2 rounded-full bg-teal/10 px-3 py-1 text-[0.9rem] font-semibold text-teal">
+              <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-teal"></span>
+              {a.after}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sesión de asesoría gratuita -->
+  <section id="sesion-gratuita" class="session scroll-mt-20 relative overflow-hidden bg-ink text-white">
+    <div aria-hidden="true" class="session-light pointer-events-none absolute inset-0"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-6 py-28 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <p class="text-[1rem] font-medium text-[#a99bff]">{freeSession.eyebrow}</p>
+        <h2 class="mt-4 text-[clamp(2.3rem,4.6vw,3.8rem)] font-bold leading-[1.02] text-white">{freeSession.title}</h2>
+        <p class="mt-6 max-w-[46ch] text-[1.14rem] leading-relaxed text-white/70">{freeSession.body}</p>
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <FreeSessionCard client:visible bullets={freeSession.bullets} cta={freeSession.cta} />
+      </div>
+    </div>
+  </section>
+
+  <!-- También te ayudamos con… -->
+  <section id="servicios" class="scroll-mt-20 mx-auto max-w-7xl px-6 pb-20 pt-28">
+    <div class="text-center">
+      <h2 class="text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">{alsoHelp.title}</h2>
+      <p class="mx-auto mt-4 max-w-[48ch] text-[1.12rem] text-graphite">{alsoHelp.sub}</p>
+    </div>
+    <div class="mt-14">
+      <ServicesDeck client:visible services={deckServices} />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="border-t border-ink/8 bg-white/40">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-12">
+      <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02] lg:col-span-4">Lo que nos suelen preguntar.</h2>
+      <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-7 lg:col-start-6">
+        {homeFaq.map((f) => (
+          <details class="faq group py-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 text-[1.22rem] font-semibold">
+              {f.q}
+              <span aria-hidden="true" class="faq-icon relative h-4 w-4 shrink-0"></span>
+            </summary>
+            <p class="mt-4 max-w-[60ch] text-[1.04rem] leading-relaxed text-graphite">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog + contacto -->
+  <section class="mx-auto max-w-7xl px-6 py-24">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <h2 class="text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold leading-[1.05]">Del blog</h2>
+      <a href="/blog" class="text-[1rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] hover:decoration-ink">Ver todos los artículos</a>
+    </div>
+    <div class="mt-10 grid gap-x-10 gap-y-8 border-t border-ink/10 pt-8 md:grid-cols-3">
+      {latestPosts.map((post) => (
+        <a href={`/blog/${post.slug}`} class="group block">
+          <span class="text-[0.9rem] text-graphite">{post.categoryLabel}</span>
+          <h3 class="mt-2 text-[1.2rem] font-semibold leading-snug transition group-hover:text-violet">{post.title}</h3>
         </a>
       ))}
     </div>
 
-    <a
-      href="/blog"
-      data-reveal
-      data-reveal-delay="360"
-      class="mt-10 inline-block rounded-full border border-white/20 px-8 py-3 text-sm font-semibold uppercase tracking-wide transition hover:bg-white hover:text-black"
-    >
-      Leer nuestro blog →
-    </a>
-  </section>
-
-  <!-- Contacto -->
-  <section class="border-t border-white/10 px-6 py-20 text-center">
-    <div data-reveal>
-      <h2 class="font-serif text-2xl sm:text-3xl">¿Hablamos de tu proyecto?</h2>
-      <p class="mx-auto mt-4 max-w-xl text-white/60">
-        Rellena el formulario y te preparamos una propuesta personalizada, o llámanos
-        directamente.
-      </p>
-      <a
-        href="/contacto"
-        class="mt-8 inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:bg-white/90"
-      >
-        Ir a contacto →
-      </a>
-      <p class="mt-6 text-sm text-white/50">
-        <a href="tel:+34601386534" class="underline decoration-white/30 underline-offset-4">+34 601 386 534</a>
-        ·
-        <a href="mailto:albarizadigital@gmail.com" class="underline decoration-white/30 underline-offset-4">albarizadigital@gmail.com</a>
-      </p>
+    <div class="mt-24 flex flex-col items-start justify-between gap-8 rounded-[28px] border border-ink/10 bg-white/60 p-10 md:flex-row md:items-center">
+      <div>
+        <h2 class="text-[clamp(1.8rem,3.2vw,2.5rem)] font-bold leading-[1.05]">¿Prefieres hablar ya?</h2>
+        <p class="mt-3 text-[1.08rem] text-graphite">
+          Llámanos al <a href="tel:+34601386534" class="font-semibold text-ink underline decoration-ink/25 underline-offset-4">601 386 534</a> o escribe a{" "}
+          <a href="mailto:albarizadigital@gmail.com" class="font-semibold text-ink underline decoration-ink/25 underline-offset-4">albarizadigital@gmail.com</a>.
+        </p>
+      </div>
+      <a href="/contacto" class="shrink-0 rounded-full bg-ink px-7 py-4 text-[1.02rem] font-semibold text-chalk transition hover:bg-violet">Escribirnos</a>
     </div>
   </section>
 </Layout>
+
+<style>
+  .hero-light {
+    background:
+      radial-gradient(45% 40% at 55% 50%, rgba(109, 85, 255, 0.28), transparent 70%),
+      radial-gradient(30% 30% at 35% 70%, rgba(63, 211, 191, 0.12), transparent 70%);
+    filter: blur(20px);
+  }
+
+  .session-light {
+    background:
+      radial-gradient(50% 60% at 85% 40%, rgba(109, 85, 255, 0.45), transparent 70%),
+      radial-gradient(40% 50% at 10% 100%, rgba(63, 211, 191, 0.14), transparent 70%);
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transition: transform 0.3s ease;
+  }
+  .faq-icon::after {
+    transform: rotate(90deg);
+  }
+  .faq[open] .faq-icon::after {
+    transform: rotate(0deg);
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon::before,
+    .faq-icon::after {
+      transition: none;
+    }
+  }
+</style>
