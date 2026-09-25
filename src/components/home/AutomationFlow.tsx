@@ -86,8 +86,8 @@ export default function AutomationFlow() {
           ))}
         </div>
         <div className="mr-2 flex flex-col items-center gap-3">
-          <div ref={hubRef} className="z-10 flex h-[76px] w-[76px] items-center justify-center rounded-[22px] bg-white shadow-[0_0_60px_-10px_rgba(109,85,255,0.9)]">
-            <span className="block h-7 w-7 rotate-45 bg-violet" />
+          <div ref={hubRef} className="z-10 h-[76px] w-[76px] rounded-[22px] shadow-[0_0_60px_-10px_rgba(109,85,255,0.9)]">
+            <img src="/brand/albariza-favicon.svg" alt="" width={76} height={76} className="h-full w-full" />
           </div>
           <span className="text-[0.85rem] font-medium text-white/80">Tu sistema</span>
         </div>

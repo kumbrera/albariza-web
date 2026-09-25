@@ -19,7 +19,7 @@ const logoSvg = readFileSync(path.join(brand, "albariza-wordmark.svg"), "utf8");
 const logoWhiteSvg = readFileSync(path.join(brand, "albariza-wordmark-white.svg"), "utf8");
 const iconSvg = readFileSync(path.join(brand, "albariza-favicon.svg"), "utf8");
 // LinkedIn applies its own rounding, so the profile image is a full-bleed square.
-const iconSquareSvg = iconSvg.replace(/rx="[^"]*"/, 'rx="0"');
+const iconSquareSvg = iconSvg.replace(/rx="[^"]*"/g, 'rx="0"');
 
 const EDGE_CANDIDATES = [
   "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
@@ -65,7 +65,7 @@ render("logo-blanco", page(350, 84, logoWhiteSvg), { pdf: path.join(out, "logo/a
 // --- Icon (favicon mark) ---
 writeFileSync(path.join(out, "icono/albariza-icono.svg"), iconSvg);
 await svgPng(iconSvg, 1024, path.join(out, "icono/albariza-icono.png"));
-render("icono", page(48, 48, iconSvg), { pdf: path.join(out, "icono/albariza-icono.pdf") });
+render("icono", page(512, 512, iconSvg), { pdf: path.join(out, "icono/albariza-icono.pdf") });
 
 // --- LinkedIn ---
 await svgPng(iconSquareSvg, 800, path.join(out, "linkedin/albariza-linkedin-perfil.png"));
