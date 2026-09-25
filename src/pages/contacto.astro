@@ -1,311 +1,94 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ContactPanel from "../components/ContactPanel.tsx";
 
-const zonas = [
-  "Cádiz capital",
-  "Jerez de la Frontera",
-  "Chiclana de la Frontera",
-  "Sevilla",
-  "Málaga",
-  "Otra zona de Andalucía",
-  "Fuera de Andalucía",
+const whatsapp = `https://wa.me/34601386534?text=${encodeURIComponent("Hola Albariza, me gustaría hablar sobre mi empresa.")}`;
+
+const channels = [
+  { label: "Llámanos", value: "601 386 534", href: "tel:+34601386534", icon: "phone" },
+  { label: "WhatsApp", value: "Escríbenos cuando quieras", href: whatsapp, icon: "whatsapp", external: true },
+  { label: "Email", value: "albarizadigital@gmail.com", href: "mailto:albarizadigital@gmail.com", icon: "mail" },
 ];
 
-const serviceGroups = [
-  {
-    label: "Marketing Digital",
-    options: [
-      "Posicionamiento SEO",
-      "Creación de Página Web",
-      "Gestión de Redes Sociales",
-      "Campañas Publicitarias (Google / Meta / TikTok)",
-      "Social Commerce",
-      "Tienda Online / eCommerce",
-    ],
-  },
-  {
-    label: "IA & Automatización",
-    options: [
-      "IA Generativa para mi empresa",
-      "Chatbot o Asistente Virtual",
-      "Automatización de Procesos (RPA)",
-      "Desarrollo No-Code / Low-Code",
-    ],
-  },
-  {
-    label: "Consultoría",
-    options: [
-      "Consultoría de Digitalización",
-      "CRM a medida",
-      "ERP / Sistema de Gestión",
-      "Integración de Sistemas",
-      "Formación y Coaching Online",
-    ],
-  },
+const next = [
+  { title: "Te escribimos", text: "Para cerrar día y hora, o para preguntarte lo que nos falte." },
+  { title: "Hablamos 30 minutos", text: "Nos cuentas cómo trabajáis y qué os roba tiempo. Sin presentación comercial." },
+  { title: "Te decimos por dónde empezar", text: "Qué haríamos primero, cuánto te ahorraría y qué costaría. Tú decides." },
 ];
 ---
 
 <Layout
-  title="Contacto — Albariza Digital"
-  description="Cuéntanos tu proyecto o reserva una consultoría gratuita de 30 minutos. Te respondemos en menos de 24h."
+  title="Contacto | Albariza Digital"
+  description="Reserva tu sesión de asesoría gratuita de 30 minutos o cuéntanos qué necesitas en web, SEO o redes. También por teléfono, WhatsApp o email."
+  theme="light"
 >
-  <section class="relative">
-    <div
-      class="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-violet-500 opacity-20 blur-[110px]"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="relative mx-auto max-w-3xl px-6 pb-6 pt-16 text-center sm:pt-24">
-      <h1 class="font-serif text-4xl leading-tight sm:text-5xl">Hablemos de tu proyecto</h1>
-      <p class="mx-auto mt-4 max-w-xl text-white/60">
-        Rellena el formulario, o si prefieres algo más rápido, reserva directamente 30
-        minutos con nosotros. Respondemos en menos de 24h.
-      </p>
-    </div>
-  </section>
-
-  <section class="px-6 pb-24 pt-6">
-    <div class="mx-auto grid max-w-5xl items-start gap-8 lg:grid-cols-[1fr_340px]">
-      <!-- Formulario principal: "Cuéntanos tu proyecto" — tarjeta clara sobre el fondo
-           oscuro, mismo recurso que ya usamos en la página de SEO/GEO para romper el negro. -->
-      <div
-        data-reveal
-        class="rounded-3xl p-6 sm:p-10"
-        style="background: linear-gradient(160deg, #f8f4ec, #efe8da);"
-      >
-        <h2 class="font-serif text-2xl text-[#1a1a1a] sm:text-3xl">Cuéntanos tu proyecto</h2>
-        <p class="mt-2 text-sm text-[#5a5a5a]">
-          Rellena el formulario y te preparamos una propuesta personalizada.
+  <section class="relative overflow-x-clip">
+    <div aria-hidden="true" class="contact-light pointer-events-none absolute right-[-10%] top-[-10%] h-[120%] w-[80%]"></div>
+    <div class="relative mx-auto grid max-w-7xl items-start gap-12 px-6 pb-24 pt-10 lg:grid-cols-12 lg:gap-12 lg:pt-16">
+      <div class="lg:col-span-5 lg:pt-6">
+        <p class="text-[1rem] font-medium text-violet">Contacto</p>
+        <h1 class="mt-4 text-[clamp(3rem,6vw,5.2rem)] font-bold leading-[0.95]">Hablemos.</h1>
+        <p class="mt-6 max-w-[40ch] text-[1.15rem] leading-relaxed text-graphite">
+          Cuéntanos qué te pasa y te decimos por dónde empezaríamos. Si lo prefieres, llámanos o escríbenos por WhatsApp.
         </p>
 
-        <form id="project-form" class="mt-8 space-y-5">
-          <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-
-          <div class="grid gap-5 sm:grid-cols-2">
-            <label class="block">
-              <span class="text-sm font-semibold text-[#1a1a1a]">Nombre *</span>
-              <input
-                type="text"
-                name="nombre"
-                required
-                placeholder="Tu nombre"
-                class="mt-1.5 w-full rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-[#1a1a1a]/40"
-              />
-            </label>
-            <label class="block">
-              <span class="text-sm font-semibold text-[#1a1a1a]">Empresa</span>
-              <input
-                type="text"
-                name="empresa"
-                placeholder="Tu empresa"
-                class="mt-1.5 w-full rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-[#1a1a1a]/40"
-              />
-            </label>
-          </div>
-
-          <div class="grid gap-5 sm:grid-cols-2">
-            <label class="block">
-              <span class="text-sm font-semibold text-[#1a1a1a]">Email *</span>
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="correo@empresa.com"
-                class="mt-1.5 w-full rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-[#1a1a1a]/40"
-              />
-            </label>
-            <label class="block">
-              <span class="text-sm font-semibold text-[#1a1a1a]">Teléfono</span>
-              <input
-                type="tel"
-                name="telefono"
-                placeholder="600 000 000"
-                class="mt-1.5 w-full rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-[#1a1a1a]/40"
-              />
-            </label>
-          </div>
-
-          <label class="block">
-            <span class="text-sm font-semibold text-[#1a1a1a]">Ciudad / Zona</span>
-            <div class="relative mt-1.5">
-              <select
-                name="zona"
-                class="w-full appearance-none rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] outline-none transition focus:border-[#1a1a1a]/40"
+        <ul class="mt-10 divide-y divide-ink/10 border-y border-ink/10">
+          {channels.map((c) => (
+            <li>
+              <a
+                href={c.href}
+                {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                class="group flex items-center gap-4 py-5"
               >
-                <option value="">Selecciona tu zona</option>
-                {zonas.map((z) => <option value={z}>{z}</option>)}
-              </select>
-              <svg class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1a1a1a]/50" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-          </label>
-
-          <label class="block">
-            <span class="text-sm font-semibold text-[#1a1a1a]">¿Qué servicio te interesa?</span>
-            <div class="relative mt-1.5">
-              <select
-                name="servicio"
-                class="w-full appearance-none rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] outline-none transition focus:border-[#1a1a1a]/40"
-              >
-                <option value="">Selecciona un servicio</option>
-                {serviceGroups.map((group) => (
-                  <optgroup label={group.label}>
-                    {group.options.map((opt) => <option value={opt}>{opt}</option>)}
-                  </optgroup>
-                ))}
-                <option value="No sé aún / Necesito orientación">No sé aún / Necesito orientación</option>
-              </select>
-              <svg class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1a1a1a]/50" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-          </label>
-
-          <label class="block">
-            <span class="text-sm font-semibold text-[#1a1a1a]">Cuéntanos tu proyecto *</span>
-            <textarea
-              name="mensaje"
-              required
-              rows="4"
-              placeholder="Describe tu negocio, qué necesitas o qué problema quieres resolver. Cuanta más info, mejor podremos ayudarte."
-              class="mt-1.5 w-full rounded-xl border border-[#1a1a1a]/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-[#1a1a1a]/40"
-            ></textarea>
-          </label>
-
-          <button
-            type="submit"
-            class="w-full rounded-xl bg-[#1a1a1a] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-[#1a1a1a]/85"
-          >
-            Enviar mensaje →
-          </button>
-
-          <p id="project-form-status" class="min-h-[1.25em] text-sm" role="status"></p>
-
-          <p class="text-xs text-[#7a7a7a]">
-            Al enviar aceptas que usemos tus datos para responderte, según nuestra{" "}
-            <a href="/politica-privacidad" class="underline decoration-[#7a7a7a]/50 underline-offset-2">
-              política de privacidad
-            </a>
-            . Sin spam, nunca.
-          </p>
-        </form>
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-ink shadow-[0_6px_16px_-10px_rgba(22,21,31,0.5)] transition group-hover:bg-violet group-hover:text-white">
+                  {c.icon === "phone" && (
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  )}
+                  {c.icon === "whatsapp" && (
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.14.82.84-3.06-.2-.31a8.22 8.22 0 0 1-1.26-4.36c0-4.55 3.71-8.26 8.27-8.26 2.21 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.85c0 4.56-3.71 8.27-8.27 8.27Zm4.53-6.2c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29Z" /></svg>
+                  )}
+                  {c.icon === "mail" && (
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg>
+                  )}
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[0.88rem] text-graphite">{c.label}</span>
+                  <span class="block truncate text-[1.12rem] font-semibold text-ink transition group-hover:text-violet">{c.value}</span>
+                </span>
+                <span aria-hidden="true" class="ml-auto text-graphite transition group-hover:translate-x-1 group-hover:text-violet">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <!-- Formulario compacto: reserva rápida, para quien no quiere rellenar tanto -->
-      <div
-        data-reveal
-        data-reveal-delay="150"
-        class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:sticky sm:top-24 sm:p-8"
-      >
-        <h2 class="font-serif text-xl sm:text-2xl">Reserva tu consultoría gratuita</h2>
-        <p class="mt-2 text-sm text-white/60">
-          30 minutos. Sin compromiso. Analizamos tu negocio online.
-        </p>
-
-        <form id="booking-form" class="mt-6 space-y-3">
-          <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-
-          <input
-            type="text"
-            name="nombre"
-            required
-            placeholder="Tu nombre"
-            class="w-full rounded-xl border border-white/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-white/40"
-          />
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Tu email"
-            class="w-full rounded-xl border border-white/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-white/40"
-          />
-          <input
-            type="tel"
-            name="telefono"
-            placeholder="Tu teléfono"
-            class="w-full rounded-xl border border-white/15 bg-white px-4 py-3 text-[#1a1a1a] placeholder-[#9a9a9a] outline-none transition focus:border-white/40"
-          />
-
-          <button
-            type="submit"
-            class="w-full rounded-full bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:bg-white/90"
-          >
-            Reservar consultoría gratuita →
-          </button>
-
-          <p id="booking-form-status" class="min-h-[1.25em] text-sm" role="status"></p>
-        </form>
-
-        <div class="mt-6 space-y-1 border-t border-white/10 pt-6 text-sm text-white/50">
-          <a href="tel:+34601386534" class="block underline decoration-white/30 underline-offset-4">
-            +34 601 386 534
-          </a>
-          <a href="mailto:albarizadigital@gmail.com" class="block underline decoration-white/30 underline-offset-4">
-            albarizadigital@gmail.com
-          </a>
-        </div>
+      <div class="lg:col-span-7">
+        <ContactPanel client:load />
       </div>
     </div>
   </section>
 
-  <script>
-    // Static site, no backend — form submissions go out client-side to Web3Forms
-    // (web3forms.com), which relays them by email to albarizadigital@gmail.com.
-    const WEB3FORMS_ACCESS_KEY = "f9022aa9-8b7b-416b-9c2d-3930ab6193b6";
-
-    function wireForm(formId: string, statusId: string, subject: string) {
-      const form = document.getElementById(formId) as HTMLFormElement | null;
-      const status = document.getElementById(statusId);
-      if (!form || !status) return;
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-        const originalLabel = btn?.textContent ?? "";
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = "Enviando...";
-        }
-        status.textContent = "";
-        status.className = "min-h-[1.25em] text-sm";
-
-        const payload = Object.fromEntries(new FormData(form).entries()) as Record<string, unknown>;
-        payload.access_key = WEB3FORMS_ACCESS_KEY;
-        payload.subject = subject;
-        payload.from_name = "Web Albariza Digital";
-
-        try {
-          if (WEB3FORMS_ACCESS_KEY.startsWith("REPLACE_")) {
-            throw new Error("not-configured");
-          }
-          const res = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify(payload),
-          });
-          const result = await res.json();
-          if (!result.success) throw new Error(result.message || "unknown");
-
-          form.reset();
-          status.textContent = "¡Gracias! Te responderemos lo antes posible.";
-          status.classList.add("text-emerald-500");
-          // Only fires if the visitor accepted analytics cookies (gtag is undefined otherwise).
-          window.gtag?.("event", "form_submit", { form_name: formId });
-        } catch {
-          status.textContent =
-            "No se pudo enviar. Escríbenos directamente a albarizadigital@gmail.com o al 601 386 534.";
-          status.classList.add("text-red-400");
-        } finally {
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = originalLabel;
-          }
-        }
-      });
-    }
-
-    wireForm("project-form", "project-form-status", "Nueva consulta — Cuéntanos tu proyecto");
-    wireForm("booking-form", "booking-form-status", "Nueva reserva — Consultoría gratuita");
-  </script>
+  <section class="border-t border-ink/8 bg-white/40">
+    <div class="mx-auto max-w-7xl px-6 py-24">
+      <h2 class="text-[clamp(2rem,3.8vw,3rem)] font-bold leading-[1.02]">Qué pasa después.</h2>
+      <ol class="mt-12 grid gap-10 border-t border-ink/10 pt-10 md:grid-cols-3">
+        {next.map((step, i) => (
+          <li>
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-ink text-[1rem] font-semibold text-white">{i + 1}</span>
+            <h3 class="mt-6 text-[1.4rem] font-bold leading-tight tracking-[-0.03em]">{step.title}</h3>
+            <p class="mt-3 max-w-[36ch] text-[1.04rem] leading-relaxed text-graphite">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .contact-light {
+    background:
+      radial-gradient(45% 40% at 60% 40%, rgba(109, 85, 255, 0.24), transparent 70%),
+      radial-gradient(30% 30% at 80% 85%, rgba(63, 211, 191, 0.12), transparent 70%);
+    filter: blur(20px);
+  }
+</style>

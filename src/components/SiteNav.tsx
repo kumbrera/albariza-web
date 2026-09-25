@@ -13,10 +13,11 @@ import { ASESORIA_PATH } from "@/data/routes";
 const LEFT = [
   { name: "Asesoría", link: ASESORIA_PATH },
   { name: "Servicios", link: "/#servicios" },
+  { name: "Nosotros", link: "/nosotros" },
 ];
 const RIGHT = [
   { name: "Blog", link: "/blog" },
-  { name: "Nosotros", link: "/nosotros" },
+  { name: "Contacto", link: "/contacto" },
 ];
 const CTA = { name: "Sesión gratuita", link: "/#sesion-gratuita" };
 

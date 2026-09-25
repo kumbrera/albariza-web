@@ -1,0 +1,79 @@
+---
+import { ASESORIA_PATH } from "../data/routes";
+
+const whatsapp = `https://wa.me/34601386534?text=${encodeURIComponent("Hola Albariza, me gustaría hablar sobre mi empresa.")}`;
+
+const columns = [
+  {
+    title: "Servicios",
+    links: [
+      { label: "Asesoría de procesos", href: ASESORIA_PATH },
+      { label: "Web", href: "/servicios/web" },
+      { label: "SEO / GEO", href: "/servicios/seo-geo" },
+      { label: "Redes sociales", href: "/servicios/social-media" },
+    ],
+  },
+  {
+    title: "Albariza",
+    links: [
+      { label: "Nosotros", href: "/nosotros" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contacto", href: "/contacto" },
+    ],
+  },
+  {
+    title: "Habla con nosotros",
+    links: [
+      { label: "601 386 534", href: "tel:+34601386534" },
+      { label: "WhatsApp", href: whatsapp, external: true },
+      { label: "albarizadigital@gmail.com", href: "mailto:albarizadigital@gmail.com" },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-ink/8 bg-white/30">
+  <div class="mx-auto max-w-7xl px-6 pb-10 pt-16">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <a href="/" aria-label="Albariza Digital, inicio">
+          <img src="/brand/albariza-wordmark.svg" alt="albariza" width="140" height="34" class="h-[34px] w-auto" />
+        </a>
+        <p class="mt-5 max-w-[32ch] text-[1rem] leading-relaxed text-graphite">
+          Asesoría de procesos y automatización para pymes y autónomos.
+        </p>
+        <a
+          href="/contacto"
+          data-open-booking
+          class="mt-6 inline-block rounded-full bg-ink px-5 py-2.5 text-[0.92rem] font-semibold text-chalk transition hover:bg-violet"
+        >
+          Reservar sesión gratuita
+        </a>
+      </div>
+      <nav aria-label="Pie de página" class="grid gap-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
+        {columns.map((col) => (
+          <div>
+            <p class="text-[0.9rem] font-semibold text-ink">{col.title}</p>
+            <ul class="mt-4 space-y-2.5">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    class="text-[0.98rem] text-graphite transition hover:text-ink"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+    <div class="mt-14 flex flex-col gap-3 border-t border-ink/8 pt-6 text-[0.88rem] text-graphite sm:flex-row sm:items-center sm:justify-between">
+      <p>© {new Date().getFullYear()} Albariza Digital</p>
+      <a href="/politica-privacidad" class="transition hover:text-ink">Política de privacidad</a>
+    </div>
+  </div>
+</footer>

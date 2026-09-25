@@ -7,6 +7,7 @@ import WhatsAppButton from "../components/WhatsAppButton.astro";
 import CookieConsent from "../components/CookieConsent.astro";
 import SiteNav from "../components/SiteNav.tsx";
 import BookingDialog from "../components/BookingDialog.tsx";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title: string;
@@ -26,7 +27,7 @@ interface Props {
 
 const {
   title,
-  description = "Marketing digital, inteligencia artificial y consultoría estratégica.",
+  description = "Asesoría de procesos y automatización para pymes y autónomos: ordenamos cómo trabaja tu empresa y automatizamos las tareas repetitivas.",
   ogType = "website",
   publishedTime,
   ambientGlow = false,
@@ -155,15 +156,19 @@ const navLinkClass = (active: boolean) =>
       <slot />
     </main>
 
-    <footer class:list={["py-10", isLight ? "border-t border-ink/8" : "border-t border-white/10"]}>
-      <div class:list={["mx-auto flex flex-col items-center justify-between gap-4 px-6 text-sm sm:flex-row", isLight ? "max-w-7xl text-graphite" : "max-w-6xl text-white/50"]}>
-        <p>© {new Date().getFullYear()} Albariza Digital. Todos los derechos reservados.</p>
-        <div class="flex items-center gap-4">
-          <a href="/politica-privacidad" class:list={["transition", isLight ? "hover:text-ink" : "hover:text-white"]}>Política de privacidad</a>
-          <a href="tel:+34601386534" class:list={["transition", isLight ? "hover:text-ink" : "hover:text-white"]}>+34 601 386 534</a>
+    {isLight ? (
+      <SiteFooter />
+    ) : (
+      <footer class:list={["py-10", isLight ? "border-t border-ink/8" : "border-t border-white/10"]}>
+        <div class:list={["mx-auto flex flex-col items-center justify-between gap-4 px-6 text-sm sm:flex-row", isLight ? "max-w-7xl text-graphite" : "max-w-6xl text-white/50"]}>
+          <p>© {new Date().getFullYear()} Albariza Digital. Todos los derechos reservados.</p>
+          <div class="flex items-center gap-4">
+            <a href="/politica-privacidad" class:list={["transition", isLight ? "hover:text-ink" : "hover:text-white"]}>Política de privacidad</a>
+            <a href="tel:+34601386534" class:list={["transition", isLight ? "hover:text-ink" : "hover:text-white"]}>+34 601 386 534</a>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    )}
 
     <WhatsAppButton />
     </div>
