@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import BlogCTA from "../../components/BlogCTA.astro";
-import { publishedBlogPosts } from "../../data/blog";
+import FaqSection from "../../components/FaqSection.astro";
+import { bookingTopicFor, headingId, publishedBlogPosts, readingMinutes } from "../../data/blog";
 import { services } from "../../data/services";
 import { ASESORIA_PATH } from "../../data/routes";
 
@@ -16,14 +17,17 @@ const { post } = Astro.props;
 const secondary = services.find((s) => s.slug === post.categorySlug);
 const relatedService =
   post.categorySlug === "asesoria-procesos-automatizacion"
-    ? { href: ASESORIA_PATH, name: "asesoría de procesos y automatización" }
+    ? { href: ASESORIA_PATH, name: "Asesoría de procesos y automatización" }
     : secondary && { href: `/servicios/${secondary.slug}`, name: secondary.name };
 
-const dateFormatter = new Intl.DateTimeFormat("es-ES", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
+// Same topic first, then the newest of the rest.
+const related = [...publishedBlogPosts]
+  .filter((p) => p.slug !== post.slug)
+  .sort((a, b) => Number(b.categorySlug === post.categorySlug) - Number(a.categorySlug === post.categorySlug) || b.datePublished.localeCompare(a.datePublished))
+  .slice(0, 2);
+
+const dateFormatter = new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric" });
+const minutes = readingMinutes(post);
 
 const articleLd = {
   "@context": "https://schema.org",
@@ -32,91 +36,201 @@ const articleLd = {
   description: post.metaDescription,
   datePublished: post.datePublished,
   dateModified: post.datePublished,
-  author: { "@type": "Organization", name: "Albariza Digital" },
-  publisher: { "@type": "Organization", name: "Albariza Digital" },
-};
-
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: post.faq.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
+  keywords: post.keywords.join(", "),
+  author: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
+  publisher: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
 };
 ---
 
-<Layout
-  title={`${post.title} | Albariza Digital`}
-  description={post.metaDescription}
-  ogType="article"
-  publishedTime={post.datePublished}
->
+<Layout title={`${post.title} | Albariza Digital`} description={post.metaDescription} ogType="article" publishedTime={post.datePublished} theme="light">
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  <div aria-hidden="true" class="read-progress fixed left-0 top-0 z-[100] h-[3px] w-full origin-left bg-violet"></div>
 
-  <article class="mx-auto max-w-2xl px-6 pb-24 pt-16 sm:pt-24">
-    <a href="/blog" class="text-sm text-white/50 transition hover:text-white">← Volver al blog</a>
+  <header class="relative overflow-x-clip">
+    <div aria-hidden="true" class="post-light pointer-events-none absolute right-[-10%] top-[-20%] h-[140%] w-[70%]"></div>
+    <div class="relative mx-auto max-w-7xl px-6 pb-14 pt-10 lg:pt-16">
+      <p class="text-[0.98rem] font-medium">
+        <a href="/blog" class="text-graphite transition hover:text-ink">Blog</a>
+        <span class="mx-1.5 text-graphite/50">/</span>
+        <span class="text-violet">{post.categoryLabel}</span>
+      </p>
+      <h1 class="mt-5 max-w-[22ch] text-[clamp(2.3rem,4.8vw,4rem)] font-bold leading-[1.0]">{post.title}</h1>
+      <p class="mt-6 text-[1rem] text-graphite">
+        <time datetime={post.datePublished}>{dateFormatter.format(new Date(post.datePublished))}</time>
+        <span class="mx-2 text-graphite/50">·</span>{minutes} min de lectura
+      </p>
+    </div>
+  </header>
 
-    <span class="mt-8 block text-xs font-medium uppercase tracking-[0.2em] text-white/50">
-      {post.categoryLabel}
-    </span>
-    <h1 class="mt-2 font-serif text-3xl leading-tight sm:text-4xl">{post.title}</h1>
-    <time datetime={post.datePublished} class="mt-4 block text-sm text-white/40">
-      {dateFormatter.format(new Date(post.datePublished))}
-    </time>
-
-    <div class="prose-content mt-10 space-y-6 text-white/80">
+  <div class="mx-auto grid max-w-7xl gap-12 border-t border-ink/8 px-6 pb-20 pt-14 lg:grid-cols-12">
+    <article class="post-body lg:col-span-8">
       {post.intro.map((block) =>
         block.type === "p" ? (
-          <p class="text-lg leading-relaxed">{block.text}</p>
+          <p class="lead">{block.text}</p>
         ) : (
-          <ul class="list-inside list-disc space-y-2">
+          <ul>
             {block.items.map((item) => <li>{item}</li>)}
           </ul>
-        )
+        ),
       )}
 
       {post.sections.map((section) => (
-        <div>
-          <h2 class="mt-4 font-serif text-2xl text-white">{section.heading}</h2>
-          <div class="mt-4 space-y-4">
-            {section.blocks.map((block) =>
-              block.type === "p" ? (
-                <p class="leading-relaxed">{block.text}</p>
-              ) : (
-                <ul class="list-inside list-disc space-y-2">
-                  {block.items.map((item) => <li>{item}</li>)}
-                </ul>
-              )
-            )}
-          </div>
-        </div>
+        <section>
+          <h2 id={headingId(section.heading)}>{section.heading}</h2>
+          {section.blocks.map((block) =>
+            block.type === "p" ? (
+              <p>{block.text}</p>
+            ) : (
+              <ul>
+                {block.items.map((item) => <li>{item}</li>)}
+              </ul>
+            ),
+          )}
+        </section>
       ))}
 
-      <div>
-        <h2 class="mt-4 font-serif text-2xl text-white">Preguntas frecuentes</h2>
-        <div class="mt-4 space-y-5">
-          {post.faq.map((item) => (
-            <div>
-              <h3 class="font-semibold text-white">{item.q}</h3>
-              <p class="mt-1 leading-relaxed">{item.a}</p>
-            </div>
+      <div class="mt-16">
+        <BlogCTA topic={bookingTopicFor(post)} />
+      </div>
+    </article>
+
+    <aside class="hidden lg:col-span-3 lg:col-start-10 lg:block">
+      <nav aria-label="En este artículo" class="sticky top-32">
+        <p class="text-[0.88rem] font-semibold text-ink">En este artículo</p>
+        <ol class="toc mt-4 space-y-1 border-l border-ink/10">
+          {post.sections.map((section) => (
+            <li>
+              <a href={`#${headingId(section.heading)}`} class="-ml-px block border-l-2 border-transparent py-1.5 pl-4 text-[0.92rem] leading-snug text-graphite transition hover:text-ink">
+                {section.heading}
+              </a>
+            </li>
+          ))}
+        </ol>
+        {relatedService && (
+          <a href={relatedService.href} class="mt-10 block rounded-2xl border border-ink/10 bg-white/60 p-5 transition hover:border-violet/40">
+            <span class="block text-[0.82rem] text-graphite">Servicio relacionado</span>
+            <span class="mt-1 block text-[1rem] font-semibold leading-snug text-ink">{relatedService.name} →</span>
+          </a>
+        )}
+      </nav>
+    </aside>
+  </div>
+
+  <FaqSection items={post.faq} title="Preguntas frecuentes." />
+
+  {related.length > 0 && (
+    <section class="border-t border-ink/8">
+      <div class="mx-auto max-w-7xl px-6 py-24">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.6rem)] font-bold leading-[1.05]">Sigue leyendo.</h2>
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {related.map((p) => (
+            <a href={`/blog/${p.slug}`} class="group rounded-[24px] border border-ink/10 bg-white/60 p-7 transition hover:border-violet/40">
+              <p class="text-[0.9rem] text-graphite">
+                <span class="font-medium text-violet">{p.categoryLabel}</span> · {readingMinutes(p)} min
+              </p>
+              <h3 class="mt-3 text-[1.4rem] font-bold leading-[1.12] tracking-[-0.035em] text-ink transition group-hover:text-violet">{p.title}</h3>
+            </a>
           ))}
         </div>
       </div>
-    </div>
-
-    {relatedService && (
-      <a
-        href={relatedService.href}
-        class="mt-10 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
-      >
-        Conoce nuestro servicio de {relatedService.name} →
-      </a>
-    )}
-
-    <BlogCTA />
-  </article>
+    </section>
+  )}
 </Layout>
+
+<script>
+  // Highlights the section being read in the table of contents.
+  const links = new Map<string, HTMLAnchorElement>();
+  document.querySelectorAll<HTMLAnchorElement>(".toc a").forEach((a) => links.set(a.hash.slice(1), a));
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((a) => a.removeAttribute("aria-current"));
+        links.get(e.target.id)?.setAttribute("aria-current", "true");
+      }
+    },
+    { rootMargin: "-20% 0px -70% 0px" },
+  );
+  document.querySelectorAll(".post-body h2[id]").forEach((h) => io.observe(h));
+</script>
+
+<style>
+  .post-light {
+    background:
+      radial-gradient(45% 40% at 60% 45%, rgba(109, 85, 255, 0.2), transparent 70%),
+      radial-gradient(30% 30% at 80% 80%, rgba(63, 211, 191, 0.1), transparent 70%);
+    filter: blur(20px);
+  }
+
+  .post-body {
+    max-width: 68ch;
+    color: color-mix(in oklab, var(--color-ink) 86%, transparent);
+    font-size: 1.12rem;
+    line-height: 1.75;
+  }
+  .post-body > * + *,
+  .post-body section > * + * {
+    margin-top: 1.25em;
+  }
+  .post-body .lead {
+    font-size: 1.28rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+  }
+  .post-body section {
+    margin-top: 3.2em;
+  }
+  .post-body h2 {
+    scroll-margin-top: 7rem;
+    color: var(--color-ink);
+    font-size: clamp(1.6rem, 2.6vw, 2.05rem);
+    font-weight: 700;
+    line-height: 1.12;
+  }
+  .post-body ul {
+    display: grid;
+    gap: 0.6em;
+  }
+  .post-body li {
+    position: relative;
+    padding-left: 1.6em;
+  }
+  .post-body li::before {
+    content: "";
+    position: absolute;
+    left: 0.2em;
+    top: 0.62em;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 2px;
+    background: var(--color-violet);
+    transform: rotate(45deg);
+  }
+
+  .toc a[aria-current="true"] {
+    border-color: var(--color-violet);
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* Scroll-driven, no JS. Browsers without scroll timelines simply don't show the bar. */
+  .read-progress {
+    transform: scaleX(0);
+  }
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      animation: read-grow linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes read-grow {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .read-progress {
+      display: none;
+    }
+  }
+</style>

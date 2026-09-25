@@ -615,3 +615,29 @@ export function isPublished(post: BlogPost, now: Date = new Date()) {
 }
 
 export const publishedBlogPosts = blogPosts.filter((p) => isPublished(p));
+
+const blockWords = (b: ContentBlock) => (b.type === "p" ? b.text : b.items.join(" ")).split(/\s+/).length;
+
+/** Minutes at ~200 words per minute, counting intro, sections and FAQ. */
+export function readingMinutes(post: BlogPost) {
+  const words =
+    post.intro.reduce((n, b) => n + blockWords(b), 0) +
+    post.sections.reduce((n, s) => n + s.heading.split(/\s+/).length + s.blocks.reduce((m, b) => m + blockWords(b), 0), 0) +
+    post.faq.reduce((n, f) => n + `${f.q} ${f.a}`.split(/\s+/).length, 0);
+  return Math.max(1, Math.round(words / 200));
+}
+
+/** URL-safe anchor for a section heading, used by the article's table of contents. */
+export function headingId(heading: string) {
+  return heading
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/** Booking-dialog topic for a post's category: the flagship session, or a secondary service. */
+export function bookingTopicFor(post: BlogPost) {
+  return ["web", "seo-geo", "social-media"].includes(post.categorySlug) ? post.categorySlug : "";
+}
