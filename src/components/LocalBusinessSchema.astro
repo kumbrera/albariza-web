@@ -1,8 +1,6 @@
 ---
-// Sitewide structured data (every page, via Layout.astro). Keeps the description
-// intentionally close to the summary Google/AI search engines already give for
-// "Albariza Digital" today — the goal is to not lose ground on an answer that
-// already works well, not to reinvent it.
+// Sitewide structured data (every page, via Layout.astro), aligned with the process-consulting
+// positioning. Keep it in step with public/llms.txt.
 const siteUrl = new URL("/", Astro.url).toString();
 
 const schema = {
@@ -10,29 +8,23 @@ const schema = {
   "@type": "ProfessionalService",
   name: "Albariza Digital",
   description:
-    "Albariza Digital es una agencia de transformación digital y marketing en Andalucía, España. Ofrece servicios de consultoría estratégica, posicionamiento SEO, gestión de redes sociales, inteligencia artificial, automatización de procesos y digitalización con CRM y ERP para pymes.",
+    "Albariza Digital es una asesoría de procesos y automatización para pymes, autónomos y directivos en España. Ordena cómo trabaja la empresa y automatiza las tareas repetitivas con las herramientas que ya usa. También diseña webs y trabaja SEO/GEO y redes sociales.",
   url: siteUrl,
   image: new URL("/brand/og-image.png", Astro.url).toString(),
-  logo: new URL("/brand/logo-mark.png", Astro.url).toString(),
+  logo: new URL("/brand/favicon-512.png", Astro.url).toString(),
   telephone: "+34601386534",
   email: "albarizadigital@gmail.com",
-  areaServed: [
-    { "@type": "AdministrativeArea", name: "Cádiz" },
-    { "@type": "AdministrativeArea", name: "Jerez de la Frontera" },
-    { "@type": "AdministrativeArea", name: "Chiclana de la Frontera" },
-    { "@type": "AdministrativeArea", name: "Sevilla" },
-    { "@type": "AdministrativeArea", name: "Málaga" },
-    { "@type": "AdministrativeArea", name: "Andalucía" },
-  ],
+  areaServed: { "@type": "Country", name: "España" },
   address: {
     "@type": "PostalAddress",
     addressRegion: "Andalucía",
     addressCountry: "ES",
   },
   makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Marketing Digital y Posicionamiento SEO" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "IA & Automatización de Procesos" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Consultoría de Digitalización, CRM y ERP" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Asesoría de procesos y automatización" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Diseño y desarrollo web" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Posicionamiento SEO y GEO" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gestión de redes sociales" } },
   ],
 };
 ---

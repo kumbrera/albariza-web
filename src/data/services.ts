@@ -42,106 +42,8 @@ export const homeTagline: Tagline = {
 };
 
 export const services: Service[] = [
-  {
-    slug: "ia-automatizacion",
-    name: "IA & Automatización",
-    tagline: {
-      normal: "Multiplica tu tiempo.",
-      emphasis: "Escala tu negocio",
-    },
-    video: "/videos/ia-automatizacion.mp4",
-    description:
-      "Implementamos inteligencia artificial generativa, chatbots y automatización de procesos para que tu negocio funcione solo mientras tú creces.",
-    longIntro:
-      "No hablamos de IA como palabra de moda: hablamos de quitarte de encima el trabajo repetitivo de verdad. Facturas que se generan solas, leads que entran directos a tu CRM, informes que se escriben sin que nadie los toque. Empezamos siempre por el proceso que más tiempo te roba, y lo automatizamos sin tocar las herramientas que ya usas.",
-    bullets: [
-      "Implementación de IA generativa",
-      "Chatbots y asistentes virtuales",
-      "Automatización de procesos (RPA)",
-      "Desarrollo no-code / low-code",
-    ],
-    process: [
-      {
-        title: "Auditoría de procesos",
-        text: "Identificamos qué tareas repetitivas están consumiendo el tiempo de tu equipo cada semana.",
-      },
-      {
-        title: "Diseño del flujo",
-        text: "Mapeamos cómo debe funcionar la automatización, sobre los sistemas que ya usas hoy.",
-      },
-      {
-        title: "Implementación y ajuste",
-        text: "Lo ponemos en marcha, medimos el tiempo ahorrado y lo afinamos contigo.",
-      },
-    ],
-    faq: [
-      {
-        q: "¿Qué es la automatización de procesos (RPA)?",
-        a: "Es tecnología que automatiza tareas digitales repetitivas —copiar datos, enviar emails, generar informes— sin programación compleja, replicando lo que haría una persona pero de forma continua y sin errores.",
-      },
-      {
-        q: "¿Cuánto cuesta automatizar procesos en mi empresa?",
-        a: "Muchas automatizaciones se implementan por menos de 500€ iniciales, con herramientas no-code desde 0-9€/mes de suscripción. El retorno de inversión medio ronda los 6-12 meses.",
-      },
-      {
-        q: "¿Necesito cambiar mis sistemas actuales para automatizar?",
-        a: "No. Automatizamos sobre las herramientas que ya usas, conectándolas entre sí en vez de sustituirlas.",
-      },
-    ],
-    ctaLine: "Cuéntanos qué tareas repetitivas te quitan más tiempo",
-    gradient: "from-violet-600 via-fuchsia-500 to-indigo-700",
-    accent: "#a855f7",
-  },
-  {
-    slug: "consultoria",
-    name: "Consultoría",
-    tagline: {
-      normal: "La base estratégica",
-      emphasis: "de tu éxito online",
-    },
-    video: "/videos/consultoria.mp4",
-    description:
-      "Te ayudamos a digitalizar procesos, integrar tu CRM y ERP, y a formar a tu equipo para que la tecnología trabaje a tu favor.",
-    longIntro:
-      "La mayoría de pymes no tienen un problema de ventas: tienen un problema de organización. Clientes que se pierden entre WhatsApp y Excel, decisiones que se toman a ojo porque nadie tiene los datos a mano. Ponemos orden primero, tecnología después — y siempre empezando por el proceso piloto que más impacto tiene, no por toda la empresa a la vez.",
-    bullets: [
-      "Digitalización de procesos",
-      "CRM personalizado",
-      "Sistemas ERP e integración",
-      "Formación y coaching en marketing",
-    ],
-    process: [
-      {
-        title: "Diagnóstico inicial",
-        text: "Analizamos cómo gestionáis hoy clientes, ventas y procesos internos, sin dar nada por hecho.",
-      },
-      {
-        title: "Plan de digitalización",
-        text: "Priorizamos qué digitalizar primero según impacto real y esfuerzo necesario.",
-      },
-      {
-        title: "Acompañamiento",
-        text: "Implementamos, formamos a tu equipo y medimos resultados a los 90 días.",
-      },
-    ],
-    faq: [
-      {
-        q: "¿Qué diferencia hay entre un CRM y un ERP?",
-        a: "El CRM gestiona la relación con tus clientes (ventas, seguimiento, oportunidades). El ERP gestiona la operativa interna (facturación, stock, contabilidad). Muchas pymes empiezan por uno solo, según dónde tengan el problema más urgente.",
-      },
-      {
-        q: "¿Cuánto tiempo lleva digitalizar una empresa pequeña?",
-        a: "Un proceso piloto bien acotado puede estar funcionando en 2-4 semanas. Digitalizar toda la operativa suele ser un proceso por fases de varios meses.",
-      },
-      {
-        q: "¿Por dónde empezamos si no sabemos qué digitalizar primero?",
-        a: "Con una consultoría inicial gratuita de 30 minutos identificamos el proceso con más impacto, y empezamos por ahí — no por toda la empresa a la vez.",
-      },
-    ],
-    ctaLine: "Cuéntanos cómo gestionas hoy tus clientes y procesos",
-    gradient: "from-amber-500 via-orange-600 to-rose-700",
-    accent: "#f59e0b",
-  },
+  // The old "IA & Automatización" and "Consultoría" pages merged into the flagship
+  // asesoría page (src/pages/servicios/asesoria-procesos-automatizacion.astro).
   {
     slug: "seo-geo",
     name: "Posicionamiento SEO / GEO",
@@ -184,8 +86,8 @@ export const services: Service[] = [
         a: "Las mejoras en tu ficha de Google Business Profile pueden notarse en semanas. El posicionamiento orgánico por contenido suele tardar de 3 a 6 meses en consolidarse.",
       },
       {
-        q: "¿Trabajáis con negocios fuera de Andalucía?",
-        a: "Sí, trabajamos con empresas de toda España, aunque somos especialistas en el mercado andaluz.",
+        q: "¿Trabajáis con negocios de toda España?",
+        a: "Sí. Trabajamos en remoto con empresas de toda España, y el SEO local lo adaptamos a la zona donde está cada negocio.",
       },
     ],
     ctaLine: "Cuéntanos qué buscan tus clientes y dónde no apareces",

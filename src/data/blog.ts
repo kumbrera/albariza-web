@@ -38,8 +38,8 @@ export const blogPosts: BlogPost[] = [
       "Qué es el RPA, qué procesos puedes automatizar ya en tu pyme y qué herramientas no-code usar. Guía práctica para pymes y autónomos.",
     excerpt:
       "Qué es el RPA, qué procesos automatizar primero y con qué herramientas no-code empezar sin programar.",
-    categorySlug: "ia-automatizacion",
-    categoryLabel: "IA & Automatización",
+    categorySlug: "asesoria-procesos-automatizacion",
+    categoryLabel: "Procesos y automatización",
     keywords: [
       "automatización de procesos",
       "RPA para pymes",
@@ -379,8 +379,8 @@ export const blogPosts: BlogPost[] = [
       "Qué es un CRM, cuándo tu pyme lo necesita de verdad y cómo evitar los errores más comunes al digitalizar procesos, integrar sistemas y formar a tu equipo.",
     excerpt:
       "Cuándo tu empresa necesita un CRM, cómo elegirlo bien y los errores que hacen fracasar la digitalización.",
-    categorySlug: "consultoria",
-    categoryLabel: "Consultoría",
+    categorySlug: "asesoria-procesos-automatizacion",
+    categoryLabel: "Procesos y automatización",
     keywords: [
       "consultoría digital para pymes",
       "qué es un CRM",

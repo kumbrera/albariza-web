@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import BlogCTA from "../../components/BlogCTA.astro";
 import { publishedBlogPosts } from "../../data/blog";
 import { services } from "../../data/services";
+import { ASESORIA_PATH } from "../../data/routes";
 
 export function getStaticPaths() {
   return publishedBlogPosts.map((post) => ({
@@ -12,7 +13,11 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const relatedService = services.find((s) => s.slug === post.categorySlug);
+const secondary = services.find((s) => s.slug === post.categorySlug);
+const relatedService =
+  post.categorySlug === "asesoria-procesos-automatizacion"
+    ? { href: ASESORIA_PATH, name: "asesoría de procesos y automatización" }
+    : secondary && { href: `/servicios/${secondary.slug}`, name: secondary.name };
 
 const dateFormatter = new Intl.DateTimeFormat("es-ES", {
   day: "numeric",
@@ -105,7 +110,7 @@ const faqLd = {
 
     {relatedService && (
       <a
-        href={`/servicios/${relatedService.slug}`}
+        href={relatedService.href}
         class="mt-10 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
       >
         Conoce nuestro servicio de {relatedService.name} →

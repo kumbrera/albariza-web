@@ -1,0 +1,67 @@
+---
+// Visible FAQ plus its FAQPage JSON-LD, so the answers Google and AI assistants read
+// are always the ones on the page.
+interface Props {
+  items: readonly { q: string; a: string }[];
+  title?: string;
+}
+const { items, title = "Lo que nos suelen preguntar." } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<section class="border-t border-ink/8 bg-white/40">
+  <div class="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-12">
+    <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02] lg:col-span-4">{title}</h2>
+    <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-7 lg:col-start-6">
+      {items.map((f) => (
+        <details class="faq group py-6">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-6 text-[1.22rem] font-semibold">
+            {f.q}
+            <span aria-hidden="true" class="faq-icon relative h-4 w-4 shrink-0"></span>
+          </summary>
+          <p class="mt-4 max-w-[60ch] text-[1.04rem] leading-relaxed text-graphite">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-icon::before,
+  .faq-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transition: transform 0.3s ease;
+  }
+  .faq-icon::after {
+    transform: rotate(90deg);
+  }
+  .faq[open] .faq-icon::after {
+    transform: rotate(0deg);
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon::before,
+    .faq-icon::after {
+      transition: none;
+    }
+  }
+</style>

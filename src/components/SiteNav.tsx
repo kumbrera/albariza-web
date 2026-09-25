@@ -8,9 +8,10 @@ import {
   NavBody,
   Navbar,
 } from "@/components/ui/resizable-navbar";
+import { ASESORIA_PATH } from "@/data/routes";
 
 const LEFT = [
-  { name: "Cómo trabajamos", link: "/#como-trabajamos" },
+  { name: "Asesoría", link: ASESORIA_PATH },
   { name: "Servicios", link: "/#servicios" },
 ];
 const RIGHT = [

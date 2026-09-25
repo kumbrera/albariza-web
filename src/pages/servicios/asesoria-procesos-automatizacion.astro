@@ -1,0 +1,186 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ChaosBoard from "../../components/asesoria/ChaosBoard.tsx";
+import SignalsCheck from "../../components/asesoria/SignalsCheck.tsx";
+import OfferGrid from "../../components/asesoria/OfferGrid.tsx";
+import StepsScroll from "../../components/home/StepsScroll.tsx";
+import StepMetrics from "../../components/home/StepMetrics.tsx";
+import StepQuote from "../../components/StepQuote.astro";
+import FaqSection from "../../components/FaqSection.astro";
+import { hero as homeHero, stepCase } from "../../data/home";
+import { asesoriaFaq, asesoriaHero, asesoriaMeta, asesoriaSteps, fit, offer, signals } from "../../data/asesoria";
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Asesoría de procesos y automatización",
+  serviceType: "Consultoría de procesos y automatización",
+  description: asesoriaMeta.description,
+  provider: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
+  areaServed: { "@type": "Country", name: "España" },
+};
+---
+
+<Layout title={asesoriaMeta.title} description={asesoriaMeta.description} theme="light">
+  <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+
+  <!-- Hero -->
+  <section class="relative overflow-x-clip">
+    <div aria-hidden="true" class="asesoria-light pointer-events-none absolute right-[-10%] top-[-10%] h-[120%] w-[75%]"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-10 lg:grid-cols-12 lg:gap-10 lg:pb-28 lg:pt-16">
+      <div class="lg:col-span-6">
+        <p class="text-[1rem] font-medium text-violet">{asesoriaHero.eyebrow}</p>
+        <h1 class="mt-4 max-w-[13ch] text-[clamp(2.6rem,5vw,4.4rem)] font-bold leading-[0.98]">{asesoriaHero.title}</h1>
+        <p class="mt-6 max-w-[50ch] text-[1.12rem] leading-relaxed text-graphite">{asesoriaHero.sub}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <a
+            href="/contacto"
+            data-open-booking
+            class="rounded-full bg-violet px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet"
+          >
+            Reservar mi sesión gratuita
+          </a>
+          <a href="#proceso" class="text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">
+            Ver cómo trabajamos
+          </a>
+        </div>
+        <ul class="mt-7 flex flex-wrap gap-2">
+          {homeHero.microcopy.map((m) => (
+            <li class="rounded-full border border-ink/10 bg-white/50 px-3.5 py-1.5 text-[0.88rem] text-graphite">{m}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-6">
+        <ChaosBoard client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- Señales -->
+  <section class="border-t border-ink/8">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02]">¿Te suena alguna?</h2>
+        <p class="mt-5 max-w-[36ch] text-[1.12rem] leading-relaxed text-graphite">
+          Son las señales que vimos en STEP y que vemos en casi todas las pymes antes de ordenar sus procesos.
+        </p>
+      </div>
+      <div class="lg:col-span-8">
+        <SignalsCheck client:visible signals={signals} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué incluye -->
+  <section class="border-t border-ink/8 bg-white/40">
+    <div class="mx-auto max-w-7xl px-6 py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <h2 class="max-w-[16ch] text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02]">Qué hacemos dentro de tu empresa.</h2>
+        <p class="max-w-[42ch] text-[1.08rem] leading-relaxed text-graphite">
+          No todo a la vez: usamos lo que haga falta para el proceso que toca.
+        </p>
+      </div>
+      <div class="mt-14">
+        <OfferGrid client:visible items={offer} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section id="proceso" class="scroll-mt-24 border-t border-ink/8">
+    <div class="mx-auto grid max-w-7xl gap-14 px-6 py-28 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-32">
+          <h2 class="text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">Un proceso cada vez.</h2>
+          <p class="mt-5 max-w-[40ch] text-[1.12rem] leading-relaxed text-graphite">
+            Empezamos por lo que más tiempo os roba, lo resolvemos y medimos el resultado antes de pasar al siguiente. Así la inversión es pequeña y se ve si funciona.
+          </p>
+        </div>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <StepsScroll client:visible steps={asesoriaSteps} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Caso STEP -->
+  <section class="border-t border-ink/8 bg-white/40">
+    <div class="mx-auto max-w-7xl px-6 py-28">
+      <div class="grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02]">Lo hicimos primero en STEP.</h2>
+        </div>
+        <div class="space-y-5 lg:col-span-6 lg:col-start-7">
+          <p class="text-[1.15rem] leading-relaxed text-graphite">{stepCase.problem}</p>
+          <p class="text-[1.15rem] leading-relaxed text-ink">{stepCase.solution}</p>
+          <a href="/nosotros" class="inline-block text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">
+            Leer la historia completa
+          </a>
+        </div>
+      </div>
+      <div class="mt-16">
+        <StepMetrics client:visible metrics={stepCase.metrics} />
+      </div>
+      <StepQuote class="mt-16 lg:ml-[calc(50%+1.5rem)]" />
+    </div>
+  </section>
+
+  <!-- Para quién -->
+  <section class="border-t border-ink/8">
+    <div class="mx-auto max-w-7xl px-6 py-28">
+      <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02]">¿Es para ti?</h2>
+      <div class="mt-12 grid gap-4 md:grid-cols-2">
+        <div class="rounded-[24px] border border-teal/25 bg-white/70 p-8">
+          <p class="flex items-center gap-2.5 text-[1.05rem] font-semibold text-teal">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal text-[0.8rem] text-white" aria-hidden="true">✓</span>
+            Encaja si…
+          </p>
+          <ul class="mt-6 space-y-4">
+            {fit.yes.map((t) => <li class="text-[1.1rem] leading-snug text-ink">{t}</li>)}
+          </ul>
+        </div>
+        <div class="rounded-[24px] border border-ink/10 bg-white/35 p-8">
+          <p class="flex items-center gap-2.5 text-[1.05rem] font-semibold text-graphite">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-ink/10 text-[0.8rem] text-graphite" aria-hidden="true">✕</span>
+            No encaja si…
+          </p>
+          <ul class="mt-6 space-y-4">
+            {fit.no.map((t) => <li class="text-[1.1rem] leading-snug text-graphite">{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FaqSection items={asesoriaFaq} />
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden border-t border-ink/8">
+    <div aria-hidden="true" class="cta-light pointer-events-none absolute inset-0"></div>
+    <div class="relative mx-auto max-w-4xl px-6 py-32 text-center">
+      <h2 class="text-[clamp(2.4rem,5vw,4rem)] font-bold leading-[1]">¿Por qué proceso empezamos?</h2>
+      <p class="mx-auto mt-5 max-w-[50ch] text-[1.15rem] leading-relaxed text-graphite">
+        En 30 minutos te decimos cuál ordenaríamos primero, cuánto tiempo te ahorraría y qué costaría.
+      </p>
+      <a
+        href="/contacto"
+        data-open-booking
+        class="mt-9 inline-block rounded-full bg-violet px-8 py-4 text-[1.05rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink"
+      >
+        Reservar mi sesión gratuita
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .asesoria-light {
+    background:
+      radial-gradient(45% 40% at 55% 45%, rgba(109, 85, 255, 0.26), transparent 70%),
+      radial-gradient(30% 30% at 75% 80%, rgba(63, 211, 191, 0.12), transparent 70%);
+    filter: blur(20px);
+  }
+  .cta-light {
+    background: radial-gradient(50% 70% at 50% 100%, rgba(109, 85, 255, 0.2), transparent 70%);
+  }
+</style>

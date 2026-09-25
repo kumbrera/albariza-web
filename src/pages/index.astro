@@ -4,6 +4,8 @@ import HeroLaptop from "../components/home/HeroLaptop.tsx";
 import PainStrip from "../components/home/PainStrip.tsx";
 import StepMetrics from "../components/home/StepMetrics.tsx";
 import StepQuote from "../components/StepQuote.astro";
+import FaqSection from "../components/FaqSection.astro";
+import { ASESORIA_PATH } from "../data/routes";
 import StepsScroll from "../components/home/StepsScroll.tsx";
 import FreeSessionCard from "../components/home/FreeSessionCard.tsx";
 import ServicesDeck from "../components/home/ServicesDeck.tsx";
@@ -42,21 +44,9 @@ const deckServices = alsoHelp.slugs.map((slug) => {
 const latestPosts = [...publishedBlogPosts]
   .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
   .slice(0, 3);
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: homeFaq.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
 ---
 
 <Layout title={homeMeta.title} description={homeMeta.description} theme="light">
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-
   <!-- Hero -->
   <section class="relative overflow-x-clip">
     <div aria-hidden="true" class="hero-light pointer-events-none absolute -left-[15%] top-[-10%] h-[120%] w-[80%]"></div>
@@ -141,6 +131,7 @@ const faqSchema = {
           <p class="mt-5 max-w-[40ch] text-[1.12rem] leading-relaxed text-graphite">
             No digitalizamos tu empresa de golpe. Elegimos lo que más tiempo te roba, lo arreglamos y medimos el resultado antes de seguir.
           </p>
+          <a href={ASESORIA_PATH} class="mt-7 inline-block text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">Qué incluye la asesoría</a>
         </div>
       </div>
       <div class="lg:col-span-6 lg:col-start-7">
@@ -202,23 +193,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="border-t border-ink/8 bg-white/40">
-    <div class="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-12">
-      <h2 class="text-[clamp(2.2rem,4.4vw,3.4rem)] font-bold leading-[1.02] lg:col-span-4">Lo que nos suelen preguntar.</h2>
-      <div class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-7 lg:col-start-6">
-        {homeFaq.map((f) => (
-          <details class="faq group py-6">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 text-[1.22rem] font-semibold">
-              {f.q}
-              <span aria-hidden="true" class="faq-icon relative h-4 w-4 shrink-0"></span>
-            </summary>
-            <p class="mt-4 max-w-[60ch] text-[1.04rem] leading-relaxed text-graphite">{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
+  <FaqSection items={homeFaq} />
 
   <!-- Blog + contacto -->
   <section class="mx-auto max-w-7xl px-6 py-24">
@@ -260,33 +235,5 @@ const faqSchema = {
     background:
       radial-gradient(50% 60% at 85% 40%, rgba(109, 85, 255, 0.45), transparent 70%),
       radial-gradient(40% 50% at 10% 100%, rgba(63, 211, 191, 0.14), transparent 70%);
-  }
-
-  .faq-icon::before,
-  .faq-icon::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 2px;
-    background: currentColor;
-    transition: transform 0.3s ease;
-  }
-  .faq-icon::after {
-    transform: rotate(90deg);
-  }
-  .faq[open] .faq-icon::after {
-    transform: rotate(0deg);
-  }
-  .faq summary::-webkit-details-marker {
-    display: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .faq-icon::before,
-    .faq-icon::after {
-      transition: none;
-    }
   }
 </style>

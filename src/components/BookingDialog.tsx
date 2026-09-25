@@ -18,6 +18,29 @@ const PAINS = ["Facturas y presupuestos", "Seguimiento de clientes", "Informes y
 
 type Status = "idle" | "sending" | "done" | "error";
 
+// data-open-booking="<slug>" on a trigger switches the copy to that secondary service.
+// A bare data-open-booking keeps the default: the free process-consulting session.
+const TOPICS: Record<string, { name: string; title: string; description: string; placeholder: string }> = {
+  web: {
+    name: "Web",
+    title: "Cuéntanos qué necesita tu web",
+    description: "Te respondemos con una propuesta y un precio orientativo. Sin compromiso.",
+    placeholder: "Qué haces, si ya tienes web, qué debería conseguir...",
+  },
+  "seo-geo": {
+    name: "SEO / GEO",
+    title: "Cuéntanos dónde quieres aparecer",
+    description: "Revisamos cómo te encuentran hoy en Google y en las IAs, y te decimos por dónde empezaríamos.",
+    placeholder: "Tu web, tu zona, qué buscan tus clientes...",
+  },
+  "social-media": {
+    name: "Social Media",
+    title: "Cuéntanos qué esperas de tus redes",
+    description: "Revisamos tus canales y te decimos qué haríamos primero. Sin compromiso.",
+    placeholder: "Tus redes, qué publicas hoy, qué resultado buscas...",
+  },
+};
+
 const field =
   "w-full rounded-xl border border-ink/12 bg-chalk/60 px-4 py-2.5 text-[0.98rem] text-ink placeholder:text-graphite/60 outline-none transition focus:border-violet focus:bg-white focus:ring-4 focus:ring-violet/10";
 
@@ -25,6 +48,9 @@ export default function BookingDialog() {
   const [open, setOpen] = useState(false);
   const [pain, setPain] = useState<string>("");
   const [status, setStatus] = useState<Status>("idle");
+  const [topic, setTopic] = useState<string>("");
+  const [note, setNote] = useState<string>("");
+  const t = TOPICS[topic];
 
   // Any element with [data-open-booking] opens the dialog, from any island or plain Astro markup.
   // Their href stays as a no-JS fallback.
@@ -33,6 +59,9 @@ export default function BookingDialog() {
       const trigger = (e.target as HTMLElement | null)?.closest("[data-open-booking]");
       if (!trigger) return;
       e.preventDefault();
+      const el = trigger as HTMLElement;
+      setTopic(el.dataset.openBooking ?? "");
+      setNote(el.dataset.bookingNote ?? "");
       setStatus("idle");
       setOpen(true);
     };
@@ -54,7 +83,8 @@ export default function BookingDialog() {
           ...data,
           tarea: pain,
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: "Nueva sesión de asesoría gratuita — Albariza",
+          servicio: t ? t.name : "Asesoría de procesos y automatización",
+          subject: t ? `Nueva consulta de ${t.name} — Albariza` : "Nueva sesión de asesoría gratuita — Albariza",
           from_name: "Web Albariza",
         }),
       });
@@ -63,7 +93,7 @@ export default function BookingDialog() {
       setStatus("done");
       form.reset();
       setPain("");
-      window.gtag?.("event", "generate_lead", { form: "sesion_asesoria" });
+      window.gtag?.("event", "generate_lead", { form: t ? `consulta_${topic}` : "sesion_asesoria" });
     } catch {
       setStatus("error");
     }
@@ -93,10 +123,10 @@ export default function BookingDialog() {
             <>
               <DialogHeader>
                 <DialogTitle className="text-[1.55rem] font-bold leading-[1.05] tracking-[-0.045em] text-ink">
-                  Reserva tu sesión de asesoría gratuita
+                  {t ? t.title : "Reserva tu sesión de asesoría gratuita"}
                 </DialogTitle>
                 <DialogDescription className="mt-2.5 text-[0.95rem] leading-relaxed text-graphite">
-                  30 minutos para ver qué proceso automatizaríamos primero, cuánto tiempo te ahorraría y qué costaría. Sin compromiso.
+                  {t ? t.description : "30 minutos para ver qué proceso automatizaríamos primero, cuánto tiempo te ahorraría y qué costaría. Sin compromiso."}
                 </DialogDescription>
               </DialogHeader>
 
@@ -121,28 +151,37 @@ export default function BookingDialog() {
                   </label>
                 </div>
 
-                <fieldset>
-                  <legend className="mb-2 text-[0.85rem] font-medium text-ink">¿Qué te roba más tiempo?</legend>
-                  <div className="flex flex-wrap gap-2">
-                    {PAINS.map((p) => (
-                      <button
-                        key={p}
-                        type="button"
-                        aria-pressed={pain === p}
-                        onClick={() => setPain(pain === p ? "" : p)}
-                        className={`rounded-full border px-3.5 py-1.5 text-[0.88rem] transition ${
-                          pain === p ? "border-violet bg-violet text-white" : "border-ink/12 bg-chalk/60 text-graphite hover:border-violet/50 hover:text-ink"
-                        }`}
-                      >
-                        {p}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
+                {!t && (
+                  <fieldset>
+                    <legend className="mb-2 text-[0.85rem] font-medium text-ink">¿Qué te roba más tiempo?</legend>
+                    <div className="flex flex-wrap gap-2">
+                      {PAINS.map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          aria-pressed={pain === p}
+                          onClick={() => setPain(pain === p ? "" : p)}
+                          className={`rounded-full border px-3.5 py-1.5 text-[0.88rem] transition ${
+                            pain === p ? "border-violet bg-violet text-white" : "border-ink/12 bg-chalk/60 text-graphite hover:border-violet/50 hover:text-ink"
+                          }`}
+                        >
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+                )}
 
                 <label className="block">
                   <span className="mb-1.5 block text-[0.85rem] font-medium text-ink">Cuéntanos un poco más</span>
-                  <textarea name="mensaje" rows={2} className={`${field} resize-none`} placeholder="Qué haces a mano hoy, qué herramientas usáis..." />
+                  <textarea
+                    key={note}
+                    name="mensaje"
+                    rows={note ? 4 : 2}
+                    defaultValue={note}
+                    className={`${field} resize-none`}
+                    placeholder={t ? t.placeholder : "Qué haces a mano hoy, qué herramientas usáis..."}
+                  />
                 </label>
 
                 <button
@@ -150,7 +189,7 @@ export default function BookingDialog() {
                   disabled={status === "sending"}
                   className="w-full rounded-full bg-violet px-6 py-3.5 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink disabled:opacity-60"
                 >
-                  {status === "sending" ? "Enviando…" : "Reservar mi sesión gratuita"}
+                  {status === "sending" ? "Enviando…" : t ? "Enviar" : "Reservar mi sesión gratuita"}
                 </button>
                 {status === "error" && (
                   <p role="alert" className="text-center text-[0.9rem] text-[#b3413a]">

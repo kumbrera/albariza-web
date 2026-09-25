@@ -9,6 +9,11 @@ export default defineConfig({
   // Required for @astrojs/sitemap (absolute URLs) and for canonical/og:url tags to
   // resolve correctly outside of a live request (e.g. at build time).
   site: 'https://albarizadigital.com',
+  // Merged into the flagship service page; keep old links and rankings pointing somewhere real.
+  redirects: {
+    '/servicios/ia-automatizacion': '/servicios/asesoria-procesos-automatizacion',
+    '/servicios/consultoria': '/servicios/asesoria-procesos-automatizacion',
+  },
   integrations: [
     react(),
     sitemap({
@@ -33,6 +38,7 @@ export default defineConfig({
         'lucide-react',
         'meshline',
         'motion/react',
+        'next-themes',
         'three',
       ],
     },
