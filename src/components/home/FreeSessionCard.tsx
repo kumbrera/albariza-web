@@ -33,6 +33,7 @@ export default function FreeSessionCard({ bullets, cta }: Props) {
         <Magnet padding={80} magnetStrength={4} wrapperClassName="mt-9 block">
           <a
             href={cta.href}
+            data-open-booking
             className="inline-flex w-full items-center justify-center rounded-full bg-white px-7 py-4 text-[1.05rem] font-semibold text-ink transition hover:bg-[#e7e3fb] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto"
           >
             {cta.label}

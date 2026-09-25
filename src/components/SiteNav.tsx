@@ -63,6 +63,7 @@ export default function SiteNav() {
           <Links items={RIGHT} group="right" />
           <a
             href={CTA.link}
+            data-open-booking
             className="ml-2 rounded-full bg-ink px-5 py-2.5 text-[0.92rem] font-semibold text-chalk transition hover:bg-violet focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
           >
             {CTA.name}
@@ -83,6 +84,7 @@ export default function SiteNav() {
           ))}
           <a
             href={CTA.link}
+            data-open-booking
             onClick={() => setOpen(false)}
             className="mt-2 w-full rounded-full bg-ink px-5 py-3 text-center font-semibold text-chalk"
           >

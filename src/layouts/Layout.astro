@@ -6,6 +6,7 @@ import LocalBusinessSchema from "../components/LocalBusinessSchema.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import CookieConsent from "../components/CookieConsent.astro";
 import SiteNav from "../components/SiteNav.tsx";
+import BookingDialog from "../components/BookingDialog.tsx";
 
 interface Props {
   title: string;
@@ -96,6 +97,7 @@ const navLinkClass = (active: boolean) =>
     {isLight ? (
       <>
         <SiteNav client:load />
+        <BookingDialog client:load />
         <div class="h-20" aria-hidden="true"></div>
       </>
     ) : (

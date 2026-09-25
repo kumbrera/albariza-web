@@ -30,6 +30,17 @@ function Node({ refEl, children, className = "", label }: { refEl: RefObject<HTM
   );
 }
 
+// Age since the item appeared, on an accelerated clock (1 s real = 1 min shown) so the demo feed
+// reads like a live log: the newest entry is "ahora" and older ones drift down the list.
+function TimeAgo() {
+  const [mins, setMins] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setMins((m) => m + 1), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return <>{mins < 1 ? "ahora" : `hace ${mins} min`}</>;
+}
+
 function Feed() {
   // AnimatedList stops once every item is shown; remount it to keep the feed alive.
   const [cycle, setCycle] = useState(0);
@@ -48,7 +59,9 @@ function Feed() {
             <span className="block truncate text-[0.93rem] font-medium text-white">{e.title}</span>
             <span className="block text-[0.78rem] text-white/50">{e.meta}</span>
           </span>
-          <span className="ml-auto shrink-0 text-[0.72rem] text-[#3fd3bf]">ahora</span>
+          <span className="ml-auto shrink-0 text-[0.72rem] text-[#3fd3bf]">
+            <TimeAgo />
+          </span>
         </div>
       ))}
     </AnimatedList>

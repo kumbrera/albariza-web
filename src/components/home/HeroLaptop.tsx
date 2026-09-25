@@ -324,11 +324,20 @@ export default function HeroLaptop() {
   const portalRef = useRef<HTMLDivElement>(null!);
   const [ready, setReady] = useState(false);
   return (
+    <div className="relative aspect-[5/4] w-full" aria-hidden="true">
+    {/* First frame of the loop, shown until the model is loaded, then crossfaded out. */}
+    <img
+      src="/hero/laptop-poster.webp"
+      alt=""
+      width={1226}
+      height={980}
+      className="pointer-events-none absolute inset-0 h-full w-full transition-opacity duration-700"
+      style={{ opacity: ready ? 0 : 1 }}
+    />
     <div
       ref={portalRef}
-      className="hero-3d relative aspect-[5/4] w-full transition-[opacity,transform] duration-1000 ease-out"
-      style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(16px)" }}
-      aria-hidden="true"
+      className="hero-3d absolute inset-0 transition-opacity duration-700 ease-out"
+      style={{ opacity: ready ? 1 : 0 }}
     >
       <Canvas
         dpr={[1, 2]}
@@ -341,6 +350,7 @@ export default function HeroLaptop() {
           <OnReady onReady={() => setReady(true)} />
         </Suspense>
       </Canvas>
+    </div>
     </div>
   );
 }

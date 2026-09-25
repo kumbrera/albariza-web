@@ -5,6 +5,7 @@ export const hero = {
   primaryCta: { label: "Reservar mi sesión gratuita", href: "#sesion-gratuita" },
   secondaryCta: { label: "Ver cómo trabajamos", href: "#como-trabajamos" },
   microcopy: ["30 minutos", "Sin compromiso", "Sales con un proceso por el que empezar"],
+  proof: { stat: "+14 h/semana", text: "Lo probamos primero en casa, en STEP.", href: "#caso-step" },
 };
 
 export const painPoints = [
@@ -21,7 +22,6 @@ export const painPoints = [
 // STEP ERP case — results as reported by Pablo (STEP, 2026-09-25).
 // `pending: true` would mark a placeholder — never publish with a pending figure.
 export const stepCase = {
-  eyebrow: "Lo vivimos en nuestra empresa",
   title: "Antes de venderlo, lo resolvimos en casa.",
   problem:
     "STEP es una empresa de eventos. Cada empleado llevaba su propio Excel y solo él lo entendía: al juntarlos no cuadraban, y si alguien faltaba, faltaban sus datos. Las oportunidades se perdían entre WhatsApps y correos, y todo el seguimiento se hacía a mano.",
@@ -53,7 +53,7 @@ export const automations = [
   {
     title: "Facturas y presupuestos",
     text: "Se generan y se envían solos a partir de los datos que ya tienes. Sin copiar y pegar.",
-    before: "2 h por factura revisando datos",
+    before: "Cada factura, hecha a mano",
     after: "Se envía sola al cerrar el pedido",
   },
   {
@@ -108,6 +108,14 @@ export const homeFaq = [
   {
     q: "¿Tengo que cambiar las herramientas que ya uso?",
     a: "No. Automatizamos sobre lo que ya tienes: tus hojas de cálculo, tu email, tu programa de facturación. Las conectamos entre sí en vez de sustituirlas.",
+  },
+  {
+    q: "¿Necesito saber de tecnología?",
+    a: "No. Tú nos cuentas cómo trabajas y nosotros nos encargamos de la parte técnica. Al terminar te enseñamos a usar lo que montamos, igual que hicimos con el equipo de STEP.",
+  },
+  {
+    q: "¿Qué pasa con los datos de mi empresa?",
+    a: "Siguen siendo tuyos y se quedan en tus herramientas. Trabajamos con los accesos mínimos que hacen falta para cada automatización y los retiramos cuando ya no se necesitan.",
   },
   {
     q: "¿Cuánto cuesta automatizar un proceso?",
