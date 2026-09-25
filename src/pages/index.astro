@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import HeroLaptop from "../components/home/HeroLaptop.tsx";
 import PainStrip from "../components/home/PainStrip.tsx";
 import StepMetrics from "../components/home/StepMetrics.tsx";
+import StepQuote from "../components/StepQuote.astro";
 import StepsScroll from "../components/home/StepsScroll.tsx";
 import FreeSessionCard from "../components/home/FreeSessionCard.tsx";
 import ServicesDeck from "../components/home/ServicesDeck.tsx";
@@ -102,8 +103,8 @@ const faqSchema = {
           ))}
         </ul>
         <a href={hero.proof.href} class="group mt-6 inline-flex items-center gap-3 text-[0.95rem] text-graphite">
-          <span class="rounded-full bg-teal/10 px-2.5 py-1 font-semibold text-teal">{hero.proof.stat}</span>
-          <span>{hero.proof.text} <span class="font-semibold text-ink underline decoration-ink/25 underline-offset-4 group-hover:decoration-ink">Ver el caso</span></span>
+          <span class="shrink-0 whitespace-nowrap rounded-full bg-teal/10 px-2.5 py-1 font-semibold text-teal">{hero.proof.stat}</span>
+          <span>{hero.proof.text} <span class="whitespace-nowrap font-semibold text-ink underline decoration-ink/25 underline-offset-4 group-hover:decoration-ink">Ver el caso</span></span>
         </a>
       </div>
     </div>
@@ -128,6 +129,7 @@ const faqSchema = {
     <div class="mt-16">
       <StepMetrics client:visible metrics={stepCase.metrics} />
     </div>
+    <StepQuote class="mt-16 lg:ml-[calc(50%+1.5rem)]" />
   </section>
 
   <!-- Cómo trabajamos -->

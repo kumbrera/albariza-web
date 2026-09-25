@@ -6,7 +6,14 @@ export const aboutMeta = {
 
 export const aboutHero = {
   title: "Primero lo vivimos. Luego lo resolvimos.",
-  sub: "Somos Pablo y Miguel. Ayudamos a pymes y autónomos a dejar de hacer a mano lo que ya puede funcionar solo, porque antes tuvimos que dejar de hacerlo nosotros.",
+  sub: "Somos Pablo y Miguel. Ayudamos a pymes y autónomos a que su día a día sea más fácil: menos tareas repetidas, menos cosas que se escapan y más tiempo para lo que importa. Lo sabemos porque antes tuvimos que hacerlo en nuestra propia empresa.",
+};
+
+// Iván's words, only spelling fixed.
+export const stepQuote = {
+  text: "Antes me pasaba horas buscando entre conversaciones para hacer los seguimientos y no fallar en nada. Después solo dedicaba mi tiempo a atender a los clientes cuando tocaba y a tiempo. Yo más cómodo y los clientes más contentos.",
+  author: "Iván",
+  role: "Comercial de STEP",
 };
 
 // Chronological, so the numbering carries information.

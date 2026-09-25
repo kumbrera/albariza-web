@@ -1,0 +1,18 @@
+---
+import { stepQuote } from "../data/nosotros";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<figure class={`border-l-2 border-violet pl-6 sm:pl-8 ${className}`}>
+  <blockquote class="max-w-[46ch] text-[clamp(1.25rem,2vw,1.55rem)] font-medium leading-snug tracking-[-0.02em] text-ink">
+    “{stepQuote.text}”
+  </blockquote>
+  <figcaption class="mt-5 flex items-center gap-3 text-[0.98rem]">
+    <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-[0.9rem] font-semibold text-white">{stepQuote.author[0]}</span>
+    <span><span class="font-semibold text-ink">{stepQuote.author}</span> <span class="text-graphite">· {stepQuote.role}</span></span>
+  </figcaption>
+</figure>

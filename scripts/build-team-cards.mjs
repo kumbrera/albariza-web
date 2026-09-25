@@ -69,10 +69,11 @@ const back = shot(
 );
 await sharp(back).webp({ quality: 88 }).toFile(path.join(out, "back.webp"));
 
-// Strap texture: repeats along the band, so one centered wordmark per tile.
-const strapSvg = wordmarkWhite.replace('width="350" height="84"', 'width="520" height="124.8"').replaceAll('fill="#4F32E0"', 'fill="#8b78ff"');
+// Strap texture: the u axis runs along the band and tiles 3x (repeat in Lanyard.tsx), so each tile is
+// ~2.7:1 on screen. Matching that aspect keeps the wordmark from being squashed along the strap.
+const strapSvg = wordmarkWhite.replace('width="350" height="84"', 'width="860" height="206.4"').replaceAll('fill="#4F32E0"', 'fill="#8b78ff"');
 const strapMeta = await sharp(Buffer.from(strapSvg)).png().toBuffer();
-await sharp({ create: { width: 1024, height: 250, channels: 4, background: "#16151f" } })
+await sharp({ create: { width: 1080, height: 400, channels: 4, background: "#16151f" } })
   .composite([{ input: strapMeta, gravity: "center" }])
   .png()
   .toFile(path.join(out, "lanyard.png"));

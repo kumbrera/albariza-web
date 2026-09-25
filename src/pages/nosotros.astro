@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import StepMetrics from "../components/home/StepMetrics.tsx";
+import StepQuote from "../components/StepQuote.astro";
 import Lanyard from "../components/Lanyard.tsx";
 import { stepCase } from "../data/home";
 import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotros";
@@ -36,6 +37,7 @@ import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotr
               {i === 2 && (
                 <div class="pt-8">
                   <StepMetrics client:visible metrics={stepCase.metrics} />
+                  <StepQuote class="mt-12" />
                 </div>
               )}
             </div>
