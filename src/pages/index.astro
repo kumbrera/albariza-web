@@ -6,6 +6,7 @@ import StepMetrics from "../components/home/StepMetrics.tsx";
 import StepsScroll from "../components/home/StepsScroll.tsx";
 import FreeSessionCard from "../components/home/FreeSessionCard.tsx";
 import ServicesDeck from "../components/home/ServicesDeck.tsx";
+import AutomationFlow from "../components/home/AutomationFlow.tsx";
 import { services } from "../data/services";
 import { publishedBlogPosts } from "../data/blog";
 import {
@@ -56,7 +57,7 @@ const faqSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <!-- Hero -->
-  <section class="relative overflow-hidden">
+  <section class="relative overflow-x-clip">
     <div aria-hidden="true" class="hero-light pointer-events-none absolute -left-[15%] top-[-10%] h-[120%] w-[80%]"></div>
     <div class="relative mx-auto grid max-w-7xl items-center gap-4 px-6 pb-16 pt-6 lg:grid-cols-12 lg:gap-10 lg:pb-24 lg:pt-10">
       <div class="order-2 lg:order-1 lg:col-span-7">
@@ -146,13 +147,9 @@ const faqSchema = {
   <section class="mx-auto max-w-7xl px-6 py-28">
     <h2 class="max-w-[18ch] text-[clamp(2.2rem,4.4vw,3.6rem)] font-bold leading-[1.02]">Lo que dejarás de hacer a mano.</h2>
     <div class="mt-14 grid gap-10 lg:grid-cols-12">
-      <figure class="relative overflow-hidden rounded-[28px] bg-ink lg:col-span-5">
-        <video class="h-full min-h-[340px] w-full object-cover opacity-90" src="/videos/ia-automatizacion.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent"></div>
-        <figcaption class="absolute inset-x-0 bottom-0 p-7 text-[1.05rem] leading-snug text-white/90">
-          Sin cambiar tus herramientas: conectamos las que ya usas.
-        </figcaption>
-      </figure>
+      <div class="lg:col-span-5">
+        <AutomationFlow client:visible />
+      </div>
       <ul class="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-7">
         {automations.map((a) => (
           <li class="automation-row group py-7">

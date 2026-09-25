@@ -112,7 +112,7 @@ function Laptop({
     <group>
       <LaptopModel />
       <group ref={lidRef} position={LID_PIVOT} rotation={[LID_TILT, 0, 0]}>
-        <Html portal={portal} transform distanceFactor={DF} position={[SCREEN_CENTER.x, SCREEN_CENTER.y, SCREEN_CENTER.z]} pointerEvents="none">
+        <Html portal={portal} zIndexRange={[20, 0]} transform distanceFactor={DF} position={[SCREEN_CENTER.x, SCREEN_CENTER.y, SCREEN_CENTER.z]} pointerEvents="none">
           <Screen tilesRef={tilesRef} api={screenApi} />
         </Html>
       </group>
@@ -245,7 +245,7 @@ function Scene({ reduced, portal }: { reduced: boolean; portal: Portal }) {
       // Horizontal extent squeezed so cards never cross the canvas edge (drei clips Html there).
       const ox = Math.sin(a) * radius * 0.74;
       const oz = Math.cos(a) * radius * 0.7;
-      const oy = height - 0.4 + Math.sin(time * 0.9 + phase) * 0.12;
+      const oy = height - 0.55 + Math.sin(time * 0.9 + phase) * 0.12;
       // Mostly facing the viewer (a card seen edge-on collapses to a line), with a slight
       // yaw toward the centre and a gentle wobble so they still read as loose, floating tabs.
       euler.set(tilt, -ox * 0.12 + Math.sin(a * 1.7) * 0.18, tilt * 0.8 + Math.sin(a) * 0.08);
@@ -296,7 +296,7 @@ function Scene({ reduced, portal }: { reduced: boolean; portal: Portal }) {
       <group>
         {TABS.map((tab, i) => (
           <group key={tab.title} ref={(el) => { tabRefs.current[i] = el; }}>
-            <Html portal={portal} transform distanceFactor={TAB_DF} pointerEvents="none">
+            <Html portal={portal} zIndexRange={[20, 0]} transform distanceFactor={TAB_DF} pointerEvents="none">
               <div ref={(el) => { tabEls.current[i] = el; }} style={{ willChange: "opacity" }}>
                 <TabCard tab={tab} />
               </div>
@@ -326,7 +326,7 @@ export default function HeroLaptop() {
   return (
     <div
       ref={portalRef}
-      className="relative aspect-[5/4] w-full transition-[opacity,transform] duration-1000 ease-out"
+      className="hero-3d relative aspect-[5/4] w-full transition-[opacity,transform] duration-1000 ease-out"
       style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(16px)" }}
       aria-hidden="true"
     >

@@ -21,8 +21,8 @@ const CTA = { name: "Sesión gratuita", link: "/#sesion-gratuita" };
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <a href="/" className={`whitespace-nowrap text-[1.3rem] font-bold tracking-[-0.05em] text-ink ${className}`}>
-      Albariza<span className="font-medium text-graphite"> Digital</span>
+    <a href="/" aria-label="Albariza Digital, inicio" className={`block ${className}`}>
+      <img src="/brand/albariza-wordmark.svg" alt="Albariza" width={350} height={84} className="h-[30px] w-auto" />
     </a>
   );
 }

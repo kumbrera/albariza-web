@@ -28,6 +28,12 @@
   font-family: var(--font-grotesk);
 }
 
+/* drei <Html> sets overflow:hidden inline on its wrapper, so a tab swinging past the canvas edge
+   got sliced into a thin visible strip. Let the hero's 3D layer spill over instead. */
+.hero-3d > div {
+  overflow: visible !important;
+}
+
 .steps li.is-active .step-dot {
   background-color: var(--color-violet);
   border-color: var(--color-violet);

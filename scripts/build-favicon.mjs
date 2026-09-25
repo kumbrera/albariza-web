@@ -6,7 +6,8 @@ const root = path.resolve(import.meta.dirname, "..");
 const publicDir = path.join(root, "public");
 const brandDir = path.join(publicDir, "brand");
 
-const markSvg = readFileSync(path.join(brandDir, "logo-mark.svg"));
+const markSvg = readFileSync(path.join(brandDir, "albariza-favicon.svg"));
+writeFileSync(path.join(publicDir, "favicon.svg"), markSvg);
 
 async function renderPng(size) {
   return sharp(markSvg, { density: 384 }).resize(size, size).png().toBuffer();

@@ -33,9 +33,9 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "automatizacion-procesos-pymes-rpa",
     title:
-      "Automatización de procesos en pymes: guía práctica del RPA para empresas andaluzas",
+      "Automatización de procesos en pymes: guía práctica del RPA para empezar sin programar",
     metaDescription:
-      "Qué es el RPA, qué procesos puedes automatizar ya en tu pyme y qué herramientas no-code usar. Guía práctica para empresas de Cádiz, Sevilla, Jerez y Málaga.",
+      "Qué es el RPA, qué procesos puedes automatizar ya en tu pyme y qué herramientas no-code usar. Guía práctica para pymes y autónomos.",
     excerpt:
       "Qué es el RPA, qué procesos automatizar primero y con qué herramientas no-code empezar sin programar.",
     categorySlug: "ia-automatizacion",
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
       "no-code para empresas",
       "automatizar facturación",
       "Make.com vs Zapier",
-      "automatización de procesos Andalucía",
+      "automatización de procesos para pymes",
     ],
     datePublished: "2026-08-23",
     intro: [
@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     ],
     sections: [
       {
-        heading: "¿Qué es el RPA y por qué las pymes andaluzas deben prestarle atención?",
+        heading: "¿Qué es el RPA y por qué a una pyme le conviene prestarle atención?",
         blocks: [
           {
             type: "p",
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
         blocks: [
           {
             type: "p",
-            text: "Estos son los procesos que más frecuentemente automatizamos en empresas de Cádiz, Sevilla, Jerez y Málaga:",
+            text: "Estos son los procesos que más tiempo suelen robar en una pyme, y los primeros que conviene automatizar:",
           },
           {
             type: "ul",
