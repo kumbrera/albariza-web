@@ -10,13 +10,14 @@ export interface DeckService {
 function ServiceCard({ service }: { service: DeckService }) {
   return (
     <a
-      href={`/servicios/${service.slug}`}
+      href={`/servicios/${service.slug}/`}
       className="group flex h-full flex-col overflow-hidden rounded-[20px] bg-white text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet"
     >
       <div className="relative h-[190px] shrink-0 overflow-hidden">
         <video
           className="h-full w-full scale-[1.03] object-cover transition duration-700 group-hover:scale-110"
           src={service.video}
+          poster={service.video.replace("/videos/", "/videos/posters/").replace(".mp4", ".webp")}
           autoPlay
           muted
           loop
@@ -45,7 +46,7 @@ export default function ServicesDeck({ services }: { services: DeckService[] }) 
           cardClassName="w-[280px] h-[380px] rounded-[24px] border-[5px] border-white"
           containerWidth="100%"
           containerHeight={460}
-          transformStyles={["rotate(-7deg) translate(-250px)", "rotate(2deg) translate(0px)", "rotate(8deg) translate(250px)"]}
+          transformStyles={["rotate(-6deg) translate(-292px)", "rotate(2deg) translate(0px)", "rotate(7deg) translate(292px)"]}
           animationDelay={0.15}
           animationStagger={0.09}
           enableHover

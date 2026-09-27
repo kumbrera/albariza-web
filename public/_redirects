@@ -1,0 +1,6 @@
+# Permanent redirects for the pages merged into the flagship service (served by Cloudflare
+# Workers static assets). Relative targets only — absolute URLs are rejected on deploy.
+/servicios/ia-automatizacion   /servicios/asesoria-procesos-automatizacion/ 301
+/servicios/ia-automatizacion/  /servicios/asesoria-procesos-automatizacion/ 301
+/servicios/consultoria         /servicios/asesoria-procesos-automatizacion/ 301
+/servicios/consultoria/        /servicios/asesoria-procesos-automatizacion/ 301

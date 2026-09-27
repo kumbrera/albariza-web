@@ -1,32 +1,77 @@
 ---
-// Sitewide structured data (every page, via Layout.astro), aligned with the process-consulting
-// positioning. Keep it in step with public/llms.txt.
-const siteUrl = new URL("/", Astro.url).toString();
+// Sitewide structured data (every page, via Layout.astro): one connected graph so search engines
+// and AI assistants resolve the same entities everywhere. Pages point at these nodes by @id
+// (Service.provider, Article.publisher, BreadcrumbList...). Keep it in step with public/llms.txt.
+import { ORG_ID, PERSON_IDS, SITE, WEBSITE_ID } from "../data/schema";
 
-const schema = {
+// Public profiles (LinkedIn, Instagram...) go here once they exist; they tie the entity together.
+const sameAs: string[] = [];
+
+const graph = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Albariza Digital",
-  description:
-    "Albariza Digital es una asesoría de procesos y automatización para pymes, autónomos y directivos en España. Ordena cómo trabaja la empresa y automatiza las tareas repetitivas con las herramientas que ya usa. También diseña webs y trabaja SEO/GEO y redes sociales.",
-  url: siteUrl,
-  image: new URL("/brand/og-image.jpg", Astro.url).toString(),
-  logo: new URL("/brand/favicon-512.png", Astro.url).toString(),
-  telephone: "+34601386534",
-  email: "albarizadigital@gmail.com",
-  areaServed: { "@type": "Country", name: "España" },
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "Andalucía",
-    addressCountry: "ES",
-  },
-  makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Asesoría de procesos y automatización" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Diseño y desarrollo web" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Posicionamiento SEO y GEO" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gestión de redes sociales" } },
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": ORG_ID,
+      name: "Albariza Digital",
+      alternateName: "Albariza",
+      description:
+        "Albariza Digital es una asesoría de procesos y automatización para pymes, autónomos y directivos en España. Ordena cómo trabaja la empresa y automatiza las tareas repetitivas con las herramientas que ya usa. También diseña webs y trabaja SEO/GEO y redes sociales.",
+      slogan: "Ponemos orden en cómo trabaja tu empresa.",
+      url: `${SITE}/`,
+      image: `${SITE}/brand/og-image.jpg`,
+      logo: { "@type": "ImageObject", url: `${SITE}/brand/favicon-512.png`, width: 512, height: 512 },
+      telephone: "+34601386534",
+      email: "albarizadigital@gmail.com",
+      areaServed: { "@type": "Country", name: "España" },
+      address: { "@type": "PostalAddress", addressRegion: "Andalucía", addressCountry: "ES" },
+      founder: [{ "@id": PERSON_IDS.pablo }, { "@id": PERSON_IDS.miguel }],
+      knowsAbout: [
+        "Automatización de procesos",
+        "Digitalización de pymes",
+        "CRM",
+        "ERP",
+        "Paneles de datos",
+        "Inteligencia artificial aplicada a empresas",
+        "Bono de Inteligencia Artificial para pymes",
+        "Diseño web",
+        "SEO",
+        "GEO",
+      ],
+      makesOffer: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Asesoría de procesos y automatización", url: `${SITE}/servicios/asesoria-procesos-automatizacion/` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Diseño y desarrollo web", url: `${SITE}/servicios/web/` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Posicionamiento SEO y GEO", url: `${SITE}/servicios/seo-geo/` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gestión de redes sociales", url: `${SITE}/servicios/social-media/` } },
+      ],
+      ...(sameAs.length ? { sameAs } : {}),
+    },
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: `${SITE}/`,
+      name: "Albariza Digital",
+      inLanguage: "es-ES",
+      publisher: { "@id": ORG_ID },
+    },
+    {
+      "@type": "Person",
+      "@id": PERSON_IDS.pablo,
+      name: "Pablo Cumbrera",
+      jobTitle: "Co-founder y Growth Manager",
+      worksFor: { "@id": ORG_ID },
+      url: `${SITE}/nosotros/`,
+    },
+    {
+      "@type": "Person",
+      "@id": PERSON_IDS.miguel,
+      name: "Miguel López",
+      jobTitle: "Co-founder, ingeniero y empresario",
+      worksFor: { "@id": ORG_ID },
+      url: `${SITE}/nosotros/`,
+    },
   ],
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />

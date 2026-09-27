@@ -8,17 +8,17 @@ const columns = [
     title: "Servicios",
     links: [
       { label: "Asesoría de procesos", href: ASESORIA_PATH },
-      { label: "Web", href: "/servicios/web" },
-      { label: "SEO / GEO", href: "/servicios/seo-geo" },
-      { label: "Redes sociales", href: "/servicios/social-media" },
+      { label: "Web", href: "/servicios/web/" },
+      { label: "SEO / GEO", href: "/servicios/seo-geo/" },
+      { label: "Redes sociales", href: "/servicios/social-media/" },
     ],
   },
   {
     title: "Albariza",
     links: [
-      { label: "Nosotros", href: "/nosotros" },
-      { label: "Blog", href: "/blog" },
-      { label: "Contacto", href: "/contacto" },
+      { label: "Nosotros", href: "/nosotros/" },
+      { label: "Blog", href: "/blog/" },
+      { label: "Contacto", href: "/contacto/" },
     ],
   },
   {
@@ -43,7 +43,7 @@ const columns = [
           Asesoría de procesos y automatización para pymes y autónomos.
         </p>
         <a
-          href="/contacto"
+          href="/contacto/"
           data-open-booking
           class="mt-6 inline-block rounded-full bg-ink px-5 py-2.5 text-[0.92rem] font-semibold text-chalk transition hover:bg-violet"
         >
@@ -71,9 +71,10 @@ const columns = [
         ))}
       </nav>
     </div>
-    <div class="mt-14 flex flex-col gap-3 border-t border-ink/8 pt-6 text-[0.88rem] text-graphite sm:flex-row sm:items-center sm:justify-between">
+    <!-- Both links on the left: the fixed WhatsApp button sits bottom-right. -->
+    <div class="mt-14 flex flex-col gap-3 border-t border-ink/8 pt-6 text-[0.88rem] text-graphite sm:flex-row sm:items-center sm:gap-8">
       <p>© {new Date().getFullYear()} Albariza Digital</p>
-      <a href="/politica-privacidad" class="transition hover:text-ink">Política de privacidad</a>
+      <a href="/politica-privacidad/" class="transition hover:text-ink">Política de privacidad</a>
     </div>
   </div>
 </footer>

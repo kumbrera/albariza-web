@@ -69,7 +69,7 @@ export default function SignalsCheck({ signals }: { signals: readonly string[] }
           </motion.p>
         </AnimatePresence>
         <a
-          href="/contacto"
+          href="/contacto/"
           data-open-booking
           data-booking-note={note}
           className={`shrink-0 rounded-full px-6 py-3.5 text-[0.98rem] font-semibold transition duration-300 ${

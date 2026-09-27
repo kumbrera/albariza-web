@@ -5,9 +5,21 @@ import StepQuote from "../components/StepQuote.astro";
 import Lanyard from "../components/Lanyard.tsx";
 import { stepCase } from "../data/home";
 import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotros";
+import { ORG_ID, PERSON_IDS, SITE, breadcrumbs } from "../data/schema";
+
+const aboutLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  url: `${SITE}/nosotros/`,
+  name: aboutMeta.title,
+  about: { "@id": ORG_ID },
+  mentions: [{ "@id": PERSON_IDS.pablo }, { "@id": PERSON_IDS.miguel }],
+};
 ---
 
 <Layout title={aboutMeta.title} description={aboutMeta.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(aboutLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs([["Inicio", "/"], ["Nosotros", "/nosotros/"]]))} />
   <!-- Hero -->
   <section class="relative overflow-x-clip">
     <div aria-hidden="true" class="about-light pointer-events-none absolute inset-x-0 top-[-20%] h-[140%]"></div>
@@ -84,7 +96,7 @@ import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotr
         <h2 class="text-[clamp(2rem,3.6vw,3rem)] font-bold leading-[1.05]">¿Te suena lo del caos de Excel y WhatsApp?</h2>
         <p class="mt-3 max-w-[52ch] text-[1.1rem] text-graphite">En 30 minutos te decimos qué proceso ordenaríamos primero y cuánto tiempo te ahorraría.</p>
       </div>
-      <a href="/contacto" data-open-booking class="shrink-0 rounded-full bg-violet px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink">
+      <a href="/contacto/" data-open-booking class="shrink-0 rounded-full bg-violet px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink">
         Reservar mi sesión gratuita
       </a>
     </div>

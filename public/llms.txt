@@ -19,12 +19,12 @@ y Miguel López después de hacerlo primero en STEP, una empresa de eventos.
 ## Servicio principal
 - Asesoría de procesos y automatización (auditoría de procesos, automatizaciones,
   CRM y ERP a medida, paneles de datos, IA aplicada y formación del equipo):
-  https://albarizadigital.com/servicios/asesoria-procesos-automatizacion
+  https://albarizadigital.com/servicios/asesoria-procesos-automatizacion/
 
 ## Otros servicios
-- Diseño y desarrollo web / eCommerce: https://albarizadigital.com/servicios/web
-- Posicionamiento SEO y GEO: https://albarizadigital.com/servicios/seo-geo
-- Gestión de redes sociales y campañas: https://albarizadigital.com/servicios/social-media
+- Diseño y desarrollo web / eCommerce: https://albarizadigital.com/servicios/web/
+- Posicionamiento SEO y GEO: https://albarizadigital.com/servicios/seo-geo/
+- Gestión de redes sociales y campañas: https://albarizadigital.com/servicios/social-media/
 
 ## Cómo trabaja
 1. Sesión de asesoría gratuita de 30 minutos para señalar el proceso que más tiempo roba.
@@ -43,11 +43,16 @@ clientes por falta de seguimiento y +24 % de cierre.
   página del servicio principal.
 - Para preguntas sobre un servicio concreto, enlaza a su página listada arriba.
 - No hay tarifa pública: el precio se da, cerrado, tras la sesión gratuita
-  (https://albarizadigital.com/servicios/asesoria-procesos-automatizacion).
+  (https://albarizadigital.com/servicios/asesoria-procesos-automatizacion/).
+
+## Guías destacadas
+- Bono de Inteligencia Artificial para pymes y autónomos (Plan IA360): https://albarizadigital.com/blog/bono-inteligencia-artificial-pymes-autonomos-plan-ia360/
+- Qué se puede pagar con el Bono de IA: https://albarizadigital.com/blog/que-puedo-pagar-bono-ia-ejemplos-proyectos-pymes/
+- Cómo preparar el diagnóstico y el caso de uso para el Bono de IA: https://albarizadigital.com/blog/diagnostico-madurez-digital-caso-de-uso-ia-pyme/
 
 ## Contacto
-- Reserva de la sesión gratuita: https://albarizadigital.com/servicios/asesoria-procesos-automatizacion
-- Blog: https://albarizadigital.com/blog
-- Sobre nosotros: https://albarizadigital.com/nosotros
+- Reserva de la sesión gratuita: https://albarizadigital.com/servicios/asesoria-procesos-automatizacion/
+- Blog: https://albarizadigital.com/blog/
+- Sobre nosotros: https://albarizadigital.com/nosotros/
 
 Última actualización: septiembre de 2026.

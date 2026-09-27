@@ -104,4 +104,5 @@ export const asesoriaFaq = [
   pick("¿Qué pasa con los datos de mi empresa?"),
   pick("¿Cuánto cuesta automatizar un proceso?"),
   pick("¿Cuánto se tarda en tener algo funcionando?"),
+  pick("¿Se podrá pagar con el Bono de Inteligencia Artificial?"),
 ];

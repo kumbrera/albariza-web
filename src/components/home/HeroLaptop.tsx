@@ -186,7 +186,7 @@ function TabCard({ tab }: { tab: Tab }) {
         </div>
       </div>
       <div className="px-2.5 py-1.5">
-        <div className="truncate rounded bg-[#f1f1ee] px-2 py-1 text-[10px] text-[#5c5b66]">{tab.url}</div>
+        <div className="truncate rounded bg-[#f1f1ee] px-2 py-1 text-[10px] text-[#3f3e48]">{tab.url}</div>
       </div>
       <div className="space-y-1.5 px-2.5 pb-3 pt-1">
         <div className="h-1.5 w-[88%] rounded bg-[#e3e2dc]" />

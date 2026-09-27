@@ -10,7 +10,7 @@ const PAINS = ["Facturas y presupuestos", "Seguimiento de clientes", "Informes y
 type Status = "idle" | "sending" | "done" | "error";
 
 const field =
-  "w-full rounded-xl border border-ink/12 bg-chalk/60 px-4 py-2.5 text-[0.98rem] text-ink placeholder:text-graphite/60 outline-none transition focus:border-violet focus:bg-white focus:ring-4 focus:ring-violet/10";
+  "w-full rounded-xl border border-ink/12 bg-chalk/60 px-4 py-2.5 text-[0.98rem] text-ink placeholder:text-graphite/85 outline-none transition focus:border-violet focus:bg-white focus:ring-4 focus:ring-violet/10";
 
 interface Props {
   topic: string;
@@ -151,7 +151,7 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
       )}
       <p className="text-center text-[0.8rem] text-graphite">
         Usamos tus datos solo para responderte.{" "}
-        <a href="/politica-privacidad" className="underline decoration-graphite/40 underline-offset-2">Política de privacidad</a>
+        <a href="/politica-privacidad/" className="underline decoration-graphite/40 underline-offset-2">Política de privacidad</a>
       </p>
     </form>
   );

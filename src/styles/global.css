@@ -15,7 +15,7 @@
   --color-graphite: #5c5b66;
   --color-violet: #4f32e0;
   --color-violet-soft: #e7e3fb;
-  --color-teal: #0f9c8b;
+  --color-teal: #0a6f63; /* darkened from #0f9c8b to pass WCAG AA (5.3:1) as text on chalk */
 }
 
 /* Body tokens + type defaults (Layout.astro puts .theme-light on <html> and <body>). */

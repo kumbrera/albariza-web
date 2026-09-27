@@ -8,6 +8,8 @@ import StepMetrics from "../../components/home/StepMetrics.tsx";
 import StepQuote from "../../components/StepQuote.astro";
 import FaqSection from "../../components/FaqSection.astro";
 import { hero as homeHero, stepCase } from "../../data/home";
+import { ORG_ID, SITE, breadcrumbs } from "../../data/schema";
+import { ASESORIA_PATH } from "../../data/routes";
 import { asesoriaFaq, asesoriaHero, asesoriaMeta, asesoriaSteps, fit, offer, signals } from "../../data/asesoria";
 
 const serviceLd = {
@@ -16,13 +18,15 @@ const serviceLd = {
   name: "Asesoría de procesos y automatización",
   serviceType: "Consultoría de procesos y automatización",
   description: asesoriaMeta.description,
-  provider: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
+  provider: { "@id": ORG_ID },
+  url: `${SITE}${ASESORIA_PATH}`,
   areaServed: { "@type": "Country", name: "España" },
 };
 ---
 
 <Layout title={asesoriaMeta.title} description={asesoriaMeta.description}>
   <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs([["Inicio", "/"], ["Asesoría de procesos y automatización", ASESORIA_PATH]]))} />
 
   <!-- Hero -->
   <section class="relative overflow-x-clip">
@@ -34,7 +38,7 @@ const serviceLd = {
         <p class="mt-6 max-w-[50ch] text-[1.12rem] leading-relaxed text-graphite">{asesoriaHero.sub}</p>
         <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
           <a
-            href="/contacto"
+            href="/contacto/"
             data-open-booking
             class="rounded-full bg-violet px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet"
           >
@@ -113,7 +117,7 @@ const serviceLd = {
         <div class="space-y-5 lg:col-span-6 lg:col-start-7">
           <p class="text-[1.15rem] leading-relaxed text-graphite">{stepCase.problem}</p>
           <p class="text-[1.15rem] leading-relaxed text-ink">{stepCase.solution}</p>
-          <a href="/nosotros" class="inline-block text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">
+          <a href="/nosotros/" class="inline-block text-[1.02rem] font-semibold text-ink underline decoration-ink/25 underline-offset-[6px] transition hover:decoration-ink">
             Leer la historia completa
           </a>
         </div>
@@ -152,6 +156,30 @@ const serviceLd = {
     </div>
   </section>
 
+  <!-- Bono IA -->
+  <section class="px-6 pb-28">
+    <a
+      href="/blog/bono-inteligencia-artificial-pymes-autonomos-plan-ia360/"
+      class="group relative mx-auto block max-w-7xl overflow-hidden rounded-[32px] bg-ink px-8 py-12 text-white sm:px-14"
+    >
+      <div aria-hidden="true" class="bono-light pointer-events-none absolute inset-0"></div>
+      <div class="relative grid items-end gap-8 lg:grid-cols-12">
+        <div class="lg:col-span-8">
+          <p class="text-[0.95rem] font-medium text-[#a99bff]">Bono de Inteligencia Artificial · Plan IA360</p>
+          <h2 class="mt-3 text-[clamp(1.9rem,3.6vw,2.9rem)] font-bold leading-[1.04]">600 millones para que pymes y autónomos implanten IA antes de que acabe 2027.</h2>
+          <p class="mt-4 max-w-[56ch] text-[1.08rem] leading-relaxed text-white/70">
+            Pedirá un diagnóstico, un caso de uso y medir el impacto: lo mismo que hacemos en la asesoría. Te contamos qué se sabe y cómo llegar preparado.
+          </p>
+        </div>
+        <div class="lg:col-span-4 lg:text-right">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-[1rem] font-semibold text-ink transition group-hover:bg-[#c9c0ff]">
+            Leer la guía <span aria-hidden="true">→</span>
+          </span>
+        </div>
+      </div>
+    </a>
+  </section>
+
   <FaqSection items={asesoriaFaq} />
 
   <!-- CTA -->
@@ -163,7 +191,7 @@ const serviceLd = {
         En 30 minutos te decimos cuál ordenaríamos primero, cuánto tiempo te ahorraría y qué costaría.
       </p>
       <a
-        href="/contacto"
+        href="/contacto/"
         data-open-booking
         class="mt-9 inline-block rounded-full bg-violet px-8 py-4 text-[1.05rem] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(79,50,224,0.7)] transition hover:bg-ink"
       >
@@ -179,6 +207,11 @@ const serviceLd = {
       radial-gradient(45% 40% at 55% 45%, rgba(109, 85, 255, 0.26), transparent 70%),
       radial-gradient(30% 30% at 75% 80%, rgba(63, 211, 191, 0.12), transparent 70%);
     filter: blur(20px);
+  }
+  .bono-light {
+    background:
+      radial-gradient(55% 90% at 100% 0%, rgba(109, 85, 255, 0.5), transparent 70%),
+      radial-gradient(40% 70% at 0% 100%, rgba(63, 211, 191, 0.16), transparent 70%);
   }
   .cta-light {
     background: radial-gradient(50% 70% at 50% 100%, rgba(109, 85, 255, 0.2), transparent 70%);

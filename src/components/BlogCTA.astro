@@ -21,7 +21,7 @@ const copy = topicCopy(topic);
         : copy.description}
     </p>
     <a
-      href={isSession ? "/contacto" : `/contacto?servicio=${topic}`}
+      href={isSession ? "/contacto/" : `/contacto/?servicio=${topic}`}
       data-open-booking={topic}
       class="mt-8 inline-block rounded-full bg-white px-7 py-4 text-[1.02rem] font-semibold text-ink transition hover:bg-[#c9c0ff]"
     >

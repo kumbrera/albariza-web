@@ -85,7 +85,7 @@ export const freeSession = {
     "Una estimación de las horas que puedes recuperar",
     "Sin compromiso y sin presentación comercial",
   ],
-  cta: { label: "Reservar mi sesión gratuita", href: "/contacto" },
+  cta: { label: "Reservar mi sesión gratuita", href: "/contacto/" },
 };
 
 export const alsoHelp = {
@@ -120,6 +120,10 @@ export const homeFaq = [
   {
     q: "¿Cuánto cuesta automatizar un proceso?",
     a: "Depende del proceso, por eso empezamos con un piloto acotado y de precio cerrado. En la sesión gratuita te damos una cifra concreta antes de que decidas nada.",
+  },
+  {
+    q: "¿Se podrá pagar con el Bono de Inteligencia Artificial?",
+    a: "El Bono de Inteligencia Artificial del Plan IA360 (600 millones para pymes y autónomos) abrirá su convocatoria general antes de que termine 2027. Financiará proyectos de IA con diagnóstico, caso de uso y medición del impacto, que es justo como trabajamos. Cuando se publiquen las bases te diremos qué parte de tu proyecto encaja; mientras, podemos dejarte el diagnóstico y el caso de uso preparados.",
   },
   {
     q: "¿Cuánto se tarda en tener algo funcionando?",

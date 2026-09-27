@@ -7,6 +7,9 @@ import CookieConsent from "../components/CookieConsent.astro";
 import SiteNav from "../components/SiteNav.tsx";
 import BookingDialog from "../components/BookingDialog.tsx";
 import SiteFooter from "../components/SiteFooter.astro";
+// Preloaded so Geist is ready for the first paint: swapping in late re-flowed the hero and
+// shifted the layout (CLS).
+import geistLatin from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -42,6 +45,7 @@ const ogImageAlt = "Albariza: ponemos orden en c√≥mo trabaja tu empresa. Asesor√
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin />
     <meta name="description" content={description} />
     <meta
       name="robots"
@@ -72,7 +76,7 @@ const ogImageAlt = "Albariza: ponemos orden en c√≥mo trabaja tu empresa. Asesor√
   </head>
   <body class="theme-light min-h-screen antialiased">
     <div class="relative z-10">
-      <SiteNav client:load />
+      <SiteNav client:load path={Astro.url.pathname} />
       <BookingDialog client:load />
       <div class="h-20" aria-hidden="true"></div>
 

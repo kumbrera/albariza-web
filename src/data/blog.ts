@@ -1,3 +1,5 @@
+import { bonoIaPosts } from "./blog-bono-ia";
+
 export type ContentBlock =
   | { type: "p"; text: string }
   | { type: "ul"; items: string[] };
@@ -24,12 +26,17 @@ export interface BlogPost {
   categoryLabel: string;
   keywords: string[];
   datePublished: string; // ISO date
+  /** ISO date of the last substantive update, when it differs from datePublished. */
+  dateModified?: string;
+  /** Primary sources cited in the article, shown at the end and linked. */
+  sources?: { label: string; url: string }[];
   intro: ContentBlock[];
   sections: BlogSection[];
   faq: FaqItem[];
 }
 
 export const blogPosts: BlogPost[] = [
+  ...bonoIaPosts,
   {
     slug: "automatizacion-procesos-pymes-rpa",
     title:

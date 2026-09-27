@@ -55,7 +55,7 @@ export default function StepsScroll({ steps }: { steps: Step[] }) {
           <span className="step-dot absolute -left-16 top-0 flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 bg-chalk text-[1rem] font-semibold text-graphite transition-colors duration-500 sm:-left-20 sm:h-12 sm:w-12">
             {i + 1}
           </span>
-          <h3 className="step-title text-[clamp(1.6rem,3.2vw,2.4rem)] font-bold leading-[1.05] text-graphite/60 transition-colors duration-500">
+          <h3 className="step-title text-[clamp(1.6rem,3.2vw,2.4rem)] font-bold leading-[1.05] text-graphite/80 transition-colors duration-500">
             {step.title}
           </h3>
           <p className="mt-4 max-w-[46ch] text-[1.08rem] leading-relaxed text-graphite">{step.text}</p>

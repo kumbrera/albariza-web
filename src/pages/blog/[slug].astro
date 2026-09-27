@@ -5,6 +5,7 @@ import FaqSection from "../../components/FaqSection.astro";
 import { bookingTopicFor, headingId, publishedBlogPosts, readingMinutes } from "../../data/blog";
 import { services } from "../../data/services";
 import { ASESORIA_PATH } from "../../data/routes";
+import { ORG_ID, SITE, WEBSITE_ID, breadcrumbs } from "../../data/schema";
 
 export function getStaticPaths() {
   return publishedBlogPosts.map((post) => ({
@@ -18,7 +19,7 @@ const secondary = services.find((s) => s.slug === post.categorySlug);
 const relatedService =
   post.categorySlug === "asesoria-procesos-automatizacion"
     ? { href: ASESORIA_PATH, name: "Asesoría de procesos y automatización" }
-    : secondary && { href: `/servicios/${secondary.slug}`, name: secondary.name };
+    : secondary && { href: `/servicios/${secondary.slug}/`, name: secondary.name };
 
 // Same topic first, then the newest of the rest.
 const related = [...publishedBlogPosts]
@@ -35,22 +36,28 @@ const articleLd = {
   headline: post.title,
   description: post.metaDescription,
   datePublished: post.datePublished,
-  dateModified: post.datePublished,
+  dateModified: post.dateModified ?? post.datePublished,
+  inLanguage: "es-ES",
   keywords: post.keywords.join(", "),
-  author: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
-  publisher: { "@type": "Organization", name: "Albariza Digital", url: "https://albarizadigital.com" },
+  image: `${SITE}/brand/og-image.jpg`,
+  mainEntityOfPage: `${SITE}/blog/${post.slug}/`,
+  author: { "@id": ORG_ID },
+  publisher: { "@id": ORG_ID },
+  isPartOf: { "@id": WEBSITE_ID },
+  ...(post.sources?.length ? { citation: post.sources.map((s) => ({ "@type": "CreativeWork", name: s.label, url: s.url })) } : {}),
 };
 ---
 
 <Layout title={`${post.title} | Albariza Digital`} description={post.metaDescription} ogType="article" publishedTime={post.datePublished}>
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs([["Inicio", "/"], ["Blog", "/blog/"], [post.title, `/blog/${post.slug}/`]]))} />
   <div aria-hidden="true" class="read-progress fixed left-0 top-0 z-[100] h-[3px] w-full origin-left bg-violet"></div>
 
   <header class="relative overflow-x-clip">
     <div aria-hidden="true" class="post-light pointer-events-none absolute right-[-10%] top-[-20%] h-[140%] w-[70%]"></div>
     <div class="relative mx-auto max-w-7xl px-6 pb-14 pt-10 lg:pt-16">
       <p class="text-[0.98rem] font-medium">
-        <a href="/blog" class="text-graphite transition hover:text-ink">Blog</a>
+        <a href="/blog/" class="text-graphite transition hover:text-ink">Blog</a>
         <span class="mx-1.5 text-graphite/50">/</span>
         <span class="text-violet">{post.categoryLabel}</span>
       </p>
@@ -58,6 +65,11 @@ const articleLd = {
       <p class="mt-6 text-[1rem] text-graphite">
         <time datetime={post.datePublished}>{dateFormatter.format(new Date(post.datePublished))}</time>
         <span class="mx-2 text-graphite/50">·</span>{minutes} min de lectura
+        {post.dateModified && post.dateModified !== post.datePublished && (
+          <>
+            <span class="mx-2 text-graphite/50">·</span>Actualizado el <time datetime={post.dateModified}>{dateFormatter.format(new Date(post.dateModified))}</time>
+          </>
+        )}
       </p>
     </div>
   </header>
@@ -88,6 +100,19 @@ const articleLd = {
           )}
         </section>
       ))}
+
+      {post.sources && post.sources.length > 0 && (
+        <section class="sources">
+          <h2 id="fuentes">Fuentes</h2>
+          <ul>
+            {post.sources.map((src) => (
+              <li>
+                <a href={src.url} target="_blank" rel="noopener">{src.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <div class="mt-16">
         <BlogCTA topic={bookingTopicFor(post)} />
@@ -124,7 +149,7 @@ const articleLd = {
         <h2 class="text-[clamp(1.9rem,3.4vw,2.6rem)] font-bold leading-[1.05]">Sigue leyendo.</h2>
         <div class="mt-10 grid gap-4 md:grid-cols-2">
           {related.map((p) => (
-            <a href={`/blog/${p.slug}`} class="group rounded-[24px] border border-ink/10 bg-white/60 p-7 transition hover:border-violet/40">
+            <a href={`/blog/${p.slug}/`} class="group rounded-[24px] border border-ink/10 bg-white/60 p-7 transition hover:border-violet/40">
               <p class="text-[0.9rem] text-graphite">
                 <span class="font-medium text-violet">{p.categoryLabel}</span> · {readingMinutes(p)} min
               </p>
@@ -205,6 +230,13 @@ const articleLd = {
     border-radius: 2px;
     background: var(--color-violet);
     transform: rotate(45deg);
+  }
+
+  .post-body .sources a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-ink) 25%, transparent);
+    text-underline-offset: 4px;
   }
 
   .toc a[aria-current="true"] {
