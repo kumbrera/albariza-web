@@ -56,7 +56,7 @@ function Feed() {
         <div key={e.title} className="flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet text-white">{e.icon}</span>
           <span className="min-w-0">
-            <span className="block truncate text-[0.93rem] font-medium text-white">{e.title}</span>
+            <span className="line-clamp-2 text-[0.93rem] font-medium leading-snug text-white sm:line-clamp-1">{e.title}</span>
             <span className="block text-[0.78rem] text-white/50">{e.meta}</span>
           </span>
           <span className="ml-auto shrink-0 text-[0.72rem] text-[#3fd3bf]">

@@ -77,6 +77,26 @@ export default function Lanyard({
   lanyardWidth = 1
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  // The island mounts well before the section (client:visible with a wide rootMargin) so the heavy
+  // physics bundle is ready in time. Physics stays paused and nothing renders until the badges are
+  // actually on screen, so the drop and the reveal spin happen in front of the visitor.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        setLive(true);
+        io.disconnect();
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleResize = (): void => setIsMobile(window.innerWidth < 768);
@@ -85,20 +105,25 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className={`relative z-0 w-full flex justify-center items-center transform scale-100 origin-center ${className}`}>
+    <div ref={wrapRef} className={`relative z-0 w-full flex justify-center items-center transform scale-100 origin-center ${className}`}>
       <Canvas
-        camera={{ position: position ?? [0, 0, isMobile ? 30 : 22], fov }}
+        camera={{ position: position ?? [0, 0, isMobile ? 25 : 22], fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
+        frameloop={live ? 'always' : 'demand'}
         gl={{ alpha: transparent }}
+        // The canvas covers most of the screen on phones: vertical swipes must still scroll the
+        // page (a vertical swipe that starts on a card simply releases it), sideways ones drag.
+        style={{ touchAction: 'pan-y' }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+        <Physics gravity={gravity} timeStep={1 / 60} paused={!live}>
           {(cards ?? [{ frontImage, backImage }]).map((c, i, all) => (
             <Band
               key={i}
               anchorX={(i - (all.length - 1) / 2) * (isMobile ? spacing * 0.62 : spacing)}
               spinDelay={0.35 + i * 0.25}
+              live={live}
               isMobile={isMobile}
               frontImage={c.frontImage}
               backImage={c.backImage}
@@ -146,8 +171,10 @@ export default function Lanyard({
 interface BandProps {
   /** X position of the fixed anchor point. */
   anchorX?: number;
-  /** Seconds after mount before the badge is flung into its reveal spin; null to disable. */
+  /** Seconds after the badges come into view before the reveal spin; null to disable. */
   spinDelay?: number | null;
+  /** False while the section is off screen: physics is paused, so the spin waits too. */
+  live?: boolean;
   maxSpeed?: number;
   minSpeed?: number;
   isMobile?: boolean;
@@ -165,6 +192,7 @@ type LanyardRigidBody = RapierRigidBody & {
 function Band({
   anchorX = 0,
   spinDelay = null,
+  live = true,
   maxSpeed = 50,
   minSpeed = 0,
   isMobile = false,
@@ -273,7 +301,7 @@ function Band({
   // Reveal: once the badge has dropped, fling it sideways and spin it about its long axis so
   // the logo on the back flashes past before the rope settles it face-forward again.
   useEffect(() => {
-    if (spinDelay == null) return;
+    if (spinDelay == null || !live) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setTimeout(() => {
       const c = card.current;
@@ -283,7 +311,23 @@ function Band({
       c.setAngvel({ x: 0, y: anchorX >= 0 ? -22 : 22, z: 0 }, true);
     }, spinDelay * 1000);
     return () => clearTimeout(t);
-  }, [spinDelay, anchorX]);
+  }, [spinDelay, anchorX, live]);
+
+  // A drag must always end. On touch screens the browser can take the gesture over for scrolling
+  // and send pointercancel instead of pointerup, which left the card glued to a finger that had
+  // already lifted. Listen on window so any release, cancel or lost focus drops it.
+  useEffect(() => {
+    if (!dragged) return;
+    const release = () => drag(false);
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
+    window.addEventListener('blur', release);
+    return () => {
+      window.removeEventListener('pointerup', release);
+      window.removeEventListener('pointercancel', release);
+      window.removeEventListener('blur', release);
+    };
+  }, [dragged]);
 
   useEffect(() => {
     if (hovered) {

@@ -36,7 +36,7 @@ import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotr
               ))}
               {i === 2 && (
                 <div class="pt-8">
-                  <StepMetrics client:visible metrics={stepCase.metrics} />
+                  <StepMetrics client:visible={{ rootMargin: "600px" }} metrics={stepCase.metrics} />
                   <StepQuote class="mt-12" />
                 </div>
               )}
@@ -73,7 +73,7 @@ import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotr
       </ul>
     </div>
     <div class="relative [mask-image:linear-gradient(to_bottom,transparent,black_14%)]">
-      <Lanyard client:visible cards={team.cards} className="h-[88vh] min-h-[620px]" />
+      <Lanyard client:visible={{ rootMargin: "1400px" }} cards={team.cards} className="h-[88vh] min-h-[620px]" />
     </div>
   </section>
 
