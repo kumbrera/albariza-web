@@ -5,7 +5,7 @@ import FaqSection from "../../components/FaqSection.astro";
 import { bookingTopicFor, headingId, publishedBlogPosts, readingMinutes } from "../../data/blog";
 import { services } from "../../data/services";
 import { ASESORIA_PATH } from "../../data/routes";
-import { ORG_ID, SITE, WEBSITE_ID, breadcrumbs } from "../../data/schema";
+import { ORG_ID, PERSON_IDS, SITE, WEBSITE_ID, breadcrumbs } from "../../data/schema";
 
 export function getStaticPaths() {
   return publishedBlogPosts.map((post) => ({
@@ -41,7 +41,7 @@ const articleLd = {
   keywords: post.keywords.join(", "),
   image: `${SITE}/brand/og-image.jpg`,
   mainEntityOfPage: `${SITE}/blog/${post.slug}/`,
-  author: { "@id": ORG_ID },
+  author: { "@id": PERSON_IDS.pablo },
   publisher: { "@id": ORG_ID },
   isPartOf: { "@id": WEBSITE_ID },
   ...(post.sources?.length ? { citation: post.sources.map((s) => ({ "@type": "CreativeWork", name: s.label, url: s.url })) } : {}),
@@ -62,7 +62,14 @@ const articleLd = {
         <span class="text-violet">{post.categoryLabel}</span>
       </p>
       <h1 class="mt-5 max-w-[22ch] text-[clamp(2.3rem,4.8vw,4rem)] font-bold leading-[1.0]">{post.title}</h1>
-      <p class="mt-6 text-[1rem] text-graphite">
+      <div class="mt-7 flex items-center gap-3.5">
+        <img src="/team/pablo-cumbrera.webp" alt="" width="44" height="44" class="h-11 w-11 rounded-full object-cover" />
+        <p class="text-[0.98rem] leading-snug">
+          <a href="/nosotros/" rel="author" class="font-semibold text-ink hover:text-violet">Pablo Cumbrera</a>
+          <span class="block text-[0.9rem] text-graphite">Co-founder de Albariza · Growth Manager</span>
+        </p>
+      </div>
+      <p class="mt-5 text-[1rem] text-graphite">
         <time datetime={post.datePublished}>{dateFormatter.format(new Date(post.datePublished))}</time>
         <span class="mx-2 text-graphite/50">·</span>{minutes} min de lectura
         {post.dateModified && post.dateModified !== post.datePublished && (
