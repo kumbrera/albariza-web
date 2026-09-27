@@ -1,61 +1,24 @@
 ---
-interface Props {
-  light?: boolean;
-}
-const { light = false } = Astro.props;
 const GA_MEASUREMENT_ID = "G-66V8XGXXJ3";
 ---
 
-{light ? (
-  <div
-    id="cookie-banner"
-    class="fixed bottom-5 left-5 right-5 z-[70] hidden max-w-sm rounded-2xl border border-ink/10 bg-white/95 p-5 shadow-[0_24px_50px_-24px_rgba(22,21,31,0.45)] backdrop-blur sm:right-auto"
-  >
-    <p class="text-[0.92rem] leading-snug text-graphite">
-      Usamos cookies de analítica para saber cómo se usa la web y mejorarla.{" "}
-      <a href="/politica-privacidad" class="text-ink underline decoration-ink/25 underline-offset-4">Más información</a>
-    </p>
-    <div class="mt-4 flex gap-2">
-      <button id="cookie-reject" type="button" class="rounded-full border border-ink/15 px-4 py-2 text-[0.88rem] font-semibold text-ink transition hover:bg-ink/5">
-        Rechazar
-      </button>
-      <button id="cookie-accept" type="button" class="rounded-full bg-ink px-4 py-2 text-[0.88rem] font-semibold text-chalk transition hover:bg-violet">
-        Aceptar
-      </button>
-    </div>
+<div
+  id="cookie-banner"
+  class="fixed bottom-5 left-5 right-5 z-[70] hidden max-w-sm rounded-2xl border border-ink/10 bg-white/95 p-5 shadow-[0_24px_50px_-24px_rgba(22,21,31,0.45)] backdrop-blur sm:right-auto"
+>
+  <p class="text-[0.92rem] leading-snug text-graphite">
+    Usamos cookies de analítica para saber cómo se usa la web y mejorarla.{" "}
+    <a href="/politica-privacidad" class="text-ink underline decoration-ink/25 underline-offset-4">Más información</a>
+  </p>
+  <div class="mt-4 flex gap-2">
+    <button id="cookie-reject" type="button" class="rounded-full border border-ink/15 px-4 py-2 text-[0.88rem] font-semibold text-ink transition hover:bg-ink/5">
+      Rechazar
+    </button>
+    <button id="cookie-accept" type="button" class="rounded-full bg-ink px-4 py-2 text-[0.88rem] font-semibold text-chalk transition hover:bg-violet">
+      Aceptar
+    </button>
   </div>
-) : (
-  <div
-    id="cookie-banner"
-    class="fixed inset-x-0 bottom-0 z-[70] hidden border-t border-white/10 bg-[#0c0c0e]/95 px-6 py-4 backdrop-blur"
-  >
-    <div class="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
-      <p class="text-sm text-white/70">
-        Usamos cookies de analítica para entender cómo se usa la web y mejorarla. Puedes
-        aceptarlas o rechazarlas —{" "}
-        <a href="/politica-privacidad" class="underline decoration-white/30 underline-offset-4">
-          más información
-        </a>.
-      </p>
-      <div class="flex shrink-0 gap-2">
-        <button
-          id="cookie-reject"
-          type="button"
-          class="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white/70 transition hover:text-white"
-        >
-          Rechazar
-        </button>
-        <button
-          id="cookie-accept"
-          type="button"
-          class="rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black transition hover:bg-white/90"
-        >
-          Aceptar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+</div>
 
 <script define:vars={{ GA_MEASUREMENT_ID }}>
   const CONSENT_KEY = "albariza-cookie-consent";

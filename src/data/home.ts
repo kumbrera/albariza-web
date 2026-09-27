@@ -133,6 +133,7 @@ export const homeFaq = [
 
 export const homeMeta = {
   title: "Asesoría de procesos y automatización | Albariza Digital",
+  ogTitle: "Albariza · Ponemos orden en cómo trabaja tu empresa",
   description:
     "Detectamos las tareas repetitivas que te roban horas y las automatizamos con las herramientas que ya usas. Reserva tu sesión de asesoría gratuita.",
 };

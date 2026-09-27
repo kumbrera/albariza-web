@@ -42,7 +42,7 @@ const articleLd = {
 };
 ---
 
-<Layout title={`${post.title} | Albariza Digital`} description={post.metaDescription} ogType="article" publishedTime={post.datePublished} theme="light">
+<Layout title={`${post.title} | Albariza Digital`} description={post.metaDescription} ogType="article" publishedTime={post.datePublished}>
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
   <div aria-hidden="true" class="read-progress fixed left-0 top-0 z-[100] h-[3px] w-full origin-left bg-violet"></div>
 

@@ -46,7 +46,7 @@ const latestPosts = [...publishedBlogPosts]
   .slice(0, 3);
 ---
 
-<Layout title={homeMeta.title} description={homeMeta.description} theme="light">
+<Layout title={homeMeta.title} ogTitle={homeMeta.ogTitle} description={homeMeta.description}>
   <!-- Hero -->
   <section class="relative overflow-x-clip">
     <div aria-hidden="true" class="hero-light pointer-events-none absolute -left-[15%] top-[-10%] h-[120%] w-[80%]"></div>

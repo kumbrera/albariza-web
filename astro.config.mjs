@@ -32,7 +32,6 @@ export default defineConfig({
         '@react-three/fiber',
         '@react-three/rapier',
         '@tabler/icons-react',
-        'framer-motion',
         'gsap',
         'gsap/ScrollTrigger',
         'lucide-react',

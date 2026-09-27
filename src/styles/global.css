@@ -6,8 +6,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-serif: "Playfair Display", "Georgia", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
   --font-grotesk: "Geist Variable", "Helvetica Neue", Arial, sans-serif;
 
   /* Light "albariza" system — chalk-white limestone soil of Jerez, not flat white. */
@@ -20,8 +18,7 @@
   --color-teal: #0f9c8b;
 }
 
-/* Light pages (home for now): body tokens + type defaults. Scoped so the dark pages that
-   still use the old Layout styling are untouched until they're redesigned. */
+/* Body tokens + type defaults (Layout.astro puts .theme-light on <html> and <body>). */
 .theme-light {
   background-color: var(--color-chalk);
   color: var(--color-ink);
@@ -53,154 +50,11 @@
 
 html,
 body {
-  background-color: #08080a;
-  color: #f5f5f0;
+  background-color: var(--color-chalk);
+  color: var(--color-ink);
   /* Stops decorative overflow (glows, off-screen cards) from adding a horizontal scrollbar.
      `clip`, not `hidden`: hidden turns body into a scroll container and breaks position: sticky. */
   overflow-x: clip;
-}
-
-/* ---------- Plasma background animation (per-card gradient motion) ---------- */
-@keyframes plasma-drift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.plasma-bg {
-  background-size: 220% 220%;
-  animation: plasma-drift 9s ease-in-out infinite;
-}
-
-/* ---------- Card shine sweep — echoes the logo's diagonal highlight, gives cards
-   a recurring "brand signature" motion instead of just the slow colour drift. ---------- */
-@keyframes shine-sweep {
-  0% {
-    transform: translateX(-140%) skewX(-20deg);
-  }
-  100% {
-    transform: translateX(140%) skewX(-20deg);
-  }
-}
-
-.shine-sweep {
-  position: absolute;
-  inset: -20% -60%;
-  background: linear-gradient(
-    100deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 58%
-  );
-  animation: shine-sweep 5.5s ease-in-out infinite;
-  animation-delay: var(--shine-delay, 0s);
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .plasma-bg,
-  .shine-sweep {
-    animation: none;
-  }
-}
-
-/* ---------- Scroll reveal — sitewide "fade + rise into place" as sections enter
-   view (see the IntersectionObserver wiring at the bottom of Layout.astro). Applied
-   via a plain `data-reveal` attribute so any .astro page can opt in without JS. ---------- */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--reveal-delay, 0s);
-}
-
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* ---------- Glow text ---------- */
-.text-glow {
-  text-shadow:
-    0 0 24px rgba(255, 255, 255, 0.35),
-    0 0 48px rgba(255, 255, 255, 0.15),
-    2px 2px 0 rgba(0, 0, 0, 0.35);
-}
-
-/* ---------- Corner bracket frame (viewfinder style) ----------
-   NOTE: the card itself already carries Tailwind's `absolute` class, which is
-   enough of a containing block for these children — do NOT set `position` here,
-   it would fight the cascade with the `absolute` utility class (same specificity,
-   whichever rule compiles later wins) and silently turn the card into a stacked
-   block instead of an absolutely-positioned carousel item. */
-.corner-brackets::before,
-.corner-brackets::after,
-.corner-brackets > .bracket-tl,
-.corner-brackets > .bracket-tr,
-.corner-brackets > .bracket-bl,
-.corner-brackets > .bracket-br {
-  content: "";
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  border-color: rgba(255, 255, 255, 0.85);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.corner-brackets.is-active > .bracket-tl,
-.corner-brackets.is-active > .bracket-tr,
-.corner-brackets.is-active > .bracket-bl,
-.corner-brackets.is-active > .bracket-br {
-  opacity: 1;
-}
-
-.bracket-tl {
-  top: -10px;
-  left: -10px;
-  border-top: 2px solid;
-  border-left: 2px solid;
-  border-top-left-radius: 6px;
-}
-
-.bracket-tr {
-  top: -10px;
-  right: -10px;
-  border-top: 2px solid;
-  border-right: 2px solid;
-  border-top-right-radius: 6px;
-}
-
-.bracket-bl {
-  bottom: -10px;
-  left: -10px;
-  border-bottom: 2px solid;
-  border-left: 2px solid;
-  border-bottom-left-radius: 6px;
-}
-
-.bracket-br {
-  bottom: -10px;
-  right: -10px;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
-  border-bottom-right-radius: 6px;
 }
 
 @theme inline {
