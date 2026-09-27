@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import StepMetrics from "../components/home/StepMetrics.tsx";
 import StepQuote from "../components/StepQuote.astro";
-import Lanyard from "../components/Lanyard.tsx";
+import LanyardLazy from "../components/LanyardLazy.tsx";
 import { stepCase } from "../data/home";
 import { aboutHero, aboutMeta, chapters, principles, team } from "../data/nosotros";
 import { ORG_ID, PERSON_IDS, SITE, breadcrumbs } from "../data/schema";
@@ -85,7 +85,7 @@ const aboutLd = {
       </ul>
     </div>
     <div class="relative [mask-image:linear-gradient(to_bottom,transparent,black_14%)]">
-      <Lanyard client:visible={{ rootMargin: "1400px" }} cards={team.cards} className="h-[88vh] min-h-[620px]" />
+      <LanyardLazy client:visible={{ rootMargin: "1400px" }} cards={team.cards} className="h-[88vh] min-h-[620px]" />
     </div>
   </section>
 
