@@ -26,3 +26,6 @@ pnpm-debug.log*
 # wrangler local state/cache
 .wrangler/
 design-src/
+
+# internal business docs (pricing, strategy): never published
+interno/
