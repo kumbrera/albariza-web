@@ -5,7 +5,7 @@ export { ASESORIA_PATH } from "./routes";
 export const asesoriaMeta = {
   title: "Asesoría de procesos y automatización: qué incluye | Albariza Digital",
   description:
-    "Ordenamos cómo trabaja tu empresa y automatizamos las tareas repetitivas con las herramientas que ya usas. Un proceso cada vez, medido en horas y en euros.",
+    "Asesoría de procesos y automatización de Albariza Digital: auditoría, automatizaciones, CRM/ERP y paneles de datos. Un proceso cada vez, medido en horas.",
 };
 
 export const asesoriaHero = {

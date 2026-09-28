@@ -1,12 +1,12 @@
 export const aboutMeta = {
   title: "Sobre nosotros | Albariza Digital",
   description:
-    "Somos Pablo y Miguel. Antes de automatizar procesos para otros, tuvimos que ordenar los nuestros. Esta es la historia de Albariza.",
+    "En Albariza Digital ordenamos primero nuestra propia empresa y ahora lo hacemos en la tuya: un proceso cada vez, con tu equipo y midiendo el ahorro.",
 };
 
 export const aboutHero = {
   title: "Primero lo vivimos. Luego lo resolvimos.",
-  sub: "Somos Pablo y Miguel. Ayudamos a pymes y autónomos a que su día a día sea más fácil: menos tareas repetidas, menos cosas que se escapan y más tiempo para lo que importa. Lo sabemos porque antes tuvimos que hacerlo en nuestra propia empresa.",
+  sub: "Ayudamos a pymes y autónomos a que su día a día sea más fácil: menos tareas repetidas, menos cosas que se escapan y más tiempo para lo que importa. Lo sabemos porque antes tuvimos que hacerlo en nuestra propia empresa.",
 };
 
 // Iván's words, only spelling fixed.
