@@ -17,6 +17,12 @@ const HOLD_END = 9;
 
 const CAM_Y = 1.9;
 const LOOK_Y = 0.1;
+// The scene is modelled in small units (laptop ~3 wide, camera ~7 away), but drei <Html transform>
+// writes world units straight into CSS px. At that scale the browser rounds sub-pixel translations
+// inside the 3D layers and the perspective (~130x) blows the rounding up: the screen UI drifted tens
+// of px off the lid depending on window size. Rendering everything 100x larger keeps the CSS values
+// big enough that rounding no longer shows. Camera and light distances are multiplied by it.
+const WORLD = 100;
 // Laptop model (public/models/laptop/laptop.glb, "Laptop (FREE)" by Brandon Westlake, Sketchfab).
 // The file holds two laptops; we use the open one ("Cube.002": body + keys). Its mesh space is
 // Z-up, 220 units wide: base in XY (front edge y=-70, hinge y=+70), lid rising to z=134 while
@@ -215,10 +221,10 @@ function Scene({ reduced, portal }: { reduced: boolean; portal: Portal }) {
     const { merge, noise, screen: screenP } = phaseAt(t);
 
     if (!reduced) {
-      camera.position.x += (pointer.x * 0.5 - camera.position.x) * 0.04;
-      camera.position.y += (CAM_Y + pointer.y * 0.25 - camera.position.y) * 0.04;
+      camera.position.x += (pointer.x * 0.5 * WORLD - camera.position.x) * 0.04;
+      camera.position.y += ((CAM_Y + pointer.y * 0.25) * WORLD - camera.position.y) * 0.04;
     }
-    camera.lookAt(0, LOOK_Y, 0);
+    camera.lookAt(0, LOOK_Y * WORLD, 0);
 
     if (tilesRef.current) {
       tilesRef.current.style.opacity = String(screenP);
@@ -259,6 +265,8 @@ function Scene({ reduced, portal }: { reduced: boolean; portal: Portal }) {
 
       if (tab.target !== undefined) {
         lid.localToWorld(tmp.copy(TILE_LOCAL[tab.target]));
+        // Tabs sit inside the scaled group: bring the target back into its space.
+        g.parent?.worldToLocal(tmp);
         g.position.set(
           THREE.MathUtils.lerp(ox, tmp.x, merge),
           THREE.MathUtils.lerp(oy, tmp.y, merge),
@@ -281,28 +289,31 @@ function Scene({ reduced, portal }: { reduced: boolean; portal: Portal }) {
     <>
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 6, 5]} intensity={1.6} />
-      <pointLight position={[0, 2.6, -2.6]} intensity={7} distance={5} color="#6d55ff" />
+      {/* Physical falloff (decay 2): 100x the distance needs 100² the intensity. */}
+      <pointLight position={[0, 2.6 * WORLD, -2.6 * WORLD]} intensity={7 * WORLD * WORLD} distance={5 * WORLD} color="#6d55ff" />
       <Environment resolution={256}>
         <Lightformer form="rect" intensity={3} position={[0, 5, 2]} scale={[8, 2, 1]} />
         <Lightformer form="rect" intensity={1.5} position={[-5, 2, 1]} rotation-y={Math.PI / 2} scale={[4, 2, 1]} />
         <Lightformer form="rect" intensity={1.2} color="#bdb3ff" position={[5, 2, -1]} rotation-y={-Math.PI / 2} scale={[4, 2, 1]} />
       </Environment>
 
-      <group position={[0, -0.4, 0]}>
-        <Laptop lidRef={lidRef} tilesRef={tilesRef} portal={portal} screenApi={screenApi} />
-        <ContactShadows position={[0, -0.07, 0]} opacity={0.45} scale={9} blur={2.6} far={3} color="#16151f" />
-      </group>
+      <group scale={WORLD}>
+        <group position={[0, -0.4, 0]}>
+          <Laptop lidRef={lidRef} tilesRef={tilesRef} portal={portal} screenApi={screenApi} />
+          <ContactShadows position={[0, -0.07, 0]} opacity={0.45} scale={9} blur={2.6} far={3} color="#16151f" />
+        </group>
 
-      <group>
-        {TABS.map((tab, i) => (
-          <group key={tab.title} ref={(el) => { tabRefs.current[i] = el; }}>
-            <Html portal={portal} zIndexRange={[20, 0]} transform distanceFactor={TAB_DF} pointerEvents="none">
-              <div ref={(el) => { tabEls.current[i] = el; }} style={{ willChange: "opacity" }}>
-                <TabCard tab={tab} />
-              </div>
-            </Html>
-          </group>
-        ))}
+        <group>
+          {TABS.map((tab, i) => (
+            <group key={tab.title} ref={(el) => { tabRefs.current[i] = el; }}>
+              <Html portal={portal} zIndexRange={[20, 0]} transform distanceFactor={TAB_DF} pointerEvents="none">
+                <div ref={(el) => { tabEls.current[i] = el; }} style={{ willChange: "opacity" }}>
+                  <TabCard tab={tab} />
+                </div>
+              </Html>
+            </group>
+          ))}
+        </group>
       </group>
     </>
   );
@@ -341,7 +352,7 @@ export default function HeroLaptop() {
     >
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, CAM_Y, 6.8], fov: 34 }}
+        camera={{ position: [0, CAM_Y * WORLD, 6.8 * WORLD], fov: 34, near: 0.1 * WORLD, far: 100 * WORLD }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
