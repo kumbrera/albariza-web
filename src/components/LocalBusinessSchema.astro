@@ -4,8 +4,11 @@
 // (Service.provider, Article.publisher, BreadcrumbList...). Keep it in step with public/llms.txt.
 import { ORG_ID, PERSON_IDS, SITE, WEBSITE_ID } from "../data/schema";
 
-// Public profiles (LinkedIn, Instagram...) go here once they exist; they tie the entity together.
-const sameAs: string[] = [];
+// Official profiles: they tie the brand entity together for search engines and AI assistants.
+const sameAs: string[] = [
+  "https://www.linkedin.com/company/albariza-digital",
+  "https://www.instagram.com/albarizadigital",
+];
 
 const graph = {
   "@context": "https://schema.org",
