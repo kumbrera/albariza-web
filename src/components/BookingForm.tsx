@@ -4,6 +4,9 @@ import { TOPICS, topicCopy } from "@/data/booking";
 
 // Web3Forms relays submissions to albarizadigital@gmail.com. The key is public by design.
 const WEB3FORMS_ACCESS_KEY = "f9022aa9-8b7b-416b-9c2d-3930ab6193b6";
+// A copy lands in the internal panel's CRM as a new lead. Production only, so testing the site
+// locally never creates real leads; a failure here never affects the visitor.
+const PANEL_ENTRADA = "https://panel.albarizadigital.com/api/entrada/";
 
 const PAINS = ["Facturas y presupuestos", "Seguimiento de clientes", "Informes y datos", "Tareas internas", "Otra cosa"];
 
@@ -51,6 +54,14 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
+      if (import.meta.env.PROD) {
+        fetch(PANEL_ENTRADA, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, tarea: pain, servicio: copy.name, origen: source, subject: isSession ? "sesion" : "consulta" }),
+          keepalive: true,
+        }).catch(() => {});
+      }
       setStatus("done");
       onDone?.();
       form.reset();
