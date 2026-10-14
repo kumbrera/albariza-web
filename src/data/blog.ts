@@ -1,4 +1,5 @@
 import { bonoIaPosts } from "./blog-bono-ia";
+import { procesosPosts } from "./blog-procesos";
 
 export type ContentBlock =
   | { type: "p"; text: string }
@@ -36,15 +37,15 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  ...procesosPosts,
   ...bonoIaPosts,
   {
     slug: "automatizacion-procesos-pymes-rpa",
-    title:
-      "Automatización de procesos en pymes: guía práctica del RPA para empezar sin programar",
+    title: "Automatización de procesos en pymes: cómo empezar",
     metaDescription:
-      "Qué es el RPA, qué procesos puedes automatizar ya en tu pyme y qué herramientas no-code usar. Guía práctica para pymes y autónomos.",
+      "Qué es la automatización de procesos (RPA), qué tareas de una pyme se pueden automatizar ya y con qué herramientas empezar sin saber programar.",
     excerpt:
-      "Qué es el RPA, qué procesos automatizar primero y con qué herramientas no-code empezar sin programar.",
+      "Qué es la automatización de procesos, qué tareas automatizar primero y con qué herramientas empezar sin programar.",
     categorySlug: "asesoria-procesos-automatizacion",
     categoryLabel: "Procesos y automatización",
     keywords: [
@@ -52,90 +53,112 @@ export const blogPosts: BlogPost[] = [
       "RPA para pymes",
       "qué es el RPA",
       "automatización sin programar",
-      "no-code para empresas",
+      "herramientas de automatización para empresas",
       "automatizar facturación",
-      "Make.com vs Zapier",
+      "Make vs Zapier",
       "automatización de procesos para pymes",
     ],
     datePublished: "2026-08-23",
+    dateModified: "2026-10-14",
     intro: [
       {
         type: "p",
-        text: "¿Cuántas horas a la semana dedica tu equipo a copiar datos de un sitio a otro, enviar emails repetitivos o rellenar formularios? La automatización de procesos (RPA) elimina ese trabajo manual para que tu equipo se centre en lo que realmente importa.",
+        text: "¿Cuántas horas a la semana dedica tu equipo a copiar datos de un sitio a otro, mandar los mismos correos o rellenar los mismos formularios? La automatización de procesos consiste en que esas tareas se hagan solas, con las herramientas que ya usas, para que el equipo dedique ese tiempo a lo que de verdad necesita a una persona.",
+      },
+      {
+        type: "p",
+        text: "En esta guía te explico qué es, qué tareas suelen automatizarse primero en una pyme, con qué herramientas se hace y cómo dar el primer paso sin complicarte.",
       },
     ],
     sections: [
       {
-        heading: "¿Qué es el RPA y por qué a una pyme le conviene prestarle atención?",
+        heading: "¿Qué es la automatización de procesos (RPA)?",
         blocks: [
           {
             type: "p",
-            text: "RPA (Robotic Process Automation) es tecnología que permite automatizar tareas digitales repetitivas sin necesidad de programación compleja. Un “robot” software replica lo que haría un humano: abrir aplicaciones, copiar datos, enviar emails, generar informes. La diferencia clave es que lo hace 24/7, sin errores y a coste mínimo.",
+            text: "RPA son las siglas en inglés de automatización robótica de procesos. Dicho sin jerga: un programa que repite en el ordenador los mismos pasos que haría una persona, como abrir un correo, copiar unos datos, pegarlos en un Excel y avisar a alguien. Hoy, en la mayoría de pymes, esto se hace conectando las aplicaciones que ya se usan (correo, Excel, el programa de facturación, el CRM) para que los datos pasen solos de una a otra.",
+          },
+          {
+            type: "p",
+            text: "Lo que una automatización hace bien:",
           },
           {
             type: "ul",
             items: [
-              "El empleado medio dedica el 40% de su tiempo a tareas repetitivas automatizables",
-              "El RPA reduce errores manuales en un 80% de media en los procesos automatizados",
-              "El retorno de inversión medio de un proyecto RPA en pymes es de 6-12 meses",
-              "No requiere cambiar los sistemas actuales — el robot trabaja sobre lo que ya tienes",
+              "Repetir tareas con reglas fijas, siempre igual, a cualquier hora.",
+              "Evitar los errores de copiar y pegar a mano.",
+              "Avisar cuando algo necesita a una persona: un presupuesto sin respuesta, un pago pendiente.",
+              "Trabajar sobre lo que ya tienes, sin cambiar de programas.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Lo que no hace: decidir por ti. Negociar un precio, valorar una incidencia o atender a un cliente enfadado sigue siendo trabajo de personas. Por eso automatizamos lo que merece la pena, no todo.",
+          },
+        ],
+      },
+      {
+        heading: "Tareas que se suelen automatizar primero en una pyme",
+        blocks: [
+          {
+            type: "p",
+            text: "Cada empresa es distinta, pero en negocios de servicios con mucha gestión manual estas tareas aparecen casi siempre:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Pedidos y solicitudes: cuando llega un pedido por correo o por el formulario de la web, se apunta solo en el Excel o en el CRM y se avisa a quien corresponda.",
+              "Seguimiento de presupuestos: si un cliente no contesta en unos días, sale un recordatorio y se avisa al comercial.",
+              "Recordatorios a clientes: citas, pagos pendientes o documentación que falta.",
+              "Facturación: la factura se genera con los datos del pedido ya cerrado, sin volver a escribirlos.",
+              "Informes: el resumen de cada semana o cada mes se monta solo con los datos al día.",
+              "Alta de clientes: los datos se escriben una vez y llegan a todos los programas que los necesitan.",
             ],
           },
         ],
       },
       {
-        heading: "Procesos que puedes automatizar en tu empresa desde ya",
+        heading: "Herramientas para automatizar sin saber programar",
         blocks: [
           {
             type: "p",
-            text: "Estos son los procesos que más tiempo suelen robar en una pyme, y los primeros que conviene automatizar:",
+            text: "Para la mayoría de estas tareas no hace falta un programador. Hay herramientas pensadas para conectar aplicaciones de forma visual, arrastrando bloques (a esto se le suele llamar no-code, «sin código»). Las más usadas:",
           },
           {
             type: "ul",
             items: [
-              "Facturación: generar y enviar facturas automáticamente al cerrar una venta en el CRM",
-              "Captación de leads: cuando alguien rellena un formulario web, se crea automáticamente en el CRM y se envía un email de bienvenida",
-              "Informes: recopilación automática de datos de ventas, tráfico web y RRSS en un informe semanal",
-              "Gestión de stock: alerta automática cuando un producto baja de cierto stock mínimo",
-              "Onboarding de clientes: secuencia de emails automática cuando un nuevo cliente firma contrato",
+              "Make: muy flexible, permite montar flujos con varios pasos y condiciones.",
+              "Zapier: la más conocida y sencilla para conexiones directas entre dos aplicaciones.",
+              "n8n: de código abierto; se puede instalar en un servidor propio. Algo más técnica.",
+              "Power Automate: la opción natural si la empresa ya trabaja con Microsoft 365.",
             ],
+          },
+          {
+            type: "p",
+            text: "La herramienta es lo de menos. Lo importante es elegir la que se conecte bien con lo que ya usáis y que alguien del equipo entienda qué hace cada automatización. Sus planes y precios cambian a menudo, así que conviene revisarlos en la web de cada una antes de decidir.",
           },
         ],
       },
       {
-        heading: "Herramientas de automatización para pymes: sin programar",
+        heading: "Cómo empezar: un proceso cada vez",
         blocks: [
           {
             type: "p",
-            text: "No necesitas un programador para automatizar procesos en tu empresa. Estas herramientas no-code lo hacen posible:",
+            text: "El error más común es querer automatizarlo todo de golpe. Funciona mucho mejor elegir un solo proceso, el que más tiempo os roba, y empezar por él:",
           },
           {
             type: "ul",
             items: [
-              "Make.com (antes Integromat): la más potente para empresas. Conecta más de 1.500 apps. Desde 9€/mes",
-              "Zapier: la más conocida y fácil de usar. Ideal para automatizaciones sencillas. Desde 0€",
-              "n8n: código abierto y autoalojable. Más técnica pero coste muy bajo a largo plazo",
-              "Microsoft Power Automate: si ya usáis Microsoft 365, está incluido en vuestra suscripción",
+              "Apunta durante una semana lo que se hace a mano y cuántas veces se repite.",
+              "Calcula cuántas horas al año suma cada tarea: veces por semana × minutos × semanas de trabajo ÷ 60.",
+              "Quédate con las que siguen reglas fijas y trabajan con datos que ya están en el ordenador.",
+              "Empieza por la que más horas suma y menos se complica.",
+              "Mide las horas y los errores antes y después. Si funciona, pasa al siguiente proceso.",
             ],
           },
-        ],
-      },
-      {
-        heading: "Cómo empezar: identifica tu primera automatización",
-        blocks: [
           {
             type: "p",
-            text: "El error más común es querer automatizarlo todo de golpe. El enfoque correcto es identificar el proceso más doloroso y empezar por él. Te proponemos este ejercicio:",
-          },
-          {
-            type: "ul",
-            items: [
-              "Apunta durante una semana todo lo que haces de forma repetitiva",
-              "Identifica cuál de esas tareas te quita más tiempo o genera más errores",
-              "Comprueba si existe una herramienta que conecte los sistemas implicados (Make.com tiene integraciones para casi todo)",
-              "Prueba con un presupuesto pequeño — muchas automatizaciones se pueden implementar por menos de 500€",
-              "Mide el tiempo ahorrado y escala desde ahí",
-            ],
+            text: "Y antes de automatizar, pon orden: si cada persona apunta las cosas a su manera, la automatización solo hará que el desorden vaya más rápido. Lo explicamos con más detalle, con un ejemplo de cálculo, en el artículo sobre qué proceso automatizar primero.",
           },
         ],
       },
@@ -143,15 +166,19 @@ export const blogPosts: BlogPost[] = [
     faq: [
       {
         q: "¿Qué es el RPA en palabras sencillas?",
-        a: "Es un “robot” de software que repite en tu ordenador las mismas acciones que haría una persona (copiar datos, enviar emails, generar informes), pero de forma automática, sin errores y sin descanso.",
+        a: "Es un programa que repite en el ordenador las mismas acciones que haría una persona (copiar datos, enviar correos, preparar informes) de forma automática. En la práctica, suele consistir en conectar las aplicaciones que ya usas para que los datos pasen solos de una a otra.",
       },
       {
         q: "¿Cuánto cuesta automatizar procesos en una pyme?",
-        a: "Muchas automatizaciones se pueden implementar por menos de 500€ iniciales, con herramientas no-code desde 0-9€/mes de suscripción. El retorno de inversión medio ronda los 6-12 meses.",
+        a: "Depende del proceso, de cuántas herramientas haya que conectar y de lo ordenados que estén los datos. Por eso conviene empezar por un solo proceso: el alcance es pequeño y se puede medir el ahorro en horas antes de seguir. Cada caso necesita entenderse antes de poder dar una cifra.",
       },
       {
         q: "¿Necesito programadores para automatizar mi empresa?",
-        a: "No. Herramientas como Make.com, Zapier o Power Automate permiten crear automatizaciones sin escribir código, conectando las aplicaciones que ya usas.",
+        a: "Para la mayoría de tareas, no. Herramientas como Make, Zapier o Power Automate permiten crear automatizaciones sin escribir código, conectando las aplicaciones que ya usas.",
+      },
+      {
+        q: "¿Tengo que cambiar los programas que uso?",
+        a: "Normalmente no. La automatización trabaja sobre lo que ya tienes: correo, Excel, el programa de facturación o el CRM.",
       },
     ],
   },
