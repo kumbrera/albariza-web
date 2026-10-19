@@ -85,7 +85,7 @@ export const bonoIaPosts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "Si divides 600 millones entre 25.000 empresas sale una media de unos 24.000 euros, pero es solo una cuenta orientativa: nada impide que haya tramos según el tamaño de la empresa, como ocurrió con el Kit Digital. Desconfía de quien hoy te prometa una cifra cerrada.",
+            text: "El importe por empresa todavía no se conoce: lo fijarán las bases, y puede haber tramos según el tamaño de la empresa, como ocurrió con el Kit Digital. Desconfía de quien hoy te prometa una cifra cerrada.",
           },
         ],
       },

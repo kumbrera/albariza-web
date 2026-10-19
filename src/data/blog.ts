@@ -459,7 +459,7 @@ export const blogPosts: BlogPost[] = [
             items: [
               "Comprar software antes de tener claro el proceso que se quiere resolver",
               "Querer digitalizarlo todo de golpe, en vez de empezar por un proceso piloto",
-              "No dedicar tiempo a formar al equipo — la mejor herramienta falla si nadie la usa bien",
+              "No dedicar tiempo a formar al equipo: la mejor herramienta falla si nadie la usa bien",
               "Elegir herramientas que no se integran entre sí y acaban generando más trabajo manual",
               "No medir el antes y el después, así que nunca se sabe si de verdad ha mejorado algo",
             ],
@@ -471,7 +471,7 @@ export const blogPosts: BlogPost[] = [
         blocks: [
           {
             type: "p",
-            text: "Un CRM gestiona la relación comercial con tus clientes: leads, oportunidades, seguimiento. Un ERP gestiona la operativa interna: facturación, stock, contabilidad, producción. Muchas pymes solo necesitan uno de los dos para empezar — el error habitual es intentar implementar ambos a la vez sin que se hablen entre sí.",
+            text: "Un CRM gestiona la relación comercial con tus clientes: leads, oportunidades, seguimiento. Un ERP gestiona la operativa interna: facturación, stock, contabilidad, producción. Muchas pymes solo necesitan uno de los dos para empezar. El error habitual es intentar implementar ambos a la vez sin que se hablen entre sí.",
           },
           {
             type: "ul",
@@ -490,7 +490,7 @@ export const blogPosts: BlogPost[] = [
             type: "ul",
             items: [
               "Audita cómo funciona hoy el proceso que quieres mejorar, sin dar nada por hecho",
-              "Elige un proceso piloto — no toda la empresa a la vez",
+              "Elige un proceso piloto, no toda la empresa a la vez",
               "Selecciona herramientas que se integren entre sí (o automatiza el puente entre ellas)",
               "Forma a tu equipo con sesiones cortas y prácticas, no un manual de 50 páginas",
               "Mide resultados a los 90 días antes de decidir si escalar a otros procesos",
@@ -506,7 +506,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         q: "¿Cuánto cuesta implementar un CRM en una pyme?",
-        a: "Depende del tamaño del equipo y la complejidad del proceso, pero muchas soluciones para pymes empiezan desde planes gratuitos o de pocos euros al mes por usuario, más el tiempo de configuración e integración inicial.",
+        a: "Depende del tamaño del equipo, de la complejidad del proceso y de con qué haya que conectarlo. Hay CRM con planes gratuitos para empezar, pero el coste real suele estar en configurarlo bien, conectarlo con lo que ya usáis y que el equipo aprenda a usarlo. Por eso conviene empezar por un solo proceso y medir antes de ampliar.",
       },
       {
         q: "¿Cuánto tiempo lleva digitalizar una empresa pequeña?",
@@ -516,12 +516,11 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "cuanto-cuesta-pagina-web-pyme",
-    title:
-      "Cuánto cuesta una página web para tu negocio (y qué debe incluir para vender de verdad)",
+    title: "Cuánto cuesta una web para tu pyme: de qué depende",
     metaDescription:
-      "Rangos de precio reales para una página web de pyme, qué debe incluir para convertir visitas en clientes y cuándo necesitas dar el salto al eCommerce.",
+      "De qué depende el precio de una página web para una pyme, qué debe incluir para convertir visitas en clientes y cuándo tiene sentido una tienda online.",
     excerpt:
-      "Rangos de precio orientativos, qué debe incluir una web que convierte y cuándo necesitas una tienda online.",
+      "De qué depende el precio de una web, qué debe incluir para que convierta y cuándo necesitas una tienda online.",
     categorySlug: "web",
     categoryLabel: "Web",
     keywords: [
@@ -535,6 +534,7 @@ export const blogPosts: BlogPost[] = [
       "diseño web para pymes",
     ],
     datePublished: "2026-08-23",
+    dateModified: "2026-10-19",
     intro: [
       {
         type: "p",
@@ -543,20 +543,26 @@ export const blogPosts: BlogPost[] = [
     ],
     sections: [
       {
-        heading: "Cuánto cuesta una página web en 2026: rangos orientativos",
+        heading: "De qué depende el precio de una página web",
         blocks: [
           {
             type: "p",
-            text: "Los precios varían según alcance y complejidad, pero estos son los rangos habituales del mercado para una pyme:",
+            text: "Preguntar cuánto cuesta una web es como preguntar cuánto cuesta una reforma: depende de lo que haya que hacer. Antes de comparar presupuestos, conviene tener claro qué necesitas. Estas son las cosas que más cambian el precio:",
           },
           {
             type: "ul",
             items: [
-              "Web corporativa sencilla (3-5 páginas): entre 600€ y 1.500€",
-              "Web con blog y SEO técnico cuidado desde el diseño: entre 1.200€ y 3.000€",
-              "Tienda online (eCommerce) con catálogo y pasarela de pago: desde 2.000€, según integraciones",
-              "Mantenimiento, hosting y actualizaciones: entre 20€ y 60€ al mes",
+              "Cuántas páginas y secciones necesita, y si los textos y las fotos los aportas tú o hay que crearlos.",
+              "Si es un diseño a medida o parte de una plantilla.",
+              "Si lleva blog, reservas, formularios conectados con tu correo o tu CRM, o zona de clientes.",
+              "Si es una tienda online: tamaño del catálogo, pasarela de pago, envíos e integraciones con tu programa de gestión.",
+              "Si el SEO técnico (velocidad, estructura, adaptación al móvil) viene cuidado desde el diseño.",
+              "Qué pasa después: alojamiento, mantenimiento, copias de seguridad y quién hace los cambios.",
             ],
+          },
+          {
+            type: "p",
+            text: "Para comparar bien, pide que cada presupuesto detalle estos puntos. Dos webs con el mismo precio pueden incluir cosas muy distintas, y lo barato sale caro si después cada cambio hay que pagarlo aparte.",
           },
         ],
       },
@@ -567,7 +573,7 @@ export const blogPosts: BlogPost[] = [
             type: "ul",
             items: [
               "Una llamada a la acción clara en cada página (llamar, escribir, comprar, reservar)",
-              "Velocidad de carga cuidada — cada segundo de más reduce las conversiones",
+              "Velocidad de carga cuidada: una web lenta pierde visitas antes de que lleguen a leer nada",
               "Diseño adaptado de verdad a móvil, no solo \"que se vea bien\"",
               "Formulario de contacto simple, sin pedir más datos de los necesarios",
               "Testimonios, reseñas o casos reales que generen confianza",
@@ -604,13 +610,17 @@ export const blogPosts: BlogPost[] = [
               "Ninguna llamada a la acción visible sin hacer scroll",
               "Tiempos de carga por encima de 3 segundos",
               "Una versión móvil que es solo la de escritorio encogida",
-              "Cero analítica instalada — sin datos, no sabes qué mejorar",
+              "Cero analítica instalada: sin datos, no sabes qué mejorar",
             ],
           },
         ],
       },
     ],
     faq: [
+      {
+        q: "¿Cuánto cuesta una página web para una pyme?",
+        a: "Depende del número de páginas, de si el diseño es a medida, de las funciones que lleve (reservas, formularios conectados, tienda online) y del mantenimiento posterior. Por eso lo sensato es definir primero qué necesitas y pedir presupuestos que detallen qué incluyen.",
+      },
       {
         q: "¿Cuánto tarda en hacerse una página web?",
         a: "Una web corporativa sencilla suele estar lista en 2-4 semanas. Un eCommerce completo, con catálogo e integraciones, puede llevar de 4 a 8 semanas según su complejidad.",

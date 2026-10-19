@@ -206,4 +206,189 @@ export const procesosPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "seguimiento-presupuestos-pyme",
+    title: "Seguimiento de presupuestos: que no se escape ninguno",
+    metaDescription:
+      "Cómo organizar el seguimiento de presupuestos en una pyme: un solo listado, estados claros, una fecha para cada siguiente paso y recordatorios automáticos.",
+    excerpt:
+      "Un sistema sencillo para saber qué presupuestos están abiertos, a quién hay que llamar hoy y por qué se pierden los que se pierden.",
+    categorySlug: "asesoria-procesos-automatizacion",
+    categoryLabel: "Procesos y automatización",
+    keywords: [
+      "seguimiento de presupuestos",
+      "cómo hacer seguimiento a un presupuesto",
+      "control de presupuestos enviados",
+      "plantilla seguimiento presupuestos Excel",
+      "automatizar seguimiento comercial",
+      "CRM para pymes",
+    ],
+    datePublished: "2026-11-04",
+    intro: [
+      {
+        type: "p",
+        text: "Para que no se escape ningún presupuesto hacen falta cuatro cosas: todos los presupuestos en un solo listado, un estado claro para cada uno, una fecha para el siguiente paso y alguien responsable de darlo. Con eso ya sabes cada mañana a quién hay que llamar. Después, los recordatorios se pueden automatizar para que nadie tenga que acordarse.",
+      },
+      {
+        type: "p",
+        text: "En este artículo te explico cómo montarlo paso a paso, empezando con lo que ya tienes (un Excel compartido sirve), y cuándo merece la pena pasar a un CRM.",
+      },
+    ],
+    sections: [
+      {
+        heading: "Por qué se escapan los presupuestos",
+        blocks: [
+          {
+            type: "p",
+            text: "Casi nunca es por falta de ganas. Los presupuestos se pierden por cómo está organizado el trabajo:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Se envían por correo, se comentan por WhatsApp y se apuntan, si se apuntan, en el Excel de cada comercial.",
+              "Nadie sabe cuántos hay abiertos ni cuánto suman sin preguntar a varias personas.",
+              "No hay fecha para el siguiente paso, así que el seguimiento depende de la memoria.",
+              "Da apuro insistir, y el «ya me dirá» se convierte en semanas sin noticias.",
+              "Cuando un presupuesto se pierde, nadie apunta por qué, así que no se aprende nada.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Paso 1: un solo listado con todos los presupuestos",
+        blocks: [
+          {
+            type: "p",
+            text: "Lo primero no es una herramienta nueva: es acordar un único sitio donde se apuntan todos los presupuestos, los envíe quien los envíe. Para empezar, una hoja compartida basta. Estas columnas son suficientes:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Cliente y persona de contacto.",
+              "Qué se ha presupuestado y por qué importe.",
+              "Fecha de envío.",
+              "Estado.",
+              "Siguiente paso y fecha en que toca darlo.",
+              "Responsable.",
+              "Motivo, si se pierde.",
+            ],
+          },
+          {
+            type: "p",
+            text: "La regla que lo cambia todo: un presupuesto que no está en el listado no existe. Si se envía por WhatsApp, se apunta igual.",
+          },
+        ],
+      },
+      {
+        heading: "Paso 2: pocos estados y bien definidos",
+        blocks: [
+          {
+            type: "p",
+            text: "Si cada persona entiende una cosa distinta por «pendiente», el listado no sirve. Con cuatro estados basta para la mayoría de negocios de servicios:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Enviado: el cliente lo tiene y aún no ha respondido.",
+              "En seguimiento: ha respondido, pide cambios o lo está valorando.",
+              "Aceptado: hay un sí.",
+              "Perdido: hay un no, o no hay respuesta después del último intento. Siempre con el motivo.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Paso 3: ningún presupuesto sin fecha de siguiente paso",
+        blocks: [
+          {
+            type: "p",
+            text: "Es la columna más importante. Cada presupuesto abierto tiene que tener apuntado qué toca hacer y cuándo: «llamar el jueves», «enviar versión con cambios el lunes». Así, cada mañana basta con filtrar por la fecha de hoy para saber a quién hay que contactar.",
+          },
+          {
+            type: "p",
+            text: "Una pauta que funciona en muchos negocios, y que conviene ajustar a tu ciclo de venta: a los dos o tres días, confirmar que lo ha recibido y resolver dudas; a la semana, una llamada; a las dos semanas, un último mensaje claro preguntando si sigue adelante. Si no hay respuesta, se marca como perdido con su motivo. Siempre se puede reabrir.",
+          },
+        ],
+      },
+      {
+        heading: "Paso 4: automatiza los recordatorios",
+        blocks: [
+          {
+            type: "p",
+            text: "Con el listado ordenado, automatizar el seguimiento es sencillo y no exige cambiar de programas. Lo más útil suele ser:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Un aviso al responsable el día que vence el siguiente paso de un presupuesto.",
+              "Un mensaje de seguimiento ya redactado que sale solo si el cliente no ha respondido en unos días, y que el comercial puede revisar antes de enviarlo.",
+              "Que el presupuesto se apunte solo en el listado al enviarlo desde el programa de facturación o desde el correo.",
+              "Un resumen cada lunes con los presupuestos abiertos, cuánto suman y cuáles llevan más tiempo sin moverse.",
+            ],
+          },
+          {
+            type: "p",
+            text: "La decisión de cuándo llamar y qué decir sigue siendo de una persona. Lo que se automatiza es acordarse.",
+          },
+        ],
+      },
+      {
+        heading: "Paso 5: mide para mejorar",
+        blocks: [
+          {
+            type: "p",
+            text: "Con unas semanas de datos en el listado aparecen respuestas que antes eran intuiciones:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Qué porcentaje de presupuestos acaba aceptado, en total y por comercial o por tipo de servicio.",
+              "Cuántos días pasan de media entre el envío y la respuesta.",
+              "Por qué se pierden: precio, plazo, no contestan, se lo quedó otro.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Con eso ya se puede decidir con datos: si casi todos los que se pierden es porque no contestan, el problema está en el seguimiento, no en el precio.",
+          },
+        ],
+      },
+      {
+        heading: "Lo vivimos en nuestra propia empresa",
+        blocks: [
+          {
+            type: "p",
+            text: "Antes de ofrecer esto como servicio, lo montamos en STEP, la empresa de eventos de nuestro equipo. Las oportunidades estaban repartidas entre conversaciones y Excel, y el seguimiento se hacía a mano. Al centralizarlo todo en un sistema, el comercial lo resumió así: «Antes me pasaba horas buscando entre conversaciones para hacer los seguimientos y no fallar en nada. Después solo dedicaba mi tiempo a atender a los clientes cuando tocaba y a tiempo».",
+          },
+        ],
+      },
+      {
+        heading: "¿Excel o CRM?",
+        blocks: [
+          {
+            type: "p",
+            text: "Un Excel compartido y bien ordenado es un buen punto de partida, y para un equipo pequeño puede bastar mucho tiempo. Merece la pena pasar a un CRM cuando varias personas trabajan los mismos clientes a la vez, cuando quieres que las conversaciones de correo o WhatsApp queden unidas a cada presupuesto, o cuando los recordatorios automáticos empiezan a ser imprescindibles. Lo importante es que el orden venga primero: un CRM sobre un proceso sin definir solo traslada el desorden a otro sitio.",
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "¿Cuántas veces hay que hacer seguimiento a un presupuesto?",
+        a: "Depende del tipo de venta, pero una pauta habitual son tres contactos: a los dos o tres días para confirmar que lo ha recibido, a la semana con una llamada y a las dos semanas con un último mensaje claro. Si no hay respuesta, se marca como perdido con su motivo y se puede reabrir más adelante.",
+      },
+      {
+        q: "¿Sirve un Excel para controlar los presupuestos?",
+        a: "Sí, para empezar es suficiente si está compartido, todo el equipo apunta ahí todos los presupuestos y cada uno tiene estado, siguiente paso, fecha y responsable. Cuando hay varias personas trabajando los mismos clientes o se necesitan recordatorios automáticos, conviene pasar a un CRM.",
+      },
+      {
+        q: "¿Se puede automatizar el seguimiento de presupuestos?",
+        a: "Sí. Se pueden automatizar los avisos al responsable, los mensajes de seguimiento cuando el cliente no contesta, el registro del presupuesto al enviarlo y un resumen semanal de los abiertos. La conversación con el cliente sigue siendo de una persona.",
+      },
+      {
+        q: "¿Qué hago con los presupuestos que no contestan?",
+        a: "Tras el último intento, márcalos como perdidos con el motivo «no contesta». Así el listado refleja la realidad y, si son muchos, sabrás que el problema está en el seguimiento o en el primer contacto, no en el precio.",
+      },
+    ],
+  },
 ];
