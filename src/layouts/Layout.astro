@@ -94,6 +94,9 @@ const ogImageAlt = "Albariza: ponemos orden en c√≥mo trabaja tu empresa. Asesor√
     <CookieConsent />
 
     <script>
+      import { guardarAtribucion } from "@/lib/atribucion";
+      guardarAtribucion();
+
       // GA4 click tracking for phone and WhatsApp links, sitewide. Silently does nothing
       // if the visitor hasn't accepted analytics cookies (gtag stays undefined then).
       document.querySelectorAll<HTMLAnchorElement>('a[href^="tel:"]').forEach((el) => {

@@ -1,12 +1,15 @@
 import { useState, type FormEvent } from "react";
 import { CircleCheck } from "lucide-react";
 import { TOPICS, topicCopy } from "@/data/booking";
+import { leerAtribucion } from "@/lib/atribucion";
 
 // Web3Forms relays submissions to albarizadigital@gmail.com. The key is public by design.
 const WEB3FORMS_ACCESS_KEY = "f9022aa9-8b7b-416b-9c2d-3930ab6193b6";
 // A copy lands in the internal panel's CRM as a new lead. Production only, so testing the site
 // locally never creates real leads; a failure here never affects the visitor.
 const PANEL_ENTRADA = "https://panel.albarizadigital.com/api/entrada/";
+// Month of the privacy policy the visitor accepts ("Última actualización" on /politica-privacidad/).
+const POLITICA_VERSION = "2026-09";
 
 const PAINS = ["Facturas y presupuestos", "Seguimiento de clientes", "Informes y datos", "Tareas internas", "Otra cosa"];
 
@@ -55,10 +58,21 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
       if (import.meta.env.PROD) {
+        const atribucion = leerAtribucion();
         fetch(PANEL_ENTRADA, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...data, tarea: pain, servicio: copy.name, origen: source, subject: isSession ? "sesion" : "consulta" }),
+          body: JSON.stringify({
+            ...data,
+            tarea: pain,
+            servicio: copy.name,
+            origen: source,
+            subject: isSession ? "sesion" : "consulta",
+            ...atribucion,
+            ...(atribucion.utm_campaign && { lista: atribucion.utm_campaign }),
+            consentimiento: true,
+            consentimiento_version: POLITICA_VERSION,
+          }),
           keepalive: true,
         }).catch(() => {});
       }
@@ -148,6 +162,17 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
         />
       </label>
 
+      {/* No name: the box only gates the submit, so the Web3Forms payload stays as it was. */}
+      <label className="flex items-start gap-2.5 text-[0.88rem] leading-snug text-graphite">
+        <input type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-violet" />
+        <span>
+          He leído y acepto la{" "}
+          <a href="/politica-privacidad/" target="_blank" className="underline decoration-graphite/40 underline-offset-2 hover:text-ink">
+            política de privacidad
+          </a>
+        </span>
+      </label>
+
       <button
         type="submit"
         disabled={status === "sending"}
@@ -160,10 +185,7 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
           No se ha podido enviar. Escríbenos a albarizadigital@gmail.com o llama al 601 386 534.
         </p>
       )}
-      <p className="text-center text-[0.8rem] text-graphite">
-        Usamos tus datos solo para responderte.{" "}
-        <a href="/politica-privacidad/" className="underline decoration-graphite/40 underline-offset-2">Política de privacidad</a>
-      </p>
+      <p className="text-center text-[0.8rem] text-graphite">Usamos tus datos solo para responderte.</p>
     </form>
   );
 }
