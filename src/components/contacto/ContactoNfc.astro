@@ -1,0 +1,92 @@
+---
+// The page an NFC card (or its QR) opens: who you met, their direct line, a 15-second form and
+// our channels. /hola/ shows the whole team; /hola/<slug>/ opens that person's card.
+import Layout from "../../layouts/Layout.astro";
+import TeamCards from "./TeamCards.tsx";
+import QuickForm from "./QuickForm.tsx";
+import { SiInstagram } from "@icons-pack/react-simple-icons";
+import { team, type Persona } from "../../data/contacto";
+
+interface Props {
+  slug?: Persona["slug"] | null;
+}
+const { slug = null } = Astro.props;
+const persona = team.find((p) => p.slug === slug) ?? null;
+const nombre = persona?.name.split(" ")[0];
+const utm = "utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc";
+---
+
+<Layout
+  title={persona ? `${persona.name} · Albariza Digital` : "Encantados · Albariza Digital"}
+  description="Asesoría de procesos y automatización para pymes. Guarda nuestro contacto o déjanos el tuyo."
+  noindex
+  minimal
+>
+  <div class="relative overflow-x-clip">
+    <div aria-hidden="true" class="hola-light pointer-events-none absolute inset-x-0 top-0 h-[560px]"></div>
+
+    <div class="relative mx-auto max-w-[440px] px-4 pb-16 pt-7">
+      <header class="flex flex-col items-center text-center">
+        <a href={`/?${utm}`} aria-label="Albariza Digital">
+          <img src="/brand/albariza-wordmark.svg" alt="Albariza" width="132" height="32" />
+        </a>
+        <h1 class="mt-7 text-[2.35rem] font-bold leading-[1] tracking-[-0.05em]">
+          {persona ? `Encantado de conocerte.` : "¿A quién has conocido?"}
+        </h1>
+        <p class="mt-3 max-w-[32ch] text-[1.02rem] leading-relaxed text-graphite">
+          {persona ? `Soy ${nombre}, de Albariza: ponemos orden en cómo trabaja tu empresa y automatizamos lo repetitivo.` : "Toca su tarjeta para ver su teléfono y escribirle por WhatsApp."}
+        </p>
+      </header>
+
+      <section class="mt-7" aria-label="Equipo">
+        <TeamCards client:load initial={slug} />
+      </section>
+
+      <section class="mt-10 rounded-[28px] bg-white p-5 shadow-[0_30px_60px_-40px_rgba(22,21,31,0.45)] ring-1 ring-ink/6" aria-labelledby="form-titulo">
+        <h2 id="form-titulo" class="text-[1.45rem] font-bold leading-tight tracking-[-0.04em]">¿Prefieres que te escribamos?</h2>
+        <p class="mb-5 mt-1.5 text-[0.95rem] text-graphite">Déjanos tu teléfono o tu email y te contamos cómo te podemos ayudar.</p>
+        <QuickForm client:visible conocido={persona?.panel ?? null} />
+      </section>
+
+      <section class="mt-10 text-center" aria-label="Más de Albariza">
+        <a
+          href={`/servicios/asesoria-procesos-automatizacion/?${utm}`}
+          class="inline-flex rounded-full bg-ink px-6 py-3.5 text-[0.98rem] font-semibold text-chalk transition hover:bg-violet"
+        >
+          Sesión gratuita de 30 minutos
+        </a>
+        <div class="mt-6 flex items-center justify-center gap-3">
+          <a href="https://www.linkedin.com/company/albariza-digital" target="_blank" rel="noopener" aria-label="LinkedIn de Albariza" class="social">
+            <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" /></svg>
+          </a>
+          <a href="https://www.instagram.com/albarizadigital" target="_blank" rel="noopener" aria-label="Instagram de Albariza" class="social">
+            <SiInstagram size={19} />
+          </a>
+          <a href={`/?${utm}`} class="social px-4 text-[0.92rem] font-semibold">albarizadigital.com</a>
+        </div>
+        <p class="mt-6 text-[0.82rem] text-graphite">Albariza Digital · Asesoría de procesos y automatización · Jerez de la Frontera</p>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .hola-light {
+    background: radial-gradient(60% 70% at 50% 0%, rgba(79, 50, 224, 0.16), rgba(79, 50, 224, 0) 70%);
+  }
+  .social {
+    display: inline-flex;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    box-shadow: 0 0 0 1px rgb(22 21 31 / 0.08);
+    transition: color 0.2s;
+  }
+  .social:hover {
+    color: var(--color-violet);
+  }
+</style>

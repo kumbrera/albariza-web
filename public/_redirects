@@ -4,3 +4,14 @@
 /servicios/ia-automatizacion/  /servicios/asesoria-procesos-automatizacion/ 301
 /servicios/consultoria         /servicios/asesoria-procesos-automatizacion/ 301
 /servicios/consultoria/        /servicios/asesoria-procesos-automatizacion/ 301
+
+# NFC contact cards (one per person; QR on the sticker points here too). Stable short links: change
+# where they land here, never on the cards. Tagged for the panel's «Tarjetas NFC» CRM list.
+/t/pablo       /hola/pablo/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=pablo 302
+/t/pablo/      /hola/pablo/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=pablo 302
+/t/miguel      /hola/miguel/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=miguel 302
+/t/miguel/     /hola/miguel/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=miguel 302
+/t/alejandro   /hola/alejandro/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=alejandro 302
+/t/alejandro/  /hola/alejandro/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc&utm_content=alejandro 302
+/t/albariza    /hola/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc 302
+/t/albariza/   /hola/?utm_source=nfc&utm_medium=tarjeta&utm_campaign=tarjetas-nfc 302

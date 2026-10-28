@@ -27,7 +27,7 @@ export default defineConfig({
     react(),
     sitemap({
       filter: (page) =>
-        !page.endsWith('/404/') && !page.endsWith('/servicios/ia-automatizacion/') && !page.endsWith('/servicios/consultoria/'),
+        !page.endsWith('/404/') && !page.includes('/hola/') && !page.endsWith('/servicios/ia-automatizacion/') && !page.endsWith('/servicios/consultoria/'),
       serialize(item) {
         const path = new URL(item.url).pathname;
         return { ...item, lastmod: postDates.get(path) ?? buildDate };

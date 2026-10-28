@@ -22,6 +22,8 @@ interface Props {
   /** True only for the 404 page — keeps it out of search results even if something
       links to it by mistake (it's also excluded from the sitemap separately). */
   noindex?: boolean;
+  /** Pages opened from an NFC card: no site nav, footer or the general WhatsApp button. */
+  minimal?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   ogType = "website",
   publishedTime,
   noindex = false,
+  minimal = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.url);
@@ -78,16 +81,16 @@ const ogImageAlt = "Albariza: ponemos orden en cómo trabaja tu empresa. Asesor�
   </head>
   <body class="theme-light min-h-screen antialiased">
     <div class="relative z-10">
-      <SiteNav client:load path={Astro.url.pathname} />
-      <BookingDialog client:load />
-      <div class="h-20" aria-hidden="true"></div>
+      {!minimal && <SiteNav client:load path={Astro.url.pathname} />}
+      {!minimal && <BookingDialog client:load />}
+      {!minimal && <div class="h-20" aria-hidden="true"></div>}
 
       <main>
         <slot />
       </main>
 
-      <SiteFooter />
-      <WhatsAppButton />
+      {!minimal && <SiteFooter />}
+      {!minimal && <WhatsAppButton />}
     </div>
 
     <FilmGrain />

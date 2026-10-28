@@ -1,0 +1,10 @@
+---
+import ContactoNfc from "../../components/contacto/ContactoNfc.astro";
+import { team } from "../../data/contacto";
+
+export function getStaticPaths() {
+  return team.map((p) => ({ params: { slug: p.slug } }));
+}
+---
+
+<ContactoNfc slug={Astro.params.slug as (typeof team)[number]["slug"]} />
