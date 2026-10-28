@@ -28,7 +28,7 @@ const graph = {
       email: "albarizadigital@gmail.com",
       areaServed: { "@type": "Country", name: "España" },
       address: { "@type": "PostalAddress", addressRegion: "Andalucía", addressCountry: "ES" },
-      founder: [{ "@id": PERSON_IDS.pablo }, { "@id": PERSON_IDS.miguel }],
+      founder: [{ "@id": PERSON_IDS.pablo }, { "@id": PERSON_IDS.miguel }, { "@id": PERSON_IDS.alejandro }],
       knowsAbout: [
         "Automatización de procesos",
         "Digitalización de pymes",
@@ -71,6 +71,14 @@ const graph = {
       "@id": PERSON_IDS.miguel,
       name: "Miguel López",
       jobTitle: "Co-founder, ingeniero y empresario",
+      worksFor: { "@id": ORG_ID },
+      url: `${SITE}/nosotros/`,
+    },
+    {
+      "@type": "Person",
+      "@id": PERSON_IDS.alejandro,
+      name: "Alejandro Pérez",
+      jobTitle: "Co-founder y empresario",
       worksFor: { "@id": ORG_ID },
       url: `${SITE}/nosotros/`,
     },

@@ -63,9 +63,11 @@ export const team = {
   cards: [
     { frontImage: "/lanyard/pablo-front.webp", backImage: "/lanyard/back.webp" },
     { frontImage: "/lanyard/miguel-front.webp", backImage: "/lanyard/back.webp" },
+    { frontImage: "/lanyard/alejandro-front.webp", backImage: "/lanyard/back.webp" },
   ],
   people: [
     { name: "Pablo Cumbrera", role: "Co-founder, Growth Manager" },
     { name: "Miguel López", role: "Co-founder, ingeniero y empresario" },
+    { name: "Alejandro Pérez", role: "Co-founder, empresario" },
   ],
 };

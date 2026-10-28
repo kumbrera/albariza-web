@@ -23,6 +23,7 @@ const wordmarkWhite = readFileSync(path.join(root, "public/brand/albariza-wordma
 const people = [
   { slug: "pablo", photo: "foto_pablo.png", name: "Pablo Cumbrera", role: "Growth Manager", pos: "50% 18%" },
   { slug: "miguel", photo: "foto miguel.png", name: "Miguel López", role: "Ingeniero y empresario", pos: "50% 22%" },
+  { slug: "alejandro", photo: "foto Alejandro.png", name: "Alejandro Pérez", role: "Empresario", pos: "50% 20%" },
 ];
 
 const shell = (body) => `<!doctype html><html><head><meta charset="utf-8"><style>

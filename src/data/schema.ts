@@ -6,6 +6,7 @@ export const WEBSITE_ID = `${SITE}/#website`;
 export const PERSON_IDS = {
   pablo: `${SITE}/nosotros/#pablo-cumbrera`,
   miguel: `${SITE}/nosotros/#miguel-lopez`,
+  alejandro: `${SITE}/nosotros/#alejandro-perez`,
 };
 
 /** BreadcrumbList from [name, path] pairs; paths are site-relative with a trailing slash. */

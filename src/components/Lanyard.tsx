@@ -76,6 +76,9 @@ export default function Lanyard({
   lanyardImage = null,
   lanyardWidth = 1
 }: LanyardProps) {
+  const count = cards?.length ?? 1;
+  // Phones are too narrow for three badges at the desktop gap: tighten it and pull the camera back.
+  const mobileGap = count > 2 ? 2.05 : spacing * 0.62;
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
   // The island mounts well before the section (client:visible with a wide rootMargin) so the heavy
   // physics bundle is ready in time. Physics stays paused and nothing renders until the badges are
@@ -107,7 +110,7 @@ export default function Lanyard({
   return (
     <div ref={wrapRef} className={`relative z-0 w-full flex justify-center items-center transform scale-100 origin-center ${className}`}>
       <Canvas
-        camera={{ position: position ?? [0, 0, isMobile ? 25 : 22], fov }}
+        camera={{ position: position ?? [0, 0, isMobile ? (count > 2 ? 31 : 25) : 22], fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
         frameloop={live ? 'always' : 'demand'}
         gl={{ alpha: transparent }}
@@ -121,7 +124,7 @@ export default function Lanyard({
           {(cards ?? [{ frontImage, backImage }]).map((c, i, all) => (
             <Band
               key={i}
-              anchorX={(i - (all.length - 1) / 2) * (isMobile ? spacing * 0.62 : spacing)}
+              anchorX={(i - (all.length - 1) / 2) * (isMobile ? mobileGap : spacing)}
               spinDelay={0.35 + i * 0.25}
               live={live}
               isMobile={isMobile}
