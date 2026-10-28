@@ -182,7 +182,7 @@ export default function BookingForm({ topic, note = "", onClose, source, onDone 
       </button>
       {status === "error" && (
         <p role="alert" className="text-center text-[0.9rem] text-[#b3413a]">
-          No se ha podido enviar. Escríbenos a albarizadigital@gmail.com o llama al 601 386 534.
+          No se ha podido enviar. Escríbenos a albarizadigital@gmail.com o llama al 644 349 817.
         </p>
       )}
       <p className="text-center text-[0.8rem] text-graphite">Usamos tus datos solo para responderte.</p>
