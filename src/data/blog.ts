@@ -1,5 +1,6 @@
 import { bonoIaPosts } from "./blog-bono-ia";
 import { procesosPosts } from "./blog-procesos";
+import { serviciosPosts } from "./blog-servicios";
 
 export type ContentBlock =
   | { type: "p"; text: string }
@@ -37,6 +38,7 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  ...serviciosPosts,
   ...procesosPosts,
   ...bonoIaPosts,
   {
